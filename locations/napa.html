@@ -390,22 +390,24 @@
   <section class="nf nf--ink" id="ai" aria-labelledby="ai-h">
     <div class="wrap">
 
-      <!-- The growth band. Full width on purpose: the fold was two columns
-           twice over and the repeat had gone flat, so the one moment that
-           carries the change breaks the grid instead of sitting inside it.
-           2025 sits small at the left, the rail draws across, and 2026 arrives
-           at scale. The reader watches the number grow rather than comparing
-           two bars. -->
-      <!-- The fold pins here, headline included: the statement holds still
-           while the reader drives the figure across the years beneath it. That
-           is the point of pinning rather than revealing — the claim stays on
-           screen for the whole of the evidence.
+      <!-- The growth band. The fold pins here, headline included: the statement
+           holds still while the reader drives the figure across the interval
+           beneath it. That is the point of pinning rather than revealing — the
+           claim stays on screen for the whole of the evidence.
 
            The figure starts above 2025 at 6% and climbs to 45% above 2026,
-           which is where the survey stops. Arrows carry the axis on to 2027 and
-           2028, which have question marks and no value: there is no reading for
-           them, and an axis that kept climbing would be a forecast this page
-           has not earned. The open end is the argument.
+           which is where the survey stops, and the axis stops there with it.
+           It used to carry on to 2027 and 2028 with question marks and no
+           values; the owner had those removed on 5 September. The fold is
+           better for it — an axis drawn past its last reading invites the eye
+           to continue the line, which is a forecast this page has not earned,
+           and two question marks were a coy way of admitting that.
+
+           Two columns, and they are not the repeat the earlier note warned
+           about: the left is a reading and the right is the sentence it came
+           from. Beside each other rather than stacked, because the number and
+           its provenance are one claim and a reader checking the source should
+           not have to leave the figure to do it.
 
            The literal 45% is what a browser without scroll-driven animation
            shows, parked at its 2026 tick. -->
@@ -414,35 +416,38 @@
           <p class="nf__meta"><b>( 04 )</b><span class="nf__tag vh" id="ai-h">Local discovery is changing</span></p>
           <h2 class="nf__head">AI is becoming another place where local decisions begin.</h2>
 
-          <div class="ngrow__lane">
-            <span class="ngrow__fig" data-count-from="6" data-count-to="45"><i class="ngrow__lit">45%</i></span>
-            <!-- The arrow runs at the figures' own level, which is why it reads
-                 as the same line continuing rather than a separate rule below. -->
-            <span class="ngrow__seg" style="--from:49%; --to:61%"></span>
-            <span class="ngrow__seg ngrow__seg--b" style="--from:72%; --to:94%"></span>
-            <!-- Where a value would be, if anyone had measured one. -->
-            <span class="ngrow__ask" style="--at:66.67%">?</span>
-            <span class="ngrow__ask ngrow__ask--last" style="--at:100%">?</span>
+          <div class="ngrow__cols">
+
+            <!-- LEFT — the reading. Two years, one interval, and the figure
+                 crosses it. The arrows to 2027 and 2028 and their question marks
+                 are gone at the owner's call: they were an open end drawn onto an
+                 axis with no data on it, and with them removed the fold argues
+                 only what the survey actually measured. The minor ticks went with
+                 them — sub-divisions of a single year suggest intermediate
+                 readings that do not exist. -->
+            <div class="ngrow__plot">
+              <div class="ngrow__lane">
+                <span class="ngrow__fig" data-count-from="6" data-count-to="45"><i class="ngrow__lit">45%</i></span>
+              </div>
+              <div class="ngrow__axis" aria-hidden="true">
+                <span class="ngrow__tick ngrow__tick--start" style="--at:0%"><i></i><b>2025</b></span>
+                <span class="ngrow__tick ngrow__tick--now ngrow__tick--end" style="--at:100%"><i></i><b>2026</b></span>
+              </div>
+            </div>
+
+            <!-- RIGHT — the sentence the reading comes from, and who measured it.
+                 Beside the graphic rather than beneath it: the number and its
+                 provenance are one claim, and a reader checking the source should
+                 not have to leave the figure to do it. -->
+            <figure class="nfig" data-reveal>
+              <p class="nfig__stat">45% of 1,002 U.S. consumers surveyed said they had used AI tools to find local-business information in the previous 12 months, against 6% the year before.</p>
+              <figcaption class="nfig__src">
+                <cite><a href="https://www.brightlocal.com/research/local-consumer-review-survey/" rel="noopener">BrightLocal, 2026 Local Consumer Review Survey</a></cite>
+                <span class="nfig__note">A U.S. consumer survey. Not specific to Napa, or to Napa visitors.</span>
+              </figcaption>
+            </figure>
+
           </div>
-
-          <div class="ngrow__axis" aria-hidden="true">
-            <span class="ngrow__minor" style="--at:16.67%"></span>
-            <span class="ngrow__minor" style="--at:50%"></span>
-            <span class="ngrow__minor" style="--at:83.33%"></span>
-            <span class="ngrow__tick ngrow__tick--start" style="--at:0%"><i></i><b>2025</b></span>
-            <span class="ngrow__tick ngrow__tick--now" style="--at:33.33%"><i></i><b>2026</b></span>
-            <span class="ngrow__tick ngrow__tick--ask" style="--at:66.67%"><i></i><b>2027</b></span>
-            <span class="ngrow__tick ngrow__tick--ask ngrow__tick--end" style="--at:100%"><i></i><b>2028</b></span>
-          </div>
-
-          <figure class="nfig" data-reveal>
-            <p class="nfig__stat">45% of 1,002 U.S. consumers surveyed said they had used AI tools to find local-business information in the previous 12 months, against 6% the year before.</p>
-
-            <figcaption class="nfig__src">
-              <cite><a href="https://www.brightlocal.com/research/local-consumer-review-survey/" rel="noopener">BrightLocal, 2026 Local Consumer Review Survey</a></cite>
-              <span class="nfig__note">A U.S. consumer survey. Not specific to Napa, or to Napa visitors.</span>
-            </figcaption>
-          </figure>
         </div>
       </div>
 

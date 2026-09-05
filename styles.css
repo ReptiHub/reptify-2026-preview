@@ -10923,9 +10923,90 @@ h1.statement--sm { font-weight: 900; }
    footnote to the sentence directly above it, and 44px reads as a break rather
    than an attachment. --v3 is the last 16px the pinned block needed. */
 .ngrow__pinner .nfig { row-gap: var(--v3); }
-/* The statement needs to finish before the figure starts. At the shared gap the
-   two read as one stack; this lets the headline land. */
-.ngrow__pinner .ngrow__lane { margin-top: clamp(1rem, 3.2vw, 2.6rem); }
+
+/* ── THE TWO COLUMNS ───────────────────────────────────────────────────────
+   The reading on the left, the sentence it came from on the right. Not the
+   "two columns twice over" the fold was warned off earlier — that note was
+   about repeating the same device down the page, and these two halves are
+   different kinds of thing: one is measured, one is cited.
+
+   Narrower than the band it replaced, and centred. The graphic was running the
+   full 1260px with the prose stacked beneath it, which made the fold tall and
+   left the statistic reading as a caption. Side by side at 62rem the figure has
+   the weight and the sentence has a column it can actually be read in.
+
+   One column below 861px, where two would give the prose about 40 characters
+   and the numeral nowhere to travel. */
+.ngrow__cols {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  max-width: 62rem;
+  margin-inline: auto;
+  width: 100%;
+}
+@media (min-width: 861px) {
+  .ngrow__cols {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+
+  /* One line across both columns. The axis hairline and the citation's rule are
+     the same kind of mark — each one closes the thing above it — and centring
+     the two columns independently left them 8px apart, which reads as a missed
+     alignment rather than a decision.
+
+     Subgrid, so the two columns share the pinner's rows instead of each solving
+     its own height: row one holds the reading and the sentence, row two holds
+     the two rules and what hangs below them. The lane sits at the foot of its
+     row and the axis at the head of the next, which is what puts the hairline
+     and the border on the same pixel at any width.
+
+     @supports because without subgrid the centred version above is still a
+     correct layout — the rules simply do not line up, which is where this
+     started. */
+  @supports (grid-template-rows: subgrid) {
+    .ngrow__cols {
+      grid-template-rows: auto auto;
+      align-items: stretch;
+      /* Split, because one `gap` was doing two jobs. The columns want the wide
+         gutter; the rows want a narrow one — the axis belongs close under its
+         numeral, and 70px of row gap put it 43px below where the citation's
+         rule landed, which is further apart than the centred version this was
+         meant to fix. */
+      column-gap: clamp(2rem, 5vw, 4.5rem);
+      row-gap: clamp(1rem, 2vw, 1.75rem);
+    }
+    .ngrow__plot,
+    .ngrow__cols .nfig {
+      grid-row: 1 / span 2;
+      grid-template-rows: subgrid;
+    }
+    /* normal, so the figure takes the row gutter from the grid it is now part
+       of. Its own row-gap: --v3 overrode the inherited one and offset the two
+       rules by exactly the difference between them. */
+    .ngrow__cols .nfig { row-gap: normal; }
+    .ngrow__cols .nfig__stat { align-self: end; }
+    .ngrow__plot .ngrow__axis { align-self: start; }
+  }
+}
+/* the lane and its axis are one object and must not be separated by the grid */
+.ngrow__plot { display: grid; }
+
+/* Left-aligned in a column, where centred prose leaves ragged edges on both
+   sides and nothing to hold. It was centred when it ran the full width, which
+   was right then and is not right here. Sized down with the column: the cqw
+   term measures the figure's own box, so at half the width it would have
+   floored at the mobile size. */
+.ngrow__cols .nfig__src { max-width: none; }
+/* The statement needs to finish before the evidence starts. At the shared gap
+   the two read as one stack; this lets the headline land.
+
+   On .ngrow__cols, not on .ngrow__lane. It was on the lane, which is now nested
+   inside the left column — so the margin was pushing that column down against
+   the right one instead of spacing the block, and the headline was left with
+   15px beneath it. */
+.ngrow__pinner .ngrow__cols { margin-top: clamp(1rem, 3.2vw, 2.6rem); }
 .ngrow__pinner .nf__head { margin: 0; }
 
 /* the figure's lane */
@@ -10935,7 +11016,10 @@ h1.statement--sm { font-weight: 900; }
    only unit that means "42% of the axis". */
 .ngrow__lane {
   position: relative; container-type: inline-size;
-  min-height: clamp(4rem, 9vw, 7.5rem);
+  /* Reserves the height the figure reaches at scale 1, not the height it starts
+     at — the numeral grows from .32 to full during the climb, and a lane sized
+     to the small state would resize the whole column underneath the reader. */
+  min-height: clamp(4rem, 34cqw, 10rem);
   display: flex; align-items: flex-end;
 }
 
@@ -10943,7 +11027,11 @@ h1.statement--sm { font-weight: 900; }
 .ngrow__fig {
   font-family: var(--state); font-weight: 900; line-height: .82;
   letter-spacing: -.075em; color: var(--chalk);
-  font-size: clamp(3.5rem, 11vw, 10rem);
+  /* cqw, not vw. The lane is half the width it was, and a viewport-sized
+     numeral filled 325px of a 461px column — the reading looked tentative in a
+     space built for it. 40cqw measures the lane itself, so the figure fills its
+     own column at any width instead of a share of the screen. */
+  font-size: clamp(3.5rem, 40cqw, 12rem);
   font-variant-numeric: tabular-nums;   /* the string climbs 6% to 45%; keep it from jittering */
   will-change: transform;
   /* Left edge, not centre. The box is always as wide as "45%" at full size, so
@@ -10973,12 +11061,6 @@ h1.statement--sm { font-weight: 900; }
 
 /* Half-year marks. They do the job the uneven spacing used to do badly: give
    the eye a sense of the interval without pretending to carry a reading. */
-.ngrow__minor {
-  position: absolute; top: 0; left: var(--at);
-  width: 1px; height: .45rem;
-  background: rgba(1, 192, 254, .22);
-  transform: translateX(-50%);
-}
 .ngrow__tick b {
   font-family: var(--work); font-size: var(--a7); font-weight: 500;
   text-transform: uppercase; letter-spacing: .18em; color: rgba(240, 239, 234, .55);
@@ -10995,10 +11077,6 @@ h1.statement--sm { font-weight: 900; }
 .ngrow__tick--now i { height: 1.4rem; background: var(--ember); }
 .ngrow__tick--now b { color: var(--ember); }
 /* the years with no survey behind them */
-.ngrow__tick--ask i { height: .6rem; background: rgba(240, 239, 234, .22); }
-.ngrow__tick--ask b { color: var(--brand-lite); opacity: .72; }
-.ngrow__tick--ask em { font-style: normal; margin-left: .15em; }
-
 /* The arrow that carries on past the evidence. A segment per gap, each one a
    rule with a head, drawn left to right. Borders rather than artwork: an
    arrowhead is a primitive, not an illustration.
@@ -11006,51 +11084,15 @@ h1.statement--sm { font-weight: 900; }
    These are the point of the fold's ending. The figure stops at 2026 because
    that is where the survey stops; the line does not, and neither does the
    question. */
-.ngrow__seg {
-  position: absolute; left: var(--from);
-  /* At the figures' own level, not down on the axis. That is the whole reason
-     it reads as the same line continuing: the arrow leaves 45% where 45% sits,
-     rather than starting a second rule underneath it. 24% up from the lane's
-     floor puts it through the middle of the numerals. */
-  bottom: 24%;
-  width: calc(var(--to) - var(--from));
-  /* 3px, not a hairline. At 1px it read as the axis rule repeated at a
-     different height rather than as an arrow, and it has to hold its own beside
-     a 160px numeral. */
-  height: 3px; background: rgba(240, 239, 234, .34);
-  transform-origin: left center;
-}
 /* A solid head, taller than it is wide. The rotated-border chevron read as a
    bent stick at the end of a rule; a filled triangle with a 1.4:1 height to
    width ratio reads as an arrow that means to arrive somewhere. */
-.ngrow__seg::after {
-  content: ''; position: absolute; right: 0; top: 50%;
-  width: 0; height: 0;
-  border-top: .62rem solid transparent;
-  border-bottom: .62rem solid transparent;
-  border-left: .88rem solid rgba(240, 239, 234, .42);
-  transform: translate(100%, -50%);
-}
-
 /* The question marks sit in the lane, where a percentage would be if anyone
    had measured one. That is the whole argument of the fold's last beat. */
 /* Above the line, not on it. The head and the question mark were landing in the
    same place and the mark sat over the arrow — each hid the other. */
-.ngrow__ask {
-  position: absolute; bottom: 0; left: var(--at);
-  transform: translateX(-50%); z-index: 1;
-  font-family: var(--state); font-weight: 900; line-height: .82;
-  letter-spacing: -.04em; color: rgba(240, 239, 234, .38);
-  /* Near the figure's own size, not a small mark beside it. At 5.5vw the arrow
-     crossed the question marks through their middle and read as a strike
-     through them; at this scale the line passes under their bowl exactly as it
-     passes under 45%, so they sit ON the line rather than being cut by it. */
-  font-size: clamp(3rem, 8.5vw, 7.5rem);
-}
-.ngrow__ask--last { transform: translateX(-100%); }
-
 /* parked on its 2026 tick where there is no pin */
-.ngrow__fig { margin-left: 33.33%; transform: translateX(-50%); }
+.ngrow__fig { margin-left: auto; }
 
 @supports (animation-timeline: view()) {
   /* min-height too, and it is derivable now in a way it was not before. The
@@ -11066,19 +11108,29 @@ h1.statement--sm { font-weight: 900; }
 
        900 → 619   1100 → 720   1400 → 843   1920 → 868   2560 → 868
 
-     868 is the ceiling, full stop — wider windows do not make it taller. With
-     an 8vh stick that needs 0.08H + 868 <= H, so H >= 944. 980 leaves 36px,
-     which is the margin a font fallback or a scrollbar can move things by.
+     Rewritten 5 September, second time. The two-column layout took 168px out of
+     the block — the reading and its source sit beside each other now instead of
+     stacked — so the pinner tops out at about 700px where it was 868. Swept at
+     H=862:
 
-     Below the gate nothing is lost: the fold renders complete and still. And
-     the gate costs almost no one — laptops sit near 800px of viewport and were
-     already below 940; desktops sit near 1000px and up.
+       900 → 550   1400 → 663   2560 → 667
+
+     667 is the ceiling. With an 8vh stick that needs 0.08H + 667 <= H, so
+     H >= 725. The gate is 860, which leaves 126px at the worst width — where
+     the old 980 gate left 36px against a taller block. Lower AND safer, which
+     is what taking height out of a pin buys you.
+
+     860 rather than 725 because a pin that only just fits reads as cramped even
+     when it technically clears. And it now admits a 13-inch laptop, which the
+     940 and 980 gates did not.
+
+     Below the gate nothing is lost: the fold renders complete and still.
 
      Below it the fold simply does not pin: everything is present and static,
      which is the same call ( 01 ) makes for narrow screens. A pin that does not
      fit is worse than no pin — it crops its own content and the reader never
      sees the end of the sequence. */
-  @media (min-width: 861px) and (min-height: 980px) and (prefers-reduced-motion: no-preference) {
+  @media (min-width: 861px) and (min-height: 860px) and (prefers-reduced-motion: no-preference) {
     .js .ngrow {
       height: 210vh;
       view-timeline-name: --fold04;
@@ -11116,7 +11168,11 @@ h1.statement--sm { font-weight: 900; }
        rather than near it. */
     @keyframes ngrow-climb {
       from { --ngrow-n: 6;  transform: translateX(0) scale(.32); }
-      to   { --ngrow-n: 45; transform: translateX(calc(33.33cqw - 50%)) scale(1); }
+      /* 100cqw - 100%: the lane's width less the figure's own, which lands its
+         RIGHT edge on the lane's right edge — the same edge 2026 is pinned to
+         by --end. It was 33.33cqw - 50% when 2026 sat a third of the way along
+         an axis that carried on to 2028. */
+      to   { --ngrow-n: 45; transform: translateX(calc(100cqw - 100%)) scale(1); }
     }
 
     /* THE SEQUENCE, in the order the argument is made.
@@ -11126,10 +11182,11 @@ h1.statement--sm { font-weight: 900; }
        than contain: contain begins only once the fold already fills the
        screen, which would leave the statement invisible on the way in.
 
-       Then the figure climbs to 2026 and stops, because that is where the
-       survey stops. Then the line keeps going: a segment draws to 2027 and a
-       question mark lands above it, then the same again to 2028. The reader
-       watches the evidence run out and the question continue. */
+       Then the figure climbs from 6% above 2025 to 45% above 2026, and stops,
+       because that is where the survey stops. Nothing follows it: the segments
+       and question marks that carried the axis on to 2027 and 2028 were removed
+       on 5 September, along with the minor ticks — sub-divisions of a single
+       interval imply readings that were never taken. */
     .js .ngrow .nf__head {
       animation-name: ngrow-fly;
       animation-duration: auto;
@@ -11143,30 +11200,7 @@ h1.statement--sm { font-weight: 900; }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .js .ngrow .ngrow__seg,
-    .js .ngrow .ngrow__ask {
-      animation-duration: auto;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      animation-timeline: --fold04;
-    }
-    .js .ngrow .ngrow__seg   { animation-name: ngrow-draw; }
-    .js .ngrow .ngrow__ask   { animation-name: ngrow-ask; }
-
     /* after the figure lands at 52% */
-    .js .ngrow .ngrow__seg:not(.ngrow__seg--b) { animation-range: contain 56% contain 68%; }
-    .js .ngrow .ngrow__ask:not(.ngrow__ask--last) { animation-range: contain 64% contain 74%; }
-    .js .ngrow .ngrow__seg--b { animation-range: contain 76% contain 88%; }
-    .js .ngrow .ngrow__ask--last { animation-range: contain 84% contain 94%; }
-
-    @keyframes ngrow-draw {
-      from { transform: scaleX(0); }
-      to   { transform: scaleX(1); }
-    }
-    @keyframes ngrow-ask {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
   }
 }
 
@@ -11186,8 +11220,12 @@ h1.statement--sm { font-weight: 900; }
 /* Inside the pin now, below the years and above the hairline that closes the
    band. Two columns so the claim and its provenance sit side by side without
    making the pinned block any taller than it has to be. */
+/* No container-type. It was here so the statistic could size in cqw when the
+   figure ran the full width; the statistic sizes in vw now, nothing else inside
+   used the unit, and a size container cannot be a subgrid — which is precisely
+   what was stopping this column from sharing the grid's rows. Verified before
+   removing: zero cqw declarations resolve inside .nfig. */
 .nfig {
-  container-type: inline-size;
   margin: 0; display: grid; gap: var(--v4) clamp(2rem, 5vw, 4rem);
   align-items: start;
 }
@@ -11214,11 +11252,11 @@ h1.statement--sm { font-weight: 900; }
 .nfig__stat {
   margin: 0;
   font-family: var(--state); font-weight: 500;
-  /* Sized and centred HERE, not in the wide-screen block. That rule sits twelve
-     lines above this one at the same specificity, so this declaration was
-     winning and the size never changed — source order decided it, not intent. */
-  font-size: clamp(1.05rem, 1.95cqw, 1.85rem);
-  line-height: 1.5; text-align: center; letter-spacing: -.01em;
+  /* Left and column-sized. It was centred at 24.6px when the figure ran the
+     full 1260px band; in a 461px column centred prose leaves a ragged edge on
+     both sides and nothing to hold. */
+  font-size: clamp(1.05rem, .95rem + .5vw, 1.45rem);
+  line-height: 1.55; text-align: left; letter-spacing: -.01em;
   color: var(--chalk); text-wrap: pretty;
 }
 

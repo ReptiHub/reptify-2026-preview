@@ -10876,8 +10876,44 @@ h1.statement--sm { font-weight: 900; }
    1.4s against the reveal's own .45s, deliberately: the fade finishes first and
    the picture is still easing after it has arrived, which is what keeps it from
    reading as one linear move. */
+/* Neutralising the 10px lift was not enough, and the reason is worth writing
+   down because it will catch the next person too.
+
+   The statistic fades in place because it lives inside the PIN — the fold is
+   held still while it fades, so nothing moves. These two columns are not
+   pinned. They travel up the screen with the page, and main.js's observer uses
+   threshold 0 ("any pixel intersecting is enough", and it says why), so the
+   fade begins the instant the top edge clears the bottom of the window and runs
+   while the block is still climbing. Opacity rising during that climb is what
+   reads as arriving from below. Removing the transform removed 10px of a
+   several-hundred-pixel effect.
+
+   So the fade is moved off the observer and onto the block's own view timeline,
+   finishing at entry 55% — comfortably before the text reaches reading
+   position. By the time it is somewhere a reader would look at it, it has been
+   fully opaque for a while, and the only thing still moving is the page.
+
+   view(), not a named timeline, and that is safe here: these blocks are outside
+   the pin. Inside one, view() freezes — see ( 04 ) above. */
 .js .nmid--stat .nf__note[data-reveal],
-.js .nmid--stat .nf__note[data-reveal].in { transform: none; }
+.js .nmid--stat .nf__note[data-reveal].in {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .js .nmid--stat .nf__note[data-reveal] {
+      animation-name: nmid-fade;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: var(--ease);
+      animation-timeline: view();
+      animation-range: entry 15% entry 55%;
+    }
+    @keyframes nmid-fade { from { opacity: 0; } to { opacity: 1; } }
+  }
+}
 
 /* clip, so the overscaled picture cannot widen the page while it settles */
 .napa__lead { overflow: clip; }

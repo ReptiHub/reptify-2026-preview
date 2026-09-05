@@ -11334,9 +11334,14 @@ h1.statement--sm { font-weight: 900; }
       animation-timeline: --fold04;
       animation-range: contain 52% contain 68%;
     }
+    /* Opacity alone. It rose 1.25rem as it faded, at the owner's call it no
+       longer does: the sentence belongs beside the figure, not arriving from
+       under it, and a block that travels while the rest of the fold is holding
+       still reads as a second thing happening rather than the same one
+       finishing. */
     @keyframes ngrow-cite {
-      from { opacity: 0; transform: translateY(1.25rem); }
-      to   { opacity: 1; transform: none; }
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
     .js .ngrow .ngrow__lit { display: none; }
     .js .ngrow .ngrow__fig::after { content: counter(ngrow) '%'; }

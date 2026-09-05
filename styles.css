@@ -10859,6 +10859,39 @@ h1.statement--sm { font-weight: 900; }
   .nmid--stat .nf__note--b { grid-column: 2; grid-row: 1; margin-top: 0; max-width: 48ch; }
 }
 
+/* ── HOW THE TWO HALVES AND THE PHOTOGRAPH ARRIVE ─────────────────────────
+   The prose fades where it stands. [data-reveal] lifts everything 10px as it
+   fades, which is right for a single element entering a quiet page and wrong
+   for two columns of running text: at this size the rise reads as the paragraph
+   settling into place after the reader has started on it. Opacity only, and the
+   transform is neutralised in both states so nothing is left to travel.
+
+   The photograph keeps its entrance, but it settles rather than rises — the
+   frame holds still and the picture eases out of a 4% overscale inside it. That
+   is the house device for a picture, written down at .svcf as
+   "picture settles: scale(1.05) → scale(1), slow-out"; this is the same gesture
+   at a scroll reveal's scale. A photograph that slides is a card; a photograph
+   that settles is a photograph.
+
+   1.4s against the reveal's own .45s, deliberately: the fade finishes first and
+   the picture is still easing after it has arrived, which is what keeps it from
+   reading as one linear move. */
+.js .nmid--stat .nf__note[data-reveal],
+.js .nmid--stat .nf__note[data-reveal].in { transform: none; }
+
+/* clip, so the overscaled picture cannot widen the page while it settles */
+.napa__lead { overflow: clip; }
+.js .napa__lead[data-reveal] { transform: none; }
+.js .napa__lead[data-reveal] img {
+  transform: scale(1.04);
+  transition: transform 1.4s var(--ease);
+}
+.js .napa__lead[data-reveal].in img { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .napa__lead[data-reveal] img { transform: none; transition: none; }
+}
+
 /* Full band width, at the owner's call. The headline left .nmid when the band
    took the width, which handed it back the 17ch cap every fold head carries and
    broke it into four narrow lines above a full-width object. Uncapped, it runs

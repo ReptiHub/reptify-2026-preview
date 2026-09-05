@@ -11278,18 +11278,13 @@ h1.statement--sm { font-weight: 900; }
 /* Full width, at the owner's call: the sentence runs the whole measure rather
    than sitting in a column with the source beside it. Bigger with it, since
    there is now room for the size. */
-@media (min-width: 950px) {
-  /* Bigger, centred, and undesigned. The owner's call: no bold figure, no
-     tinted year, nothing for the eye to stop on. It is the sentence that backs
-     the graphic above it, and a graphic with its own emphasis inside the
-     caption reads as two competing statements. */
-  .nfig__stat { margin: 0; max-width: none; }
-  .nfig__src {
-    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
-    gap: .4rem 1.6rem; max-width: none;
-    border-top: 1px solid rgba(240, 239, 234, .16); padding-top: var(--v2);
-  }
-}
+/* The wide-screen block that used to live here is gone. It turned .nfig__src
+   into a centred flex row, which was right when the figure ran the full 1260px
+   band and the statistic was centred with it. In a 541px column it was centring
+   the citation against left-aligned prose directly above it — the source looked
+   indented from its own column. The base rule below stacks and left-aligns,
+   which is what this layout wants, and it also set .nfig__stat properties the
+   base already carries. */
 
 /* Reading scale, not display scale. The band above now carries the figures at
    size; setting them large again here printed 45% twice in one fold, which
@@ -11320,7 +11315,12 @@ h1.statement--sm { font-weight: 900; }
 .nfig__src cite a { color: var(--chalk); text-underline-offset: .22em; }
 /* .55 and not --chalk-40: that token resolves to alpha .4, which composites to
    3.48:1 on ink, under AA for 13px. .55 measures 5.44:1. */
-.nfig__note { font-size: clamp(.82rem, .76rem + .2vw, .98rem); line-height: 1.6; color: rgba(240, 239, 234, .55); }
+/* Smaller again, at the owner's call. The citation and the note were the same
+   13px before today and the step between them was the fix; the note being
+   quieter than the citation is the same fix, from the other end. 12.9px at 1400
+   against the citation's 16.7 — and .55 alpha measures 5.44:1 on ink, past AA
+   for text this size, which is why the colour does not move with it. */
+.nfig__note { font-size: clamp(.75rem, .72rem + .1vw, .85rem); line-height: 1.6; color: rgba(240, 239, 234, .55); }
 
 
 

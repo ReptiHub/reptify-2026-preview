@@ -11097,12 +11097,13 @@ h1.statement--sm { font-weight: 900; }
    layer to pin the last one. Seven spans place exactly, and can be measured.
 
    Shorter and fainter than .ngrow__tick i, which is .85rem and marks a real
-   date. The height difference is what keeps major and minor reading as two
-   ranks rather than as an even comb. They carry no reading of their own — the
+   date. .55rem against .85 keeps major and minor as two ranks while leaving the
+   minors tall enough to read as a scale — at .34rem they were closer to dust
+   than to a ruler. They carry no reading of their own — the
    survey took none at an eighth of a year — they give the interval a scale. */
 .ngrow__minor {
   position: absolute; top: 0; left: var(--at);
-  width: 1px; height: .34rem;
+  width: 1px; height: .55rem;
   background: rgba(240, 239, 234, .22);
   transform: translateX(-50%);
 }
@@ -11132,7 +11133,10 @@ h1.statement--sm { font-weight: 900; }
    past AA. */
 .ngrow__tick b { color: var(--brand-lite); }
 .ngrow__tick i { background: rgba(1, 192, 254, .45); }
-.ngrow__tick--now i { height: 1.4rem; background: var(--ember); }
+/* Colour, not length. 2026's mark was 1.4rem against 2025's .85 — the ember
+   one read as a taller rank when the two are the same kind of thing, two ends
+   of one interval. The emphasis belongs in the colour, which it already has. */
+.ngrow__tick--now i { background: var(--ember); }
 .ngrow__tick--now b { color: var(--ember); }
 /* the years with no survey behind them */
 /* The arrow that carries on past the evidence. A segment per gap, each one a
@@ -11195,7 +11199,12 @@ h1.statement--sm { font-weight: 900; }
      sees the end of the sequence. */
   @media (min-width: 861px) and (min-height: 900px) and (prefers-reduced-motion: no-preference) {
     .js .ngrow {
-      height: 210vh;
+      /* 260vh, up from 210. The beats are unchanged — they are proportions of
+         the hold, not distances — so lengthening the runway spends more
+         scrolling on the same sequence and every one of them slows together.
+         The pin still fits: the runway is the scroll distance, the pinner is
+         what has to fit the screen, and they are different numbers. */
+      height: 260vh;
       view-timeline-name: --fold04;
       view-timeline-axis: block;
       border-bottom: 0; padding-bottom: 0;
@@ -11204,7 +11213,25 @@ h1.statement--sm { font-weight: 900; }
        8vh clears it from 950px up. Anything smaller slides the eyebrow under
        the logo. So the top offset is fixed cost — headroom has to come from
        the gate above, not from here. */
-    .js .ngrow .ngrow__pinner { position: sticky; top: 8vh; padding-bottom: var(--v4); border-bottom: 1px solid rgba(240, 239, 234, .22); }
+    /* No border-bottom here any more: a border cannot be scaled from its centre,
+       and the closing line is now drawn as ::after so it can open the way the
+       axis rule does. */
+    .js .ngrow .ngrow__pinner { position: sticky; top: 8vh; padding-bottom: var(--v4); }
+    .js .ngrow .ngrow__pinner::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 1px; background: rgba(240, 239, 234, .22);
+      transform-origin: center;
+      animation-name: ngrow-rule;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: var(--ease);
+      animation-timeline: --fold04;
+      /* Opens with the figure and closes before the sentence has finished
+         arriving, so the fold is drawing its own bottom edge while the number
+         crosses — and is already still by the time the reader reaches the
+         citation. */
+      animation-range: contain 14% contain 60%;
+    }
 
     .js .ngrow .ngrow__fig {
       margin-left: 0; transform: none;
@@ -11256,7 +11283,7 @@ h1.statement--sm { font-weight: 900; }
       animation-name: ngrow-tick;
       animation-duration: auto;
       animation-fill-mode: both;
-      animation-timing-function: linear;
+      animation-timing-function: var(--ease);
       animation-timeline: --fold04;
       animation-range: contain 2% contain 14%;
     }
@@ -11278,7 +11305,7 @@ h1.statement--sm { font-weight: 900; }
       animation-name: ngrow-rule;
       animation-duration: auto;
       animation-fill-mode: both;
-      animation-timing-function: linear;
+      animation-timing-function: var(--ease);
       animation-timeline: --fold04;
       animation-range: contain 2% contain 14%;
     }
@@ -11292,7 +11319,7 @@ h1.statement--sm { font-weight: 900; }
       animation-name: ngrow-tick;
       animation-duration: auto;
       animation-fill-mode: both;
-      animation-timing-function: linear;
+      animation-timing-function: var(--ease);
       animation-timeline: --fold04;
       animation-range: contain 6% contain 16%;
     }
@@ -11303,7 +11330,7 @@ h1.statement--sm { font-weight: 900; }
       animation-name: ngrow-cite;
       animation-duration: auto;
       animation-fill-mode: both;
-      animation-timing-function: linear;
+      animation-timing-function: var(--ease);
       animation-timeline: --fold04;
       animation-range: contain 52% contain 68%;
     }

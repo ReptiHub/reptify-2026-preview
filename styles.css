@@ -10815,10 +10815,16 @@ h1.statement--sm { font-weight: 900; }
      pushed the prose down the page, which reads worse than a short sidebar.
      A right column that ends early reads as an aside. A left column that
      starts late reads as a bug. */
-  .nmid--stat .nf__note { grid-column: 1; grid-row: 1; margin-top: 0; max-width: 46ch; }
-  /* The statistic left this grid for the pinner, so the row below the band is
-     the prose alone and takes the full measure rather than half of it. */
-  .nmid--stat .nf__note { grid-column: 1 / -1; max-width: 62ch; }
+  /* The prose below the band is two halves of one argument, so it is set as
+     two. The left says what has not happened; the right says what it costs a
+     business. Both start on row 1 — neither is a footnote to the other.
+
+     There was a dead rule here: this selector was written twice, the first
+     placing the note in column 1 and the second, four lines later at equal
+     specificity, overriding it to span the grid. Source order decided it and
+     the first line never applied. Both are replaced by the two below. */
+  .nmid--stat .nf__note--a { grid-column: 1; grid-row: 1; margin-top: 0; max-width: 46ch; }
+  .nmid--stat .nf__note--b { grid-column: 2; grid-row: 1; margin-top: 0; max-width: 46ch; }
 }
 
 /* Full band width, at the owner's call. The headline left .nmid when the band

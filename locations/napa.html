@@ -453,9 +453,22 @@
 
       <div class="nmid nmid--stat">
 
-        <div class="nf__note" data-reveal>
+      <!-- Split at the turn. The left half says what has NOT happened and what
+           the new front door looks like; the right half says what it therefore
+           costs a business. "For a local business, that changes something
+           important" is the hinge, so it opens the second column rather than
+           sitting fourth in a single run of prose where the turn is easy to
+           read past.
+
+           Two blocks rather than a CSS column-count, because the break has to
+           fall on that sentence and nowhere else — column-count would put it
+           wherever the measure happened to run out. One column below 950px,
+           where they follow each other in the order they are written. -->
+        <div class="nf__note nf__note--a" data-reveal>
         <p>This doesn&rsquo;t mean Google, Maps, reviews or recommendations have disappeared. It means another front door has opened.</p>
         <p>Someone can ask where to have dinner near downtown Napa. Which tasting rooms may suit walk-ins. Whether there&rsquo;s a spa open Sunday. What they can do within walking distance. Instead of presenting ten blue links, an AI system may try to answer the question directly.</p>
+        </div>
+        <div class="nf__note nf__note--b" data-reveal>
         <p>For a local business, that changes something important. It is no longer enough simply to exist online. <strong>The business has to be understandable online.</strong> Its name, location, hours, services, booking information and other important facts need to be clear enough for people to use and consistent enough for search and AI systems to trust.</p>
         <p>A Napa business does not need to become an AI company. It needs the truth about the business to travel well.</p>
         </div>

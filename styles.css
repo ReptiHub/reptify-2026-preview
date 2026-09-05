@@ -11205,7 +11205,9 @@ h1.statement--sm { font-weight: 900; }
       animation-timeline: --fold04;
       /* contain, not cover: for a pin taller than the screen that range is
          exactly the stretch where it holds the viewport, start to finish. */
-      animation-range: contain 4% contain 52%;
+      /* 14%, not 4%: the years go up first and the figure arrives onto an axis
+         that already exists, rather than the two appearing together. */
+      animation-range: contain 14% contain 52%;
     }
 
     /* The sentence waits for the number. The climb ends at contain 52%, so the
@@ -11230,6 +11232,39 @@ h1.statement--sm { font-weight: 900; }
 
        Below the gate none of this applies and data-reveal is back in charge,
        which is what shows the sentence in the static fallback. */
+    /* THE YEARS GO UP FIRST. Opacity only, and that is not a stylistic choice:
+       .ngrow__tick positions itself with transform — translateX(-50%), and the
+       two ends override it to none and -100% — so animating transform here
+       would walk both labels off their marks. */
+    .js .ngrow .ngrow__tick {
+      animation-name: ngrow-tick;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: --fold04;
+      animation-range: contain 2% contain 14%;
+    }
+    @keyframes ngrow-tick { from { opacity: 0; } to { opacity: 1; } }
+
+    /* THE RULE ARRIVES LAST, and from its own middle outward, at the same
+       moment as the sentence on the right. Two things finishing together reads
+       as one gesture closing the fold rather than two more events after the
+       number has already stopped.
+
+       scaleX from the centre rather than a width animation: a transform is
+       composited and a width is not, and the line is 1px tall — reflowing it
+       sixty times a second to grow it is work for no reason. */
+    .js .ngrow .ngrow__axis::before {
+      transform-origin: center;
+      animation-name: ngrow-rule;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: --fold04;
+      animation-range: contain 52% contain 68%;
+    }
+    @keyframes ngrow-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
     .js .ngrow .nfig[data-reveal],
     .js .ngrow .nfig[data-reveal].in { opacity: 1; transform: none; transition: none; }
     .js .ngrow .nfig {
@@ -11250,13 +11285,18 @@ h1.statement--sm { font-weight: 900; }
     /* Starts above the 2025 tick and lands above 2026. The x values are the
        tick positions, so the figure is always over the year it is reporting
        rather than near it. */
+    /* The 10% stop carries opacity alone. Properties absent from a keyframe keep
+       interpolating between the ones that do declare them, so the counter and
+       the transform still run the full range while the figure fades in over the
+       first tenth of it. */
     @keyframes ngrow-climb {
-      from { --ngrow-n: 6;  transform: translateX(0) scale(.32); }
+      from { --ngrow-n: 6;  opacity: 0; transform: translateX(0) scale(.32); }
+      10%  { opacity: 1; }
       /* 100cqw - 100%: the lane's width less the figure's own, which lands its
          RIGHT edge on the lane's right edge — the same edge 2026 is pinned to
          by --end. It was 33.33cqw - 50% when 2026 sat a third of the way along
          an axis that carried on to 2028. */
-      to   { --ngrow-n: 45; transform: translateX(calc(100cqw - 100%)) scale(1); }
+      to   { --ngrow-n: 45; opacity: 1; transform: translateX(calc(100cqw - 100%)) scale(1); }
     }
 
     /* THE SEQUENCE, in the order the argument is made.

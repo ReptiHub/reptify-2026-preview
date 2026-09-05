@@ -10924,7 +10924,11 @@ h1.statement--sm { font-weight: 900; }
       animation-fill-mode: both;
       animation-timing-function: var(--ease);
       animation-timeline: view();
-      animation-range: cover 8% cover 42%;
+      /* 5% to 72%, widened from 8-42. Scroll distance is the only duration a
+         scrubbed animation has: at a third of the cover phase the settle was
+         over in a few flicks of the wheel. Two thirds gives it the length of
+         the picture's own pass through the screen. */
+      animation-range: cover 5% cover 72%;
     }
     @keyframes lead-settle {
       from { transform: scale(1.04); }

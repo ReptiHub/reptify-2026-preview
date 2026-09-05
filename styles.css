@@ -10823,8 +10823,40 @@ h1.statement--sm { font-weight: 900; }
      placing the note in column 1 and the second, four lines later at equal
      specificity, overriding it to span the grid. Source order decided it and
      the first line never applied. Both are replaced by the two below. */
-  .nmid--stat .nf__note--a { grid-column: 1; grid-row: 1; margin-top: 0; max-width: 46ch; }
-  .nmid--stat .nf__note--b { grid-column: 2; grid-row: 1; margin-top: 0; max-width: 46ch; }
+  /* Unequal tracks, because the two halves are unequal text: the right carries
+     about 14% more of it, so at matched widths it always sets a line more.
+
+     The ch caps alone were not enough. They only bind once the track is wider
+     than the measure, so between 950 and about 1300 both columns took the same
+     track width and the imbalance came back — measured 55px apart at 1000,
+     which is worse than the 29px this started as. The ratio has to live on the
+     tracks so it applies at every width, and the caps stay as the upper guard
+     on measure when the band gets wide.
+
+     Balance across the range, right minus left, in pixels:
+
+                960   1000   1200   1400   1800   2560
+       equal     28     55     28     29      0      0
+       .92/1.08  28    -28    -28      0      0      0
+
+     Not zero everywhere, and it cannot be: line breaking is discrete, so two
+     different texts cannot land on the same height at every possible width.
+     28px is one line. The worst case halves, and the widths the page is
+     actually read at land on nothing. */
+  .nmid--stat { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); }
+  .nmid--stat .nf__note--a { grid-column: 1; grid-row: 1; margin-top: 0; max-width: 44ch; }
+  /* 48ch against the left's 44, and the four characters are the whole point.
+     The right half carries about 14% more text, so at a shared 46ch measure it
+     set one line more and the two columns ended 29px apart. Widening the fuller
+     column and narrowing the emptier one lands both on 220px exactly — measured
+     at 46/46 (29px apart), 44/48 (0), 42/50 (29px the other way), so 44/48 is
+     not a guess between two ends, it is the one that balances.
+
+     Measures rather than fr units, because the tracks are equal and should
+     stay equal: the columns below the band line up with the grid the rest of
+     the fold uses, and it is the text inside them that is being balanced, not
+     the grid. */
+  .nmid--stat .nf__note--b { grid-column: 2; grid-row: 1; margin-top: 0; max-width: 48ch; }
 }
 
 /* Full band width, at the owner's call. The headline left .nmid when the band

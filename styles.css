@@ -10876,53 +10876,62 @@ h1.statement--sm { font-weight: 900; }
    1.4s against the reveal's own .45s, deliberately: the fade finishes first and
    the picture is still easing after it has arrived, which is what keeps it from
    reading as one linear move. */
-/* Neutralising the 10px lift was not enough, and the reason is worth writing
-   down because it will catch the next person too.
+/* NO REVEAL ON THESE TWO. Third attempt, and the first two were wrong in the
+   same way, so the reasoning is here rather than the fix.
 
-   The statistic fades in place because it lives inside the PIN — the fold is
-   held still while it fades, so nothing moves. These two columns are not
-   pinned. They travel up the screen with the page, and main.js's observer uses
-   threshold 0 ("any pixel intersecting is enough", and it says why), so the
-   fade begins the instant the top edge clears the bottom of the window and runs
-   while the block is still climbing. Opacity rising during that climb is what
-   reads as arriving from below. Removing the transform removed 10px of a
-   several-hundred-pixel effect.
+   The statistic fades in place because it lives inside the PIN: the fold is
+   held still while it fades, so nothing moves. These columns are not pinned —
+   they travel up the screen with the page. Any fade therefore means the block
+   is invisible at some point WHILE it is on screen and climbing, and
+   invisible-then-visible during a climb is what a reader calls coming from
+   below. The 10px lift was never the cause; removing it removed 10px of a
+   several-hundred-pixel effect. Moving the fade earlier, to entry 55%, only
+   moved where it happened.
 
-   So the fade is moved off the observer and onto the block's own view timeline,
-   finishing at entry 55% — comfortably before the text reaches reading
-   position. By the time it is somewhere a reader would look at it, it has been
-   fully opaque for a while, and the only thing still moving is the page.
-
-   view(), not a named timeline, and that is safe here: these blocks are outside
-   the pin. Inside one, view() freezes — see ( 04 ) above. */
+   So there is no reveal. The text is simply there, and the only thing that
+   moves is the page. That is the one arrangement that cannot read as an
+   arrival, and running prose does not need an entrance — it needs to be
+   readable the moment it is legible. */
 .js .nmid--stat .nf__note[data-reveal],
 .js .nmid--stat .nf__note[data-reveal].in {
   opacity: 1;
   transform: none;
   transition: none;
-}
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .js .nmid--stat .nf__note[data-reveal] {
-      animation-name: nmid-fade;
-      animation-duration: auto;
-      animation-fill-mode: both;
-      animation-timing-function: var(--ease);
-      animation-timeline: view();
-      animation-range: entry 15% entry 55%;
-    }
-    @keyframes nmid-fade { from { opacity: 0; } to { opacity: 1; } }
-  }
+  animation: none;
 }
 
 /* clip, so the overscaled picture cannot widen the page while it settles */
 .napa__lead { overflow: clip; }
 .js .napa__lead[data-reveal] { transform: none; }
-.js .napa__lead[data-reveal] img {
-  transform: scale(1.04);
-  transition: transform 1.4s var(--ease);
-}
+.js .napa__lead[data-reveal] img { transform: scale(1.04); }
 .js .napa__lead[data-reveal].in img { transform: none; }
+
+/* Scrubbed by scroll, not fired by the observer. As a 1.4s transition on .in it
+   started the instant the top edge cleared the bottom of the window and was
+   finished long before the photograph was anywhere a reader would look — the
+   settle happened, off screen, to nobody. On a view timeline it is tied to
+   position instead of to a clock: the picture eases out of its overscale while
+   you are scrolling past it, and stops when it is properly in view.
+
+   cover, and one phase throughout. Mixing entry with cover produces an empty
+   range and plays nothing, which is a trap this stylesheet has already fallen
+   into once — see ( 01 )'s note. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .js .napa__lead[data-reveal] img {
+      animation-name: lead-settle;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: var(--ease);
+      animation-timeline: view();
+      animation-range: cover 8% cover 42%;
+    }
+    @keyframes lead-settle {
+      from { transform: scale(1.04); }
+      to   { transform: none; }
+    }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .js .napa__lead[data-reveal] img { transform: none; transition: none; }

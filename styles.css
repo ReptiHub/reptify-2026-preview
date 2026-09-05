@@ -11090,6 +11090,22 @@ h1.statement--sm { font-weight: 900; }
   content: ''; position: absolute; left: 0; right: 0; top: 0;
   height: 1px; background: rgba(240, 239, 234, .18);
 }
+/* Ruler marks between the years. Elements and not a repeating gradient: a
+   repeating gradient draws at each period's START, so over the axis it puts a
+   mark at the left end and none at the right — asymmetric beneath two
+   symmetric year ticks, and not fixable without stacking a second background
+   layer to pin the last one. Seven spans place exactly, and can be measured.
+
+   Shorter and fainter than .ngrow__tick i, which is .85rem and marks a real
+   date. The height difference is what keeps major and minor reading as two
+   ranks rather than as an even comb. They carry no reading of their own — the
+   survey took none at an eighth of a year — they give the interval a scale. */
+.ngrow__minor {
+  position: absolute; top: 0; left: var(--at);
+  width: 1px; height: .34rem;
+  background: rgba(240, 239, 234, .22);
+  transform: translateX(-50%);
+}
 .ngrow__tick { position: absolute; top: 0; left: var(--at); transform: translateX(-50%); display: grid; justify-items: center; gap: .5rem; }
 /* --start, not :first-child, for the same reason --end exists: the axis has
    arrows in it now and position-based selectors break when siblings move. */
@@ -11246,10 +11262,13 @@ h1.statement--sm { font-weight: 900; }
     }
     @keyframes ngrow-tick { from { opacity: 0; } to { opacity: 1; } }
 
-    /* THE RULE ARRIVES LAST, and from its own middle outward, at the same
-       moment as the sentence on the right. Two things finishing together reads
-       as one gesture closing the fold rather than two more events after the
-       number has already stopped.
+    /* THE RULE ARRIVES WITH THE YEARS, from its own middle outward. It ran at
+       the end with the sentence for an hour and that was wrong: two dates
+       floating with nothing between them is not an axis, it is two labels. The
+       line is what makes them an interval, so it is part of the same beat.
+
+       Both pseudo-elements, so the ruler marks open with the line they sit on
+       rather than appearing on a rule that is already drawn.
 
        scaleX from the centre rather than a width animation: a transform is
        composited and a width is not, and the line is 1px tall — reflowing it
@@ -11261,9 +11280,22 @@ h1.statement--sm { font-weight: 900; }
       animation-fill-mode: both;
       animation-timing-function: linear;
       animation-timeline: --fold04;
-      animation-range: contain 52% contain 68%;
+      animation-range: contain 2% contain 14%;
     }
     @keyframes ngrow-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* The minors fade rather than scale. They sit ON the rule, so scaling them
+       with it would slide each mark toward the centre and land it somewhere
+       that is not its eighth — the marks would arrive in the wrong places and
+       then walk to the right ones. */
+    .js .ngrow .ngrow__minor {
+      animation-name: ngrow-tick;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: --fold04;
+      animation-range: contain 6% contain 16%;
+    }
 
     .js .ngrow .nfig[data-reveal],
     .js .ngrow .nfig[data-reveal].in { opacity: 1; transform: none; transition: none; }

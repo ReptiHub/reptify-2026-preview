@@ -1624,6 +1624,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   overflow: clip;
 }
 .cta__inner { width: 100%; padding-block: clamp(3.5rem, 9vw, 7rem); }
+/* Out of the layout entirely unless the pin is running, so the fallback fold is
+   byte-for-byte the arrangement it was before the pin existed. */
+.cta__pin { display: contents; }
 
 .cta__bg {
   position: absolute; inset: 0; z-index: -2;
@@ -1721,6 +1724,64 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @keyframes strike-draw { to { transform: scaleX(1); } }
 @supports not (animation-timeline: view()) { .strike::after { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) { .strike::after { animation: none; transform: scaleX(1); } }
+
+/* ── THE HOLD ──────────────────────────────────────────────────────────────
+   The closing fold anchors, the line is drawn through REMOVE while it is held,
+   and then it releases and carries on up. Three beats, and the middle one is
+   the only reason the other two exist: unpinned, the strike was drawn while the
+   words were still travelling, so the reader met a line that had already
+   happened. Held still, the draw is the thing being watched.
+
+   200vh of runway against a 100vh pin gives exactly 100vh of held scrolling,
+   which is what `contain` measures — so the range below is in units of the hold
+   itself, not of the page.
+
+   The timeline is NAMED and lives on the runway, not on the strike. A `view()`
+   timeline inside a sticky element freezes: pinned contents stop travelling
+   against the viewport, which is the whole point of pinning them, so there is
+   nothing left for view() to measure. That is not a quirk to work around, it is
+   what the two features mean together — the same trap fold ( 04 ) on the Napa
+   page fell into, and its comment says so too.
+
+   animation-duration is set to auto explicitly. The base rule above uses the
+   `animation` shorthand, which writes duration: 0s, and a scroll-driven
+   animation with a zero duration scrubs nothing.
+
+   Gated on height because a pin that does not fit crops itself. Below the gate
+   nothing is lost: the fold keeps its own view() timeline and draws the line on
+   the way past, which is what it did before and still reads correctly. */
+@supports (animation-timeline: view()) {
+  @media (min-width: 861px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
+    .js .cta {
+      display: block;
+      min-height: 0;
+      height: 200vh;
+      view-timeline-name: --ctahold;
+      view-timeline-axis: block;
+    }
+    /* sticky, not fixed, and that matters twice: it releases on its own at the
+       end of the runway, and being positioned it gives the absolutely placed
+       sky and vignette their containing block — so they size to the 100vh pin
+       instead of stretching down the whole 200vh runway behind the type. */
+    .js .cta .cta__pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      align-content: center;
+      overflow: clip;
+    }
+    .js .cta .strike::after {
+      animation-timeline: --ctahold;
+      animation-duration: auto;
+      /* Not 0% to 100%. The fold arrives, holds a beat, THEN the line is drawn,
+         and it finishes with room to spare before the release — so the reader
+         sees a still frame, a stroke, and a still frame, rather than a stroke
+         that starts as the fold lands and ends as it leaves. */
+      animation-range: contain 18% contain 62%;
+    }
+  }
+}
 
 .cta__act {
   /* the action gets the air the removed hairline used to occupy — a payoff and

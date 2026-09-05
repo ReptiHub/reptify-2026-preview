@@ -1070,6 +1070,14 @@
        quiet and small, the payoff is the only loud thing on the screen, and the
        action sits on the same rail as everything above it. -->
   <section class="cta">
+    <!-- The pin. Everything the reader sees lives inside it — sky, vignette and
+         type together — so the whole fold holds still while the strike is drawn
+         rather than the words sitting on a background that slides past them.
+
+         It is display:contents until the gate in styles.css opens, so on a short
+         screen, without JS, or without scroll-driven animation this wrapper is
+         not in the layout at all and the fold is exactly what it was. -->
+    <div class="cta__pin">
     <div class="cta__bg" aria-hidden="true"></div>
     <div class="cta__vig" aria-hidden="true"></div>
     <div class="cta__inner wrap">
@@ -1078,6 +1086,7 @@
       <div class="cta__act" data-reveal>
         <a class="btn btn--lg" href="contact.html"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></a>
       </div>
+    </div>
     </div>
   </section>
 

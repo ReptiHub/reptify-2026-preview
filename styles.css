@@ -10940,7 +10940,7 @@ h1.statement--sm { font-weight: 900; }
 .ngrow__cols {
   display: grid;
   gap: clamp(1.75rem, 4vw, 3.5rem);
-  max-width: 62rem;
+  max-width: 72rem;
   margin-inline: auto;
   width: 100%;
 }
@@ -11006,7 +11006,7 @@ h1.statement--sm { font-weight: 900; }
    inside the left column — so the margin was pushing that column down against
    the right one instead of spacing the block, and the headline was left with
    15px beneath it. */
-.ngrow__pinner .ngrow__cols { margin-top: clamp(1rem, 3.2vw, 2.6rem); }
+.ngrow__pinner .ngrow__cols { margin-top: clamp(2rem, 5.5vw, 4.5rem); }
 .ngrow__pinner .nf__head { margin: 0; }
 
 /* the figure's lane */
@@ -11019,7 +11019,7 @@ h1.statement--sm { font-weight: 900; }
   /* Reserves the height the figure reaches at scale 1, not the height it starts
      at — the numeral grows from .32 to full during the climb, and a lane sized
      to the small state would resize the whole column underneath the reader. */
-  min-height: clamp(4rem, 34cqw, 10rem);
+  min-height: clamp(4rem, 34cqw, 12rem);
   display: flex; align-items: flex-end;
 }
 
@@ -11031,7 +11031,11 @@ h1.statement--sm { font-weight: 900; }
      numeral filled 325px of a 461px column — the reading looked tentative in a
      space built for it. 40cqw measures the lane itself, so the figure fills its
      own column at any width instead of a share of the screen. */
-  font-size: clamp(3.5rem, 40cqw, 12rem);
+  /* 14rem, not 12: at 12 the clamp took over from the container query in the
+     widened column, so 40cqw wanted 216px and got 192 — the numeral filled less
+     of a bigger space than it had of a smaller one. The ceiling is a guard for
+     enormous windows, and it was sitting below the size the column asks for. */
+  font-size: clamp(3.5rem, 40cqw, 14rem);
   font-variant-numeric: tabular-nums;   /* the string climbs 6% to 45%; keep it from jittering */
   will-change: transform;
   /* Left edge, not centre. The box is always as wide as "45%" at full size, so
@@ -11113,16 +11117,19 @@ h1.statement--sm { font-weight: 900; }
      stacked — so the pinner tops out at about 700px where it was 868. Swept at
      H=862:
 
-       900 → 550   1400 → 663   2560 → 667
+       900 → 603   1400 → 725   2560 → 730
 
-     667 is the ceiling. With an 8vh stick that needs 0.08H + 667 <= H, so
-     H >= 725. The gate is 860, which leaves 126px at the worst width — where
-     the old 980 gate left 36px against a taller block. Lower AND safer, which
-     is what taking height out of a pin buys you.
+     730 is the ceiling — measured after the columns were widened to 72rem and
+     the type raised, which put 63px back on. With an 8vh stick that needs
+     0.08H + 730 <= H, so H >= 794. The gate is 860, leaving 63px at the worst
+     width.
 
-     860 rather than 725 because a pin that only just fits reads as cramped even
-     when it technically clears. And it now admits a 13-inch laptop, which the
-     940 and 980 gates did not.
+     63px is thinner than the 126 this gate was set for and thinner than is
+     comfortable, but it is nearly double the 36px that made the old 980 gate
+     untenable, and the failure mode is mild: below the gate the fold renders
+     complete and still. If the block gains height again, raise this to 900
+     rather than trimming the fold — 900 leaves about 100px and still admits a
+     13-inch laptop, which the 940 and 980 gates did not.
 
      Below the gate nothing is lost: the fold renders complete and still.
 
@@ -11159,6 +11166,43 @@ h1.statement--sm { font-weight: 900; }
       /* contain, not cover: for a pin taller than the screen that range is
          exactly the stretch where it holds the viewport, start to finish. */
       animation-range: contain 4% contain 52%;
+    }
+
+    /* The sentence waits for the number. The climb ends at contain 52%, so the
+       citation starts there and is in by 68% — the reader watches 6% become
+       45%, and only then is told what 45% is of. Arriving together made the
+       right column something to read past on the way to the graphic.
+
+       The observer is taken off this element's opacity entirely while the
+       scroll animation owns it — both the base and the .in state are set to
+       visible, so the only thing hiding the sentence is the animation's own
+       fill. That is the same call .cost[data-reveal] makes above, for the
+       reason written there: two ways to hide one piece of text, and only one
+       of them self-corrects.
+
+       Written this way rather than leaving the two to race on cascade origin.
+       Animations do out-rank normal declarations, so the shorter version would
+       probably have worked — but "probably" is not checkable here: the preview
+       pane returns stale computed styles for opacity (an inline
+       `opacity: 1 !important` reads back as 0), so the race could not be
+       measured. A rule that does not depend on the answer is better than a
+       rule that depends on an answer nobody verified.
+
+       Below the gate none of this applies and data-reveal is back in charge,
+       which is what shows the sentence in the static fallback. */
+    .js .ngrow .nfig[data-reveal],
+    .js .ngrow .nfig[data-reveal].in { opacity: 1; transform: none; transition: none; }
+    .js .ngrow .nfig {
+      animation-name: ngrow-cite;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: --fold04;
+      animation-range: contain 52% contain 68%;
+    }
+    @keyframes ngrow-cite {
+      from { opacity: 0; transform: translateY(1.25rem); }
+      to   { opacity: 1; transform: none; }
     }
     .js .ngrow .ngrow__lit { display: none; }
     .js .ngrow .ngrow__fig::after { content: counter(ngrow) '%'; }
@@ -11255,7 +11299,7 @@ h1.statement--sm { font-weight: 900; }
   /* Left and column-sized. It was centred at 24.6px when the figure ran the
      full 1260px band; in a 461px column centred prose leaves a ragged edge on
      both sides and nothing to hold. */
-  font-size: clamp(1.05rem, .95rem + .5vw, 1.45rem);
+  font-size: clamp(1.15rem, 1rem + .75vw, 1.75rem);
   line-height: 1.55; text-align: left; letter-spacing: -.01em;
   color: var(--chalk); text-wrap: pretty;
 }

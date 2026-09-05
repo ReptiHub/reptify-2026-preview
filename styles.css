@@ -11117,19 +11117,21 @@ h1.statement--sm { font-weight: 900; }
      stacked — so the pinner tops out at about 700px where it was 868. Swept at
      H=862:
 
-       900 → 603   1400 → 725   2560 → 730
+       900 → 610   1400 → 735   2560 → 742
 
-     730 is the ceiling — measured after the columns were widened to 72rem and
-     the type raised, which put 63px back on. With an 8vh stick that needs
-     0.08H + 730 <= H, so H >= 794. The gate is 860, leaving 63px at the worst
-     width.
+     742 is the ceiling, measured at H=862 after the band went to 72rem, the
+     statistic to 26.5px and the citation block to a real three-step scale.
+     With an 8vh stick that needs 0.08H + 742 <= H, so H >= 807.
 
-     63px is thinner than the 126 this gate was set for and thinner than is
-     comfortable, but it is nearly double the 36px that made the old 980 gate
-     untenable, and the failure mode is mild: below the gate the fold renders
-     complete and still. If the block gains height again, raise this to 900
-     rather than trimming the fold — 900 leaves about 100px and still admits a
-     13-inch laptop, which the 940 and 980 gates did not.
+     The gate went 940 → 980 → 860 → 900, and the last move was written down
+     before it was needed: the 860 note said "if the block gains height again,
+     raise this to 900 rather than trimming the fold". It gained 12px and the
+     margin fell to 51px at 2560, so this is that note being honoured rather
+     than the fold being cut to fit a number.
+
+     900 leaves about 80px at the worst width. Still admits a 13-inch laptop,
+     which the 940 and 980 gates did not, and below it nothing is lost: the
+     fold renders complete and still.
 
      Below the gate nothing is lost: the fold renders complete and still.
 
@@ -11137,7 +11139,7 @@ h1.statement--sm { font-weight: 900; }
      which is the same call ( 01 ) makes for narrow screens. A pin that does not
      fit is worse than no pin — it crops its own content and the reader never
      sees the end of the sequence. */
-  @media (min-width: 861px) and (min-height: 860px) and (prefers-reduced-motion: no-preference) {
+  @media (min-width: 861px) and (min-height: 900px) and (prefers-reduced-motion: no-preference) {
     .js .ngrow {
       height: 210vh;
       view-timeline-name: --fold04;
@@ -11309,11 +11311,16 @@ h1.statement--sm { font-weight: 900; }
   border-top: 1px solid rgba(240, 239, 234, .22);
   padding-top: var(--v3); max-width: 46ch;
 }
-.nfig__src cite { font-style: normal; font-size: var(--t-100); }
+/* Up from --t-100, and no longer the same size as the note beneath it. Both sat
+   at 13px, which read as one undifferentiated block of small print under a
+   26.5px statistic — three sizes in the column and two of them identical. The
+   citation is the answer to "says who", so it leads; the note qualifies it, so
+   it follows. */
+.nfig__src cite { font-style: normal; font-size: clamp(.9rem, .8rem + .28vw, 1.1rem); }
 .nfig__src cite a { color: var(--chalk); text-underline-offset: .22em; }
 /* .55 and not --chalk-40: that token resolves to alpha .4, which composites to
    3.48:1 on ink, under AA for 13px. .55 measures 5.44:1. */
-.nfig__note { font-size: var(--t-100); line-height: 1.55; color: rgba(240, 239, 234, .55); }
+.nfig__note { font-size: clamp(.82rem, .76rem + .2vw, .98rem); line-height: 1.6; color: rgba(240, 239, 234, .55); }
 
 
 

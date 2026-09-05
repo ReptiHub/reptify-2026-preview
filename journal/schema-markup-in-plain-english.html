@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schema markup for local service businesses | Reptify</title>
+<meta name="description" content="What structured data is, which types a service business needs, and copy-paste JSON-LD you can adapt today — plus the mistakes that make it useless.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://reptifymedia.com/journal/schema-markup-in-plain-english.html">
+<meta property="og:title" content="Schema markup for local service businesses | Reptify">
+<meta property="og:description" content="What structured data is, which types a service business needs, and copy-paste JSON-LD you can adapt today — plus the mistakes that make it useless.">
+<meta property="og:image" content="https://reptifymedia.com/assets/journal/first-and-main-arcade-1500.webp">
+<meta property="og:site_name" content="Reptify Media">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://reptifymedia.com/journal/schema-markup-in-plain-english.html">
+<meta name="theme-color" content="#F0EFEA">
+<script>document.documentElement.className='js'</script>
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../styles.css">
+<!-- Google Analytics 4 — stream "reptifymedia.com - GA4", ID 4940016306.
+
+     Consent Mode v2 defaults to denied, and it is set BEFORE the config call
+     because a default that arrives after the first hit is not a default. With no
+     consent banner on the site, analytics_storage stays denied: GA still receives
+     cookieless pings and models sessions from them, which is lawful in the EU/UK
+     without a banner. If the owner later wants full granular data there, the
+     banner comes first and flips these to granted — not the other way round.
+
+     In the head, as Google's own install instructions specify, but placed after
+     the stylesheet and the font preloads rather than immediately after <head>.
+     The script is async so it never blocks parsing wherever it sits; what the
+     ordering buys is that the critical resources claim the connection first.
+
+     It was at the end of <body> until the instructions were read properly. That
+     was cheaper but it undercounts: a visitor who leaves before the document
+     finishes parsing is never counted at all, and measurement that misses the
+     fastest bounces is measurement that flatters the site.
+
+     gtag.js is around 90KB over the wire — more than this entire site's code,
+     which is 57.8KB gzipped. It is the heaviest thing here by some way. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6XX2PJYJP5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted'
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-6XX2PJYJP5', { anonymize_ip: true });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Article",
+      "headline": "Schema markup for local service businesses, in plain English",
+      "description": "What structured data is, which types a service business actually needs, and copy-paste JSON-LD you can adapt today — with the mistakes that make it useless.",
+      "url": "https://reptifymedia.com/journal/schema-markup-in-plain-english.html",
+      "image": "https://reptifymedia.com/assets/journal/first-and-main-arcade-1500.webp",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-23",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": { "@id": "https://reptifymedia.com/#founder" },
+      "publisher": { "@id": "https://reptifymedia.com/#org" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://reptifymedia.com/journal/schema-markup-in-plain-english.html" },
+      "about": "Structured data implementation for local service businesses",
+      "keywords": "local business schema markup, schema for service business, JSON-LD example, structured data local SEO, FAQPage schema" },
+    { "@type": "FAQPage", "mainEntity": [
+      { "@type": "Question", "name": "Will schema markup improve my rankings?", "acceptedAnswer": { "@type": "Answer", "text": "Not directly. Google documentation frames structured data as what makes a page eligible for enhanced display, and never claims it lifts rankings. It affects how clearly you are understood and which result formats you can qualify for. Treat a claim that schema will raise rankings by itself as a warning about the person making it." } },
+      { "@type": "Question", "name": "JSON-LD or microdata?", "acceptedAnswer": { "@type": "Answer", "text": "JSON-LD. It sits in one block and does not entangle with your markup, and Google recommends it as the easiest solution for website owners to implement and maintain at scale. Google adds that all three formats are equally acceptable to it, so an existing microdata implementation that works is not an emergency." } },
+      { "@type": "Question", "name": "Do I need schema on every page?", "acceptedAnswer": { "@type": "Answer", "text": "Every page should reference the business entity. Beyond that, add what the page actually contains — Service on service pages, FAQPage where there are real questions, BreadcrumbList on inner pages." } },
+      { "@type": "Question", "name": "Can I add reviews to my schema?", "acceptedAnswer": { "@type": "Answer", "text": "Only reviews that are genuinely on that page and genuinely from customers. Marking up ratings that appear nowhere on the page is a policy violation and a reliable way to lose rich results entirely." } }
+    ] },
+    { "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://reptifymedia.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Journal", "item": "https://reptifymedia.com/journal.html" },
+      { "@type": "ListItem", "position": 3, "name": "Schema markup for local service businesses, in plain English", "item": "https://reptifymedia.com/journal/schema-markup-in-plain-english.html" }
+    ] }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="hdr wrap">
+  <a class="mark" href="../index.html" aria-label="Reptify Media — home"><img src="../assets/logo.png" alt="Reptify Media" width="320" height="81"></a>
+  <nav class="nav" aria-label="Primary">
+    <p class="clock" id="clock" aria-hidden="true"></p>
+    <a class="nav-hide" href="../index.html#solutions">Solutions</a>
+    <a href="../journal.html" aria-current="page">Journal</a>
+    <a class="nav-hide" href="../faq.html">FAQ</a>
+    <a class="nav-more" href="../contact.html">Contact</a>
+    <a class="btn" href="../contact.html"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></a>
+  </nav>
+</header>
+<main>
+
+  <article class="jp jp--wide wrap">
+    <header class="jp__head">
+      <h1 class="statement--sm jp__h1">Schema markup for local service businesses, in plain English</h1>
+      <p class="jp__meta"><time datetime="2026-08-18">18 August 2026</time> &middot; 7 min read</p>
+      <div class="jp__stick">
+      <ul class="jp__share">
+        <li><a href="https://www.instagram.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Freptifymedia.com%2Fjournal%2Fschema-markup-in-plain-english.html" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
+        <li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Freptifymedia.com%2Fjournal%2Fschema-markup-in-plain-english.html" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a></li>
+        <li><a href="https://x.com/intent/tweet?url=https%3A%2F%2Freptifymedia.com%2Fjournal%2Fschema-markup-in-plain-english.html&text=Schema%20markup%20for%20local%20service%20businesses%2C%20in%20plain%20English" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+        <li><button type="button" class="jp__prt" data-print aria-label="Print this article"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2h10v5H7z"/><path fill-rule="evenodd" d="M4 8h16a2 2 0 0 1 2 2v5a1 1 0 0 1-1 1h-2v-2H5v2H3a1 1 0 0 1-1-1v-5a2 2 0 0 1 2-2zm14.4 2.2a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path fill-rule="evenodd" d="M6 14h12v8H6zm1.6 1.6v4.8h8.8v-4.8z"/></svg></button></li>
+      </ul>
+      <nav class="toc" aria-label="On this page">
+        <p class="eyebrow">On this page</p>
+        <ol><li><a href="#what-it-actually-is">What it actually is</a></li><li><a href="#the-three-types-most-service-businesses-need">The three types most service businesses need</a></li><li><a href="#copy-this-and-change-the-facts">Copy this and change the facts</a></li><li><a href="#what-happened-to-faq-rich-results">What happened to FAQ rich results</a></li><li><a href="#the-four-mistakes-that-make-it-useless">The four mistakes that make it useless</a></li><li><a href="#what-to-expect">What to expect</a></li></ol>
+      </nav>
+
+      <!-- The one ask on the page. It is not there while the reader is still
+           reading — it fades in when the end of the article reaches the bottom
+           of the screen, driven by the sentinel at the close of the prose. -->
+      <div class="railoffer">
+  <a class="ecard ecard--cta" href="../contact.html">
+          <span class="ecard__body">
+            <span class="ecard__eyebrow">The offer</span>
+            <span class="ecard__t">Structured data is table stakes. The audit tells you what else is missing.</span>
+            <span class="ecard__d">A written list of what is costing your business, ordered by what it costs. No obligation, and no report with homework attached.</span>
+            <span class="btn ecard__btn"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></span>
+          </span>
+        </a>
+      </div>
+      </div>
+    </header>
+
+    <div class="jp__body">
+
+
+      <div class="prose jp__prose">
+        <!-- Lead photograph. Napa, 29 August 2026 — first-hand, shot for this
+             article. The caption carries the location because it is a checkable
+             fact, which this site is otherwise short of. -->
+        <figure class="jp__lead">
+          <img src="../assets/journal/first-and-main-arcade-1500.webp"
+               srcset="../assets/journal/first-and-main-arcade-750.webp 750w,
+                       ../assets/journal/first-and-main-arcade-1100.webp 1100w,
+                       ../assets/journal/first-and-main-arcade-1500.webp 1500w"
+               sizes="(min-width: 1000px) 57vw, 100vw"
+               alt="A row of identical arched bays running along the front of the First &amp; Main building in Napa."
+               width="1500" height="1000" decoding="async" fetchpriority="high">
+          <figcaption>First &amp; Main, Napa</figcaption>
+        </figure>
+        <p class="jp__answer">Schema markup is a block of machine-readable notes attached to a page that says, in a standard vocabulary, what the page is about: this is a business, this is its name, these are its services. It removes guesswork. It is not a ranking trick and it will not rescue a page with nothing on it, but on a page that already says something true it is the cheapest way to be understood exactly.</p>
+        <h2 id="what-it-actually-is">What it actually is</h2>
+<p>A page of HTML says how something should look. It does not say what it means. A phone number and a fax number look identical to a machine, and so do an opening time and a price.</p>
+<p>Structured data solves that by adding a separate block, usually JSON-LD in a <code>&lt;script&gt;</code> tag, that labels the facts explicitly. It is invisible to visitors and unambiguous to everything else. If you are choosing a format, Google settles the argument in its <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" rel="noopener">introduction to structured data</a>: it &ldquo;recommends using JSON-LD for structured data if your site&rsquo;s setup allows it, as it&rsquo;s the easiest solution for website owners to implement and maintain at scale,&rdquo; while noting that all three formats are equally acceptable to it.</p>
+<p><strong>It does not change what is true about your business.</strong> It removes the chance of being misread. That is a smaller promise than most agencies make about it, and it is the accurate one.</p>
+        <h2 id="the-three-types-most-service-businesses-need">The three types most service businesses need</h2>
+<p>Most of the value is in three, and everything beyond them is refinement.</p>
+<p><strong>The business itself.</strong> <code>LocalBusiness</code>, or a more specific subtype where one fits: <code>MedicalBusiness</code>, <code>Dentist</code>, <code>ProfessionalService</code>, <code>Restaurant</code>. Specific is better, because it inherits the right expectations.</p>
+<p><strong>Your services.</strong> A <code>Service</code> for each thing you sell, with a price where you publish prices. This is the piece most sites skip, and it is the one that answers <em>what do they do and what does it cost</em>.</p>
+<p><strong>Your questions.</strong> <code>FAQPage</code> on any page with real questions and real answers. This one now comes with a caveat large enough that it has its own section below, and anybody still selling it to you as a quick route to a Google rich result has not read the documentation this year.</p>
+        <aside class="handoff">
+  <p class="handoff__lab">If you would rather not do this yourself</p>
+  <p class="handoff__t">AI Visibility Strategy &mdash; the markup written and kept true as you change.</p>
+  <a class="pill handoff__go" href="../ai-visibility.html"><span class="pill__l"><i>See what it involves</i><i aria-hidden="true">See what it involves</i></span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg></a>
+</aside>
+<h2 id="copy-this-and-change-the-facts">Copy this and change the facts</h2>
+<p>One business entity with a stable <code>@id</code>, so every other page can point at the same organisation instead of describing it again:</p>
+<p><pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://example.com/#org",
+  "name": "Example Business",
+  "url": "https://example.com/",
+  "email": "hello@example.com",
+  "telephone": "+1-555-000-0000",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1 Example Street, Suite 100",
+    "addressLocality": "Napa",
+    "addressRegion": "CA",
+    "postalCode": "94559",
+    "addressCountry": "US"
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Napa Valley" },
+    { "@type": "AdministrativeArea", "name": "San Francisco Bay Area" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Services",
+    "itemListElement": [
+      { "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Initial consultation" },
+        "price": "150", "priceCurrency": "USD" }
+    ]
+  }
+}
+&lt;/script&gt;</code></pre></p>
+<p>And an FAQ block, which is the fastest win on the list:</p>
+<p><pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Do you take walk-ins?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Every visit is booked in advance."
+    }
+  }]
+}
+&lt;/script&gt;</code></pre></p>
+<p>Change the facts, keep the shape. Then validate it — Google's Rich Results Test and Schema.org's validator both take a pasted URL and both are free.</p>
+        <h2 id="what-happened-to-faq-rich-results">What happened to FAQ rich results</h2>
+<p>This deserves saying plainly, because it is the clearest example of why markup should never be bought as a trick.</p>
+<p>When <code>FAQPage</code> arrived in 2019 it did something visible: your questions could expand directly underneath your listing in Google, taking up real space in the results. That was the pitch, and for a few years it worked.</p>
+<p>Google narrowed it in August 2023, <a href="https://developers.google.com/search/blog/2023/08/howto-faq-changes" rel="noopener">restricting the FAQ rich result</a> to well-known, authoritative government and health websites. Every other site kept the markup and lost the display. Then it went entirely. Google&rsquo;s <a href="https://developers.google.com/search/docs/appearance/structured-data/faqpage" rel="noopener">own documentation</a> now records that the feature &ldquo;is no longer shown in Google Search results,&rdquo; and that it stopped appearing on 7 May 2026. The How-to rich result was retired in the same clear-out.</p>
+<p>So should you still write it? Yes, and for a reason worth being honest about, because it is a weaker reason than the one it replaces. A rich result was something you could see. What <code>FAQPage</code> does now is label a question as a question and its answer as an answer, in a standard vocabulary, for anything reading the page that is not Google&rsquo;s results layout. That includes the AI assistants doing the summarising this journal keeps writing about. It is a well-founded expectation rather than a demonstrated result, and you should treat anyone claiming to measure it with suspicion.</p>
+<p>The general lesson is bigger than the FAQ. Markup bought for a display format is a bet on somebody else&rsquo;s product decisions, and those get reversed. Markup written because it accurately describes your page keeps its value regardless of what any one search engine chooses to render this year.</p>
+        <h2 id="the-four-mistakes-that-make-it-useless">The four mistakes that make it useless</h2>
+<p><strong>Marking up things the page does not say.</strong> Reviews that are not on the page, prices that appear nowhere, hours you do not keep. Google&rsquo;s <a href="https://developers.google.com/search/docs/appearance/structured-data/sd-policies" rel="noopener">structured data guidelines</a> are blunt about it: &ldquo;Don&rsquo;t mark up content that is not visible to readers of the page,&rdquo; and &ldquo;don&rsquo;t mark up irrelevant or misleading content, such as fake reviews.&rdquo;</p>
+<p>Be precise about the consequence, because it is routinely overstated in both directions. Google says a structured data issue &ldquo;can result in a manual action,&rdquo; and that such an action &ldquo;means that a page loses eligibility for appearance as a rich result; it doesn&rsquo;t affect how the page ranks in Google web search.&rdquo; So it is not the ranking catastrophe some agencies threaten. It is the loss of the exact thing the markup was added to earn.</p>
+<p><strong>Describing the business differently on every page.</strong> The reason for a single <code>@id</code> is so eight pages describe one organisation rather than eight similar ones.</p>
+<p><strong>Letting it drift.</strong> Schema written once and never touched becomes a confident, machine-readable statement of facts that stopped being true. That is worse than having none, because it is asserted in the format most likely to be believed.</p>
+<p><strong>Treating it as the strategy.</strong> Structured data describes what is there. It cannot describe a service page that does not exist.</p>
+        <h2 id="what-to-expect">What to expect</h2>
+<p>Be plain about the ceiling. Schema does not lift a page&rsquo;s ranking by itself, it does not guarantee a rich result, and it will not make a thin page competitive. Google&rsquo;s documentation describes it as what makes a page <em>eligible</em> for enhanced display, which is a careful word and worth borrowing.</p>
+<p>What it does is make you unambiguous, and on a page that already answers something honestly, unambiguous is the difference between being summarised correctly and being skipped.</p>
+<p>It is table stakes, not a strategy. The strategy is the thing it describes: <a href="../smart-web-presence.html">a site that is legible to people and machines at the same time</a>.</p>
+
+        <aside class="keys" aria-label="Key points">
+          <p class="eyebrow">Key points</p>
+          <ul><li>Schema labels meaning; it does not change what is true about your business.</li><li>Three types carry most of the value: the business, its services, its questions.</li><li>FAQ rich results stopped appearing in Google on 7 May 2026. The markup is still worth writing, for a smaller and more honest reason.</li><li>One stable @id keeps eight pages describing one organisation, not eight.</li><li>Never mark up what the page does not say. The manual action costs you rich-result eligibility, not your ranking.</li><li>It makes you unambiguous. It cannot make a thin page competitive.</li></ul>
+        </aside>
+
+        <h2 id="questions">Questions people ask</h2>
+        <div class="faq"><div class="faq__q"><h3>Will schema markup improve my rankings?</h3><p>Not directly. Google&rsquo;s documentation frames structured data as what makes a page <em>eligible</em> for enhanced display, and never claims it lifts rankings. It affects how clearly you are understood and which result formats you can qualify for. Treat a claim that schema will raise rankings by itself as a warning about the person making it.</p></div><div class="faq__q"><h3>JSON-LD or microdata?</h3><p>JSON-LD. It sits in one block and does not entangle with your markup, and Google recommends it outright as &ldquo;the easiest solution for website owners to implement and maintain at scale.&rdquo; Google does add that all three formats are equally acceptable to it, so an existing microdata implementation that works is not an emergency.</p></div><div class="faq__q"><h3>Do I need schema on every page?</h3><p>Every page should reference the business entity. Beyond that, add what the page actually contains — Service on service pages, FAQPage where there are real questions, BreadcrumbList on inner pages.</p></div><div class="faq__q"><h3>Can I add reviews to my schema?</h3><p>Only reviews that are genuinely on that page and genuinely from customers. Marking up ratings that appear nowhere on the page is a policy violation and a reliable way to lose rich results entirely.</p></div></div>
+      </div>
+        <p class="jp__src">
+          <span class="jp__src__x">
+            <span class="jp__src__t">Reptify Media &middot; Journal</span>
+            <span class="jp__src__u">https://reptifymedia.com/journal/schema-markup-in-plain-english.html</span>
+            <span class="jp__src__d">Published <time datetime="2026-08-18">18 August 2026</time><span data-printed></span></span>
+          </span>
+          <img class="jp__src__bull" src="../assets/bull-ink.png" alt=""
+               width="260" height="311" decoding="async">
+        </p>
+      <div class="jp__end" aria-hidden="true"></div>
+    </div>
+
+    <section class="more" aria-label="More stories">
+      <h2 class="more__h" data-sweep><span>More</span> stories</h2>
+      <div class="more__grid">
+        <a class="mcard" href="the-business-record-ai-reads.html">
+          <span class="mcard__shot" aria-hidden="true"><img src="../assets/journal/hall-of-records-750.webp" srcset="../assets/journal/hall-of-records-750.webp 750w, ../assets/journal/hall-of-records-1100.webp 1100w" sizes="(min-width: 1000px) 34vw, 100vw" alt="" width="1500" height="1000" loading="lazy" decoding="async"><span class="ecard__lab">The record</span></span>
+          <span class="mcard__meta"><time datetime="2026-08-18">18 August 2026</time></span>
+          <span class="mcard__t" data-sweep>The business record AI reads, and why it has to match everywhere</span>
+          <span class="mcard__d">When two of your own sources disagree, an AI assistant does not average them. It drops you.</span>
+        </a>
+        <a class="mcard" href="what-a-website-has-to-do-now.html">
+          <span class="mcard__shot" aria-hidden="true"><img src="../assets/journal/first-street-napa-750.webp" srcset="../assets/journal/first-street-napa-750.webp 750w, ../assets/journal/first-street-napa-1100.webp 1100w" sizes="(min-width: 1000px) 34vw, 100vw" alt="" width="1500" height="1000" loading="lazy" decoding="async"><span class="ecard__lab">Being chosen</span></span>
+          <span class="mcard__meta"><time datetime="2026-08-18">18 August 2026</time></span>
+          <span class="mcard__t" data-sweep>What a website has to do now that it didn't have to do in 2019</span>
+          <span class="mcard__d">Your site has two readers now. One never visits, and it decides whether the other hears about you.</span>
+        </a>
+        <a class="mcard" href="what-ai-can-see-about-your-business.html">
+          <span class="mcard__shot" aria-hidden="true"><img src="../assets/journal/small-world-door-750.webp" srcset="../assets/journal/small-world-door-750.webp 750w, ../assets/journal/small-world-door-1100.webp 1100w" sizes="(min-width: 1000px) 34vw, 100vw" alt="" width="1500" height="1000" loading="lazy" decoding="async"><span class="ecard__lab">Being found</span></span>
+          <span class="mcard__meta"><time datetime="2026-08-18">18 August 2026</time></span>
+          <span class="mcard__t" data-sweep>What ChatGPT and Perplexity can actually see about your business</span>
+          <span class="mcard__d">Ten minutes, six questions, no tools. Most owners are surprised by question four.</span>
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <div class="ftr__cue" aria-hidden="true"></div>
+</main>
+
+<footer class="ftr wrap">
+
+  <!-- One block: the statement down the left, the menu beside its first lines,
+       the name finishing on its last. -->
+  <div class="ftr__grid">
+  <p class="ftr__statement">Less<br><i class="cta__drag">Friction.</i><br><span>More<br>Business.</span></p>
+  <div class="ftr__cols">
+    <div class="ftr__sol">
+      <h2>Solutions</h2>
+      <div class="ftr__sol__cols">
+        <ul>
+          <li><a href="../index.html#solutions">Always On Frontdesk</a></li>
+          <li><a href="../index.html#solutions">Smart Web Presence</a></li>
+          <li><a href="../index.html#solutions">AI Visibility Strategy</a></li>
+        </ul>
+        <ul>
+          <li><a href="../index.html#solutions">AI Workforce Solutions</a></li>
+          <li><a href="../index.html#solutions">Business Photography</a></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <div class="ftr__sol__cols">
+        <ul>
+          <li><a href="../about.html">About</a></li><li><a href="../locations.html">Where we work</a></li>
+          <li><a href="../journal.html">Journal</a></li>
+        </ul>
+        <ul>
+          <li><a href="../faq.html">FAQ</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__social">
+      <h2>Socials</h2>
+      <!-- All five profiles are live and carry rel="me", which claims each one
+           back to this site. They are also in sameAs on the entity in index.html:
+           a footer link is for a reader; sameAs is what tells a search engine or an
+           assistant that the site and the profiles are one business. Keep the two in
+           step — a profile added in one place and not the other is half a signal. -->
+      <ul>
+        <li><a href="https://www.instagram.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a></li>
+        <li><a href="https://www.facebook.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/company/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
+        <li><a href="https://x.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on X"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+        <li><a href="https://www.youtube.com/@reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a></li>
+      </ul>
+      <!-- Not a link, and not a trick. No browser exposes an API to add a
+           bookmark — IE's AddFavorite is long dead and Firefox dropped addPanel in
+           2013 — so a button that claims to do it silently would do nothing at all
+           on every browser in use. This tells the reader the shortcut instead,
+           with the right key for their platform. It is the honest version of the
+           thing that was asked for, and it still gets the site remembered. -->
+      <button class="btn ftr__cta" type="button" data-bookmark>
+        <span class="btn__l"><i>Bookmark us</i><i aria-hidden="true">Bookmark us</i></span>
+      </button>
+      <p class="ftr__hint" data-bookmark-hint role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <p class="ftr__word" aria-hidden="true">Reptify Media</p>
+  </div>
+
+  <div class="ftr__fine">
+    <p>Founded in New York City &middot; Based in Napa Valley &middot; 1300 First Street, Suite 368, Napa, CA 94559 &middot; <a href="tel:+17079271172">+1 707-927-1172</a> &middot; San Francisco Bay Area, Silicon Valley, Napa Valley &mdash; and worldwide.</p>
+    <p>&copy; 2026 Reptify Media LLC. <a href="../privacy.html">Privacy</a> &middot; <a href="../terms.html">Terms</a></p>
+  </div>
+
+</footer>
+
+<div class="bar"><a class="btn" href="../contact.html"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></a></div>
+<script src="../main.js" defer></script>
+</body>
+</html>

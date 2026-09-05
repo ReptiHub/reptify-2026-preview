@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How AI picks a local business to recommend | Reptify</title>
+<meta name="description" content="When someone asks an AI assistant for a business like yours, the answer is assembled, not looked up. What it is built from, and why a thin record loses.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html">
+<meta property="og:title" content="How AI decides which local business to recommend | Reptify">
+<meta property="og:description" content="When someone asks an AI assistant for a business like yours, the answer is assembled, not looked up. What it is built from, and why a thin record loses.">
+<meta property="og:image" content="https://reptifymedia.com/assets/journal/three-blocks-then-left-1500.webp">
+<meta property="og:site_name" content="Reptify Media">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html">
+<meta name="theme-color" content="#F0EFEA">
+<script>document.documentElement.className='js'</script>
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../styles.css">
+<!-- Google Analytics 4 — stream "reptifymedia.com - GA4", ID 4940016306.
+
+     Consent Mode v2 defaults to denied, and it is set BEFORE the config call
+     because a default that arrives after the first hit is not a default. With no
+     consent banner on the site, analytics_storage stays denied: GA still receives
+     cookieless pings and models sessions from them, which is lawful in the EU/UK
+     without a banner. If the owner later wants full granular data there, the
+     banner comes first and flips these to granted — not the other way round.
+
+     In the head, as Google's own install instructions specify, but placed after
+     the stylesheet and the font preloads rather than immediately after <head>.
+     The script is async so it never blocks parsing wherever it sits; what the
+     ordering buys is that the critical resources claim the connection first.
+
+     It was at the end of <body> until the instructions were read properly. That
+     was cheaper but it undercounts: a visitor who leaves before the document
+     finishes parsing is never counted at all, and measurement that misses the
+     fastest bounces is measurement that flatters the site.
+
+     gtag.js is around 90KB over the wire — more than this entire site's code,
+     which is 57.8KB gzipped. It is the heaviest thing here by some way. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6XX2PJYJP5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted'
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-6XX2PJYJP5', { anonymize_ip: true });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Article",
+      "headline": "How AI decides which local business to recommend",
+      "description": "When someone asks an AI assistant for a business like yours, the answer is assembled, not looked up. Here is what it is assembled from, and why a thin record loses.",
+      "url": "https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html",
+      "image": "https://reptifymedia.com/assets/journal/three-blocks-then-left-1500.webp",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-23",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": { "@id": "https://reptifymedia.com/#founder" },
+      "publisher": { "@id": "https://reptifymedia.com/#org" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html" },
+      "about": "How AI assistants select and recommend local businesses",
+      "keywords": "how does ChatGPT choose businesses, AI local business recommendations, answer engine optimization, AI search visibility, generative engine optimization" },
+    { "@type": "FAQPage", "mainEntity": [
+      { "@type": "Question", "name": "Does my website still matter if AI answers the question?", "acceptedAnswer": { "@type": "Answer", "text": "More than before, but differently. Your site is where an AI assistant confirms what other sources claim, and it is the only source you fully control. It has to be legible to a machine as well as readable by a person." } },
+      { "@type": "Question", "name": "Is this the same as SEO?", "acceptedAnswer": { "@type": "Answer", "text": "It overlaps and it is not the same. Classic SEO competes for a position in a list of links. This competes to be named inside a written answer, where there is no second page and often only three names. The technical hygiene is shared; the goal is not." } },
+      { "@type": "Question", "name": "How long does it take to show up in AI answers?", "acceptedAnswer": { "@type": "Answer", "text": "There is no honest number. Assistants refresh what they know on their own schedules, and some rely partly on training data that is months old. Fixing the record is the part you control; when it is picked up is not." } },
+      { "@type": "Question", "name": "Can I pay to appear in AI recommendations?", "acceptedAnswer": { "@type": "Answer", "text": "You can now buy space in ChatGPT, but not the answer itself. OpenAI began testing ads in February 2026 and has since expanded beyond the US, and states that ads do not influence the answers ChatGPT gives, are clearly labeled as sponsored, and are visually separated from the organic answer. Two further limits matter for local service businesses: ads appear only on the Free and Go tiers, and OpenAI says ads are not eligible to appear near sensitive or regulated topics like health. For a med spa or a chiropractor, the paid slot is not merely separate from the recommendation, it is largely not on offer." } }
+    ] },
+    { "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://reptifymedia.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Journal", "item": "https://reptifymedia.com/journal.html" },
+      { "@type": "ListItem", "position": 3, "name": "How AI decides which local business to recommend", "item": "https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html" }
+    ] }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="hdr wrap">
+  <a class="mark" href="../index.html" aria-label="Reptify Media — home"><img src="../assets/logo.png" alt="Reptify Media" width="320" height="81"></a>
+  <nav class="nav" aria-label="Primary">
+    <p class="clock" id="clock" aria-hidden="true"></p>
+    <a class="nav-hide" href="../index.html#solutions">Solutions</a>
+    <a href="../journal.html" aria-current="page">Journal</a>
+    <a class="nav-hide" href="../faq.html">FAQ</a>
+    <a class="nav-more" href="../contact.html">Contact</a>
+    <a class="btn" href="../contact.html"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></a>
+  </nav>
+</header>
+<main>
+
+  <article class="jp jp--wide wrap">
+    <header class="jp__head">
+      <h1 class="statement--sm jp__h1">How AI decides which local business to recommend</h1>
+      <p class="jp__meta"><time datetime="2026-08-18">18 August 2026</time> &middot; 7 min read</p>
+      <div class="jp__stick">
+      <ul class="jp__share">
+        <li><a href="https://www.instagram.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Freptifymedia.com%2Fjournal%2Fhow-ai-decides-which-business-to-recommend.html" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
+        <li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Freptifymedia.com%2Fjournal%2Fhow-ai-decides-which-business-to-recommend.html" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a></li>
+        <li><a href="https://x.com/intent/tweet?url=https%3A%2F%2Freptifymedia.com%2Fjournal%2Fhow-ai-decides-which-business-to-recommend.html&text=How%20AI%20decides%20which%20local%20business%20to%20recommend" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+        <li><button type="button" class="jp__prt" data-print aria-label="Print this article"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2h10v5H7z"/><path fill-rule="evenodd" d="M4 8h16a2 2 0 0 1 2 2v5a1 1 0 0 1-1 1h-2v-2H5v2H3a1 1 0 0 1-1-1v-5a2 2 0 0 1 2-2zm14.4 2.2a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path fill-rule="evenodd" d="M6 14h12v8H6zm1.6 1.6v4.8h8.8v-4.8z"/></svg></button></li>
+      </ul>
+      <nav class="toc" aria-label="On this page">
+        <p class="eyebrow">On this page</p>
+        <ol><li><a href="#what-actually-happens-when-someone-asks">What actually happens when someone asks</a></li><li><a href="#why-a-thin-record-loses-to-a-thick-one">Why a thin record loses to a thick one</a></li><li><a href="#what-counts-as-the-record">What counts as the record</a></li><li><a href="#why-disagreement-is-worse-than-silence">Why disagreement is worse than silence</a></li><li><a href="#what-this-means-for-a-business-owner">What this means for a business owner</a></li></ol>
+      </nav>
+
+      <!-- The one ask on the page. It is not there while the reader is still
+           reading — it fades in when the end of the article reaches the bottom
+           of the screen, driven by the sentinel at the close of the prose. -->
+      <div class="railoffer">
+  <a class="ecard ecard--cta" href="../contact.html">
+          <span class="ecard__body">
+            <span class="ecard__eyebrow">The offer</span>
+            <span class="ecard__t">Find out what an AI assistant can actually say about your business.</span>
+            <span class="ecard__d">A written list of what is costing your business, ordered by what it costs. No obligation, and no report with homework attached.</span>
+            <span class="btn ecard__btn"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></span>
+          </span>
+        </a>
+      </div>
+      </div>
+    </header>
+
+    <div class="jp__body">
+
+
+      <div class="prose jp__prose">
+        <!-- Lead photograph. Napa, 29 August 2026 — first-hand, shot for this
+             article. The caption carries the location because it is a checkable
+             fact, which this site is otherwise short of. -->
+        <figure class="jp__lead">
+          <img src="../assets/journal/three-blocks-then-left-1500.webp"
+               srcset="../assets/journal/three-blocks-then-left-750.webp 750w,
+                       ../assets/journal/three-blocks-then-left-1100.webp 1100w,
+                       ../assets/journal/three-blocks-then-left-1500.webp 1500w"
+               sizes="(min-width: 1000px) 57vw, 100vw"
+               alt="A directional sign for a day spa listing massage, skin and nails, beside an arrow marked three blocks then left."
+               width="1500" height="1000" decoding="async" fetchpriority="high">
+          <figcaption>Downtown Napa</figcaption>
+        </figure>
+        <p class="jp__answer">An assistant does not look your business up in a directory and read it back. It assembles an answer from whatever it can find about every candidate business, then names the ones it can describe most confidently. Where the record is thin it names someone else, not because that business is better, but because it is easier to describe.</p>
+        <h2 id="what-actually-happens-when-someone-asks">What actually happens when someone asks</h2>
+<p>A person types <em>best med spa near Campbell</em> into ChatGPT, or asks which chiropractor in Napa takes their insurance. What comes back looks like a recommendation. It is closer to a summary.</p>
+<p>The assistant runs a search, pulls back a set of pages, and writes an answer out of what those pages say. You can see the machinery from the outside if you look at the crawlers. OpenAI <a href="https://developers.openai.com/api/docs/bots" rel="noopener">documents a separate user-agent for exactly this job</a>: OAI-SearchBot, which &ldquo;is used to surface websites in search results in ChatGPT&rsquo;s search features,&rdquo; kept distinct from GPTBot, which crawls material that may train the underlying model. Live retrieval and prior training are two different pipes, and most products draw on both.</p>
+<p>The details differ by product and they change every few months. What does not change is the shape of it: <strong>the AI assistant is writing a description of your business from sources it did not ask you to approve.</strong> Your website is one of those sources. It is rarely the only one, and on questions about hours, location, price or reputation it is often not the decisive one.</p>
+        <h2 id="why-a-thin-record-loses-to-a-thick-one">Why a thin record loses to a thick one</h2>
+<p>Assistants are built to avoid saying things they cannot support. That single design goal explains most of what you see in the results.</p>
+<p>If a model can find your name, your city, what you do, what it costs roughly, when you are open, and what people said afterwards, it can write two confident sentences about you. If it can find a name and a phone number, it can write half a sentence. Half a sentence loses to two confident ones every time.</p>
+<p>This is the part owners find hardest to accept, so it is worth saying plainly: <strong>the business that gets named is not always the better business. It is the better-described one.</strong> A twenty-year practice with a thin online record will lose a recommendation to a two-year competitor who published their services, their hours and their prices as text.</p>
+        <aside class="handoff">
+  <p class="handoff__lab">If you would rather not do this yourself</p>
+  <p class="handoff__t">AI Visibility Strategy &mdash; the work of being found and described correctly.</p>
+  <a class="pill handoff__go" href="../ai-visibility.html"><span class="pill__l"><i>See what it involves</i><i aria-hidden="true">See what it involves</i></span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg></a>
+</aside>
+<h2 id="what-counts-as-the-record">What counts as the record</h2>
+<p>The record is everything a machine can read about you without your permission. In rough order of how often it decides an answer:</p>
+<p><strong>Your own site, if it is legible.</strong> Services named as text, not baked into a banner image. Prices as text where you publish them. Hours, address and service area stated once and stated the same way. Structured data that says <em>this is a business, here is its name, here is what it offers</em> in a format nothing has to guess at.</p>
+<p><strong>Third-party listings.</strong> Directories, maps profiles, professional associations, chambers, booking platforms. These matter less for what they say about your quality than for what they <em>confirm</em>. Two sources agreeing is worth far more than one source asserting.</p>
+<p><strong>Anything written about you elsewhere.</strong> Press, a supplier&rsquo;s case study, a partner&rsquo;s site, a forum thread. Independent mentions are the strongest item on this list because they are the hardest to manufacture, and this is not a matter of opinion. Google, describing <a href="https://support.google.com/business/answer/7091" rel="noopener">how local results are ranked</a>, says prominence is based partly on &ldquo;how many websites link to your business,&rdquo; and that &ldquo;businesses with complete and accurate info are more likely to show up in local search results.&rdquo;</p>
+<p><strong>Reviews, and here it is worth being exact rather than repeating the usual line.</strong> Google documents volume and rating as the ranking input: &ldquo;more reviews and positive ratings can help your business&rsquo;s local ranking.&rdquo; Not the wording. The wording earns its place for a different reason. When a system is describing you rather than ordering a list, review text is the only source in which a specific treatment, a named staff member, or an actual outcome appears in someone else&rsquo;s words. Stars can be averaged. They cannot be quoted.</p>
+        <h2 id="why-disagreement-is-worse-than-silence">Why disagreement is worse than silence</h2>
+<p>If your hours say one thing on your site and another on a maps listing, an AI assistant does not average them and it does not pick the newer one. It usually does the safe thing. It declines to state your hours at all, or it drops you in favour of a business whose sources agree.</p>
+<p>Silence about a detail costs you that detail. <strong>Disagreement about a detail can cost you the whole recommendation</strong>, because it makes every other fact about you less trustworthy by association. It is also, for most businesses, the cheapest thing on this page to put right: it needs an afternoon and a list, not a rebuild.</p>
+        <h2 id="what-this-means-for-a-business-owner">What this means for a business owner</h2>
+<p>Three things follow, and none of them are about writing more blog posts.</p>
+<p><strong>Publish the boring facts as text.</strong> Services, service area, hours, what you charge if you charge publicly. Not in an image, not in a PDF, not only in a booking widget that loads after the page does.</p>
+<p><strong>Make your sources agree.</strong> One name, one address format, one phone number, one description of what you do, everywhere it appears. This is unglamorous and it is the highest-yield work available.</p>
+<p><strong>Give the model something to quote.</strong> A clear answer to a real question, written as text on a page you control, is what gets lifted into an answer with your name attached to it.</p>
+<p>None of this guarantees placement. Nobody can promise that, and any agency that does is selling a result it has no mechanism to deliver. What it does is remove the reasons you are being skipped, which is <a href="../ai-visibility.html">the whole of what AI Visibility Strategy is</a>.</p>
+
+        <aside class="keys" aria-label="Key points">
+          <p class="eyebrow">Key points</p>
+          <ul><li>Assistants assemble answers rather than looking businesses up, so being describable beats being long-established.</li><li>A thin record loses to a thick one because models avoid claims they cannot support.</li><li>Two sources agreeing is worth more than one source asserting.</li><li>Contradictory facts are worse than missing facts, because they make every other fact about you less trustworthy.</li><li>Nobody can guarantee AI placement, and for health-adjacent businesses you cannot buy the slot either. What you can do is remove the reasons you are skipped.</li></ul>
+        </aside>
+
+        <h2 id="questions">Questions people ask</h2>
+        <div class="faq"><div class="faq__q"><h3>Does my website still matter if AI answers the question?</h3><p>More than before, but differently. Your site is where an AI assistant confirms what other sources claim, and it is the only source you fully control. It has to be legible to a machine as well as readable by a person.</p></div><div class="faq__q"><h3>Is this the same as SEO?</h3><p>It overlaps and it is not the same. Classic SEO competes for a position in a list of links. This competes to be named inside a written answer, where there is no second page and often only three names. The technical hygiene is shared; the goal is not.</p></div><div class="faq__q"><h3>How long does it take to show up in AI answers?</h3><p>There is no honest number. Assistants refresh what they know on their own schedules, and some rely partly on training data that is months old. Fixing the record is the part you control; when it is picked up is not.</p></div><div class="faq__q"><h3>Can I pay to appear in AI recommendations?</h3><p>You can now buy space in ChatGPT. You cannot buy the answer. OpenAI <a href="https://openai.com/index/testing-ads-in-chatgpt/" rel="noopener">began testing ads in February 2026</a> and has expanded the pilot well beyond the US since, and it is explicit about the wall between the two: &ldquo;ads do not influence the answers ChatGPT gives you,&rdquo; and &ldquo;when you see an ad, they are always clearly labeled as sponsored and visually separated from the organic answer.&rdquo;</p><p>Two further limits matter for the businesses this article is about. Ads run only on the Free and Go tiers. And OpenAI states that &ldquo;ads are not eligible to appear near sensitive or regulated topics like health, mental health or politics.&rdquo; For a med spa or a chiropractor the paid slot is not simply separate from the recommendation, it is largely not on offer. Being described well is not the cheaper route to that answer. It is the only one.</p></div></div>
+      </div>
+        <p class="jp__src">
+          <span class="jp__src__x">
+            <span class="jp__src__t">Reptify Media &middot; Journal</span>
+            <span class="jp__src__u">https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html</span>
+            <span class="jp__src__d">Published <time datetime="2026-08-18">18 August 2026</time><span data-printed></span></span>
+          </span>
+          <img class="jp__src__bull" src="../assets/bull-ink.png" alt=""
+               width="260" height="311" decoding="async">
+        </p>
+      <div class="jp__end" aria-hidden="true"></div>
+    </div>
+
+    <section class="more" aria-label="More stories">
+      <h2 class="more__h" data-sweep><span>More</span> stories</h2>
+      <div class="more__grid">
+        <a class="mcard" href="your-ai-agent-is-not-the-system.html">
+          <span class="mcard__shot" aria-hidden="true"><img src="../assets/journal/chamber-of-commerce-750.webp" srcset="../assets/journal/chamber-of-commerce-750.webp 750w, ../assets/journal/chamber-of-commerce-1100.webp 1100w" sizes="(min-width: 1000px) 34vw, 100vw" alt="" width="1500" height="1000" loading="lazy" decoding="async"><span class="ecard__lab">The system</span></span>
+          <span class="mcard__meta"><time datetime="2026-08-24">24 August 2026</time></span>
+          <span class="mcard__t" data-sweep>Your AI agent is not the system</span>
+          <span class="mcard__d">One voice answers the phone. Fifteen other decisions have to happen around it, and that is the part you are buying.</span>
+        </a>
+        <a class="mcard" href="schema-markup-in-plain-english.html">
+          <span class="mcard__shot" aria-hidden="true"><img src="../assets/journal/first-and-main-arcade-750.webp" srcset="../assets/journal/first-and-main-arcade-750.webp 750w, ../assets/journal/first-and-main-arcade-1100.webp 1100w" sizes="(min-width: 1000px) 34vw, 100vw" alt="" width="1500" height="1000" loading="lazy" decoding="async"><span class="ecard__lab">The record</span></span>
+          <span class="mcard__meta"><time datetime="2026-08-18">18 August 2026</time></span>
+          <span class="mcard__t" data-sweep>Schema markup for local service businesses, in plain English</span>
+          <span class="mcard__d">The machine-readable notes most sites skip, in plain English — with the code to copy.</span>
+        </a>
+        <a class="mcard" href="the-business-record-ai-reads.html">
+          <span class="mcard__shot" aria-hidden="true"><img src="../assets/journal/hall-of-records-750.webp" srcset="../assets/journal/hall-of-records-750.webp 750w, ../assets/journal/hall-of-records-1100.webp 1100w" sizes="(min-width: 1000px) 34vw, 100vw" alt="" width="1500" height="1000" loading="lazy" decoding="async"><span class="ecard__lab">The record</span></span>
+          <span class="mcard__meta"><time datetime="2026-08-18">18 August 2026</time></span>
+          <span class="mcard__t" data-sweep>The business record AI reads, and why it has to match everywhere</span>
+          <span class="mcard__d">When two of your own sources disagree, an AI assistant does not average them. It drops you.</span>
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <div class="ftr__cue" aria-hidden="true"></div>
+</main>
+
+<footer class="ftr wrap">
+
+  <!-- One block: the statement down the left, the menu beside its first lines,
+       the name finishing on its last. -->
+  <div class="ftr__grid">
+  <p class="ftr__statement">Less<br><i class="cta__drag">Friction.</i><br><span>More<br>Business.</span></p>
+  <div class="ftr__cols">
+    <div class="ftr__sol">
+      <h2>Solutions</h2>
+      <div class="ftr__sol__cols">
+        <ul>
+          <li><a href="../index.html#solutions">Always On Frontdesk</a></li>
+          <li><a href="../index.html#solutions">Smart Web Presence</a></li>
+          <li><a href="../index.html#solutions">AI Visibility Strategy</a></li>
+        </ul>
+        <ul>
+          <li><a href="../index.html#solutions">AI Workforce Solutions</a></li>
+          <li><a href="../index.html#solutions">Business Photography</a></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <div class="ftr__sol__cols">
+        <ul>
+          <li><a href="../about.html">About</a></li><li><a href="../locations.html">Where we work</a></li>
+          <li><a href="../journal.html">Journal</a></li>
+        </ul>
+        <ul>
+          <li><a href="../faq.html">FAQ</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__social">
+      <h2>Socials</h2>
+      <!-- All five profiles are live and carry rel="me", which claims each one
+           back to this site. They are also in sameAs on the entity in index.html:
+           a footer link is for a reader; sameAs is what tells a search engine or an
+           assistant that the site and the profiles are one business. Keep the two in
+           step — a profile added in one place and not the other is half a signal. -->
+      <ul>
+        <li><a href="https://www.instagram.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a></li>
+        <li><a href="https://www.facebook.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/company/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
+        <li><a href="https://x.com/reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on X"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+        <li><a href="https://www.youtube.com/@reptifymedia" rel="me noopener" target="_blank" aria-label="Reptify Media on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a></li>
+      </ul>
+      <!-- Not a link, and not a trick. No browser exposes an API to add a
+           bookmark — IE's AddFavorite is long dead and Firefox dropped addPanel in
+           2013 — so a button that claims to do it silently would do nothing at all
+           on every browser in use. This tells the reader the shortcut instead,
+           with the right key for their platform. It is the honest version of the
+           thing that was asked for, and it still gets the site remembered. -->
+      <button class="btn ftr__cta" type="button" data-bookmark>
+        <span class="btn__l"><i>Bookmark us</i><i aria-hidden="true">Bookmark us</i></span>
+      </button>
+      <p class="ftr__hint" data-bookmark-hint role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <p class="ftr__word" aria-hidden="true">Reptify Media</p>
+  </div>
+
+  <div class="ftr__fine">
+    <p>Founded in New York City &middot; Based in Napa Valley &middot; 1300 First Street, Suite 368, Napa, CA 94559 &middot; <a href="tel:+17079271172">+1 707-927-1172</a> &middot; San Francisco Bay Area, Silicon Valley, Napa Valley &mdash; and worldwide.</p>
+    <p>&copy; 2026 Reptify Media LLC. <a href="../privacy.html">Privacy</a> &middot; <a href="../terms.html">Terms</a></p>
+  </div>
+
+</footer>
+
+<div class="bar"><a class="btn" href="../contact.html"><span class="btn__l"><i>Request an Audit</i><i aria-hidden="true">Request an Audit</i></span></a></div>
+<script src="../main.js" defer></script>
+</body>
+</html>

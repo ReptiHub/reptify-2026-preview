@@ -1,0 +1,13 @@
+# PREVIEW DEPLOYMENT — not the production site.
+#
+# The production site is https://reptifymedia.com. This copy exists so the work
+# can be reviewed at a shareable URL before the domain is repointed, and it must
+# never be indexed: two crawlable copies of the same pages at two hostnames is a
+# duplicate of the real site competing with it.
+#
+# Every page here also carries meta robots noindex,nofollow. Belt and braces on
+# purpose — robots.txt asks a crawler not to fetch, meta robots tells it not to
+# index what it fetched anyway.
+
+User-agent: *
+Disallow: /

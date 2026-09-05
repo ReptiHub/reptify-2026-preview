@@ -1,0 +1,130 @@
+# ── NOT PART OF THE PUBLIC SITE ──────────────────────────────────────────
+# The repo root is the deploy root, so every project document beside the HTML
+# is served too unless it is blocked here. These are internal: README carries
+# the launch-blocker list, OFFERS and BRIEF carry unshipped positioning, and
+# _parked/ holds the case-study fold that was lifted out precisely BECAUSE it
+# names clients without written permission. Publishing it at a guessable URL
+# would undo the reason for parking it.
+#
+# 404 rather than 301: these should read as not existing, not as moved.
+# Above every other rule, because first match wins.
+/README.md          /404.html   404
+/OFFERS.md          /404.html   404
+/BRIEF.md           /404.html   404
+/COPY.md            /404.html   404
+/CLAUDE.md          /404.html   404
+/JOURNAL.md         /404.html   404
+/PHOTOGRAPHY.md     /404.html   404
+/A2P-COMPLIANCE.md  /404.html   404
+/build.py           /404.html   404
+/layout-check.js    /404.html   404
+/_parked/*          /404.html   404
+/serve.py           /404.html   404
+# lib/ is NOT blocked as a directory — circuit.css and circuit.js are loaded
+# by the pages. Only its own README is internal.
+/lib/README.md      /404.html   404
+# The case-study screenshots belong to the fold parked in _parked/. They are
+# named client sites, referenced by nothing, and reachable at a guessable URL
+# — blocking the markup and publishing the pictures would leave the same hole.
+/assets/studies/*   /404.html   404
+
+# Redirects from the old WordPress site to this one.
+#
+# Cloudflare Pages reads this file. Format is: <from> <to> <status>, first match
+# wins, so specific rules must sit above the wildcards.
+#
+# WHY THIS FILE EXISTS. The site this replaces has been indexed for years and
+# was still live on 2026-08-28 — WordPress 7.1, Elementor, AIOSEO, titled
+# "Reptify Media - Best Digital Marketing Company New York". Search Console shows
+# 3,353 impressions in the four weeks to 27 August across 66 queries. All of that
+# accrues to the OLD urls. Deploying this site without a map would 404 every one
+# of them, and a 404 tells Google the page is gone rather than moved: the ranking
+# is not transferred, it is discarded. A 301 passes it on.
+#
+# The old canonical form carries NO trailing slash — /about-us returns 200,
+# /about-us/ 301s to it, and the canonical tags agree. Both forms are listed
+# anyway, because inbound links from other people's sites will use whichever
+# they happened to copy, and we do not control those.
+#
+# All of these were verified live (HTTP 200) on 2026-08-28 before being mapped.
+
+# ── pages with a direct equivalent ─────────────────────────
+/about-us                 /about.html      301
+/about-us/                /about.html      301
+/contact-us               /contact.html    301
+/contact-us/              /contact.html    301
+/blog                     /journal.html    301
+/blog/                    /journal.html    301
+/terms-of-service         /terms.html      301
+/terms-of-service/        /terms.html      301
+/privacy-policy           /privacy.html    301
+/privacy-policy/          /privacy.html    301
+
+# The old /services page has no single equivalent: this site splits that job
+# across four offer pages plus the Solution fold on the homepage. Sending it to
+# the fold keeps the reader in the same conceptual place rather than picking one
+# offer arbitrarily. If /services turns out to carry real ranking — check
+# Search Console before deciding — a proper services index is worth building,
+# and this line should then point at it.
+/services                 /#solutions      301
+/services/                /#solutions      301
+
+# Affiliate terms: no equivalent page exists yet and the affiliate programme is
+# an open decision. Terms is the nearest honest destination. Revisit if the
+# programme ships.
+/affiliate-terms-and-conditions   /terms.html   301
+/affiliate-terms-and-conditions/  /terms.html   301
+
+# ── the six blog posts, matched on subject ─────────────────
+# Not matched to the homepage. A redirect to a generic page is treated as a soft
+# 404 and forfeits most of what the 301 was for; the closest surviving article on
+# the same subject keeps it.
+
+# voice search -> how machines choose what to say
+/why-understanding-voice-search-technology-is-best-for-you    /journal/how-ai-decides-which-business-to-recommend.html  301
+/why-understanding-voice-search-technology-is-best-for-you/   /journal/how-ai-decides-which-business-to-recommend.html  301
+
+# marketing audit -> what a machine can actually see about a business
+/how-a-website-marketing-audit-can-save-your-online-business  /journal/what-ai-can-see-about-your-business.html  301
+/how-a-website-marketing-audit-can-save-your-online-business/ /journal/what-ai-can-see-about-your-business.html  301
+
+# website marketing strategy -> what a website has to do now
+/create-a-website-marketing-strategy-that-works-proven-tips   /journal/what-a-website-has-to-do-now.html  301
+/create-a-website-marketing-strategy-that-works-proven-tips/  /journal/what-a-website-has-to-do-now.html  301
+/how-to-do-website-marketing-the-right-way                    /journal/what-a-website-has-to-do-now.html  301
+/how-to-do-website-marketing-the-right-way/                   /journal/what-a-website-has-to-do-now.html  301
+
+# branding and online presence -> the offer that now covers it
+# RETARGETED AT LAUNCH — these two pointed at /smart-web-presence.html and
+# /ai-visibility.html, which are noindex while their layouts are unfinished. A
+# 301 into a noindex page is worse than no redirect: Google follows it, is told
+# not to index what it finds, and the ranking the old URL earned is discarded
+# rather than passed on. They point at the homepage's Solutions fold until
+# those pages ship, then they go back to the specific pages.
+/website-branding-strategy-establishing-a-better-online-presence /#solutions      301
+/website-branding-strategy-establishing-a-better-online-presence/ /#solutions      301
+
+# competitor analysis -> being findable against competitors
+/competitor-analysis-unlock-your-digital-marketing-strategy    /#solutions      301
+/competitor-analysis-unlock-your-digital-marketing-strategy/   /#solutions      301
+
+# ── archives, categories, authors ──────────────────────────
+# WordPress generated these automatically and this site has no equivalent of any
+# of them. They hold little ranking on their own but they do collect internal and
+# occasional external links, so they go to the index they were listing.
+/category/*               /journal.html    301
+/author/*                 /about.html      301
+/2022/*                   /journal.html    301
+/2023/*                   /journal.html    301
+/tag/*                    /journal.html    301
+
+# ── deliberately NOT redirected ────────────────────────────
+# /pricing, /team, /services-2, /experihome, /full-width-masonry were all live
+# and returning 200 on the old site. They are unbuilt demo pages left behind by
+# the WordPress theme — they were never real pages of this business, and they
+# should never have been reachable. They are allowed to 404, which is the honest
+# answer: these pages do not exist and no page here corresponds to them.
+# Redirecting them would tell Google the content moved, which is false.
+#
+# /wp-content/*, /wp-admin, /wp-login.php and the rest of the WordPress surface
+# also 404 by design. Nothing on this site corresponds to them either.

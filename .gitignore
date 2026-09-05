@@ -1,0 +1,83 @@
+
+# Napa shoot masters, dropped into assets/journal/ 2026-08-29 — 570 files, 354MB.
+# The masters do not belong in the repo; only the webp derivatives this build
+# actually serves do. This is the same fault as the three MP4s that permanently
+# block a whole-tree push, caught before it was committed rather than after.
+assets/journal/*.jpg
+assets/journal/*.jpeg
+assets/journal/*.JPG
+
+# ── raw shoot masters, untracked 2026-09-03 ───────────────────────
+# 57.6MB across 59 files that no page, stylesheet or script references:
+# 34 camera masters dropped into assets/logos/ beside the real brand PNGs,
+# 16 numbered originals at the assets/ root, the FAQ chairs photograph the
+# owner removed from the homepage, and a few leftover seams.
+#
+# Listed exactly rather than by pattern. `assets/pool-*.webp` was tried and
+# would have caught pool-121212 and four siblings that ARE on the page —
+# every brand logo is a .png and every one of them survives this list.
+#
+# Deleted from disk 2026-09-03, after checking each one three ways: present
+# in the repo, byte-identical copy in ../reptify-media-2026.subtree-backup,
+# and referenced by no HTML, CSS, JS, JSON, XML or txt in the tree. The list
+# stays here so a re-import of the same masters is ignored rather than
+# silently re-added. Recovery, if ever needed, is the subtree backup.
+assets/101010.jpg
+assets/111111.jpg
+assets/121212.jpg
+assets/131313.jpg
+assets/141414.jpg
+assets/151515.jpg
+assets/161616.jpg
+assets/171717.jpg
+assets/222.jpg
+assets/333.jpg
+assets/444.jpg
+assets/555.jpg
+assets/666.jpg
+assets/777.jpg
+assets/888.jpg
+assets/999.jpg
+assets/faq-chairs-600.webp
+assets/faq-chairs-900.webp
+assets/logos/1Reptify Media LLC Napa CA-6218.jpg
+assets/logos/1Reptify Media LLC Napa CA-6219.jpg
+assets/logos/1Reptify Media LLC Napa CA-6220.jpg
+assets/logos/1Reptify Media LLC Napa CA-6221.jpg
+assets/logos/1Reptify Media LLC Napa CA-6222.jpg
+assets/logos/1Reptify Media LLC Napa CA-6223.jpg
+assets/logos/1Reptify Media LLC Napa CA-6224.jpg
+assets/logos/1Reptify Media LLC Napa CA-6225.jpg
+assets/logos/1Reptify Media LLC Napa CA-6226.jpg
+assets/logos/1Reptify Media LLC Napa CA-6227.jpg
+assets/logos/1Reptify Media LLC Napa CA-6228.jpg
+assets/logos/1Reptify Media LLC Napa CA-6229.jpg
+assets/logos/1Reptify Media LLC Napa CA-6230.jpg
+assets/logos/1Reptify Media LLC Napa CA-6231.jpg
+assets/logos/1Reptify Media LLC Napa CA-6232.jpg
+assets/logos/1Reptify Media LLC Napa CA-6233.jpg
+assets/logos/1Reptify Media LLC Napa CA-6234.jpg
+assets/logos/1Reptify Media LLC Napa CA-6235.jpg
+assets/logos/1Reptify Media LLC Napa CA-6236.jpg
+assets/logos/1Reptify Media LLC Napa CA-6237.jpg
+assets/logos/1Reptify Media LLC Napa CA-6238.jpg
+assets/logos/1Reptify Media LLC Napa CA-6239.jpg
+assets/logos/1Reptify Media LLC Napa CA-6240.jpg
+assets/logos/1Reptify Media LLC Napa CA-6241.jpg
+assets/logos/1Reptify Media LLC Napa CA-6242.jpg
+assets/logos/1Reptify Media LLC Napa CA-6243.jpg
+assets/logos/1Reptify Media LLC Napa CA-6244.jpg
+assets/logos/1Reptify Media LLC Napa CA-6245.jpg
+assets/logos/1Reptify Media LLC Napa CA-6246.jpg
+assets/logos/1Reptify Media LLC Napa CA-6247.jpg
+assets/logos/1Reptify Media LLC Napa CA-6248.jpg
+assets/logos/1Reptify Media LLC Napa CA-6249.jpg
+assets/logos/1Reptify Media LLC Napa CA-6250.jpg
+assets/logos/1Reptify Media LLC Napa CA-6251.jpg
+assets/pool-171717.webp
+assets/seam-1.webp
+assets/seam-2.webp
+assets/seam-3.webp
+assets/seam-4.webp
+assets/seam-5.webp
+assets/seam-6.webp

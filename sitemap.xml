@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Not submitted until the indexing hold is released. Canonical host: reptifymedia.com, no www. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://reptifymedia.com/</loc><lastmod>2026-09-02</lastmod><priority>1.0</priority></url>
+  <url><loc>https://reptifymedia.com/about.html</loc><lastmod>2026-09-02</lastmod><priority>0.8</priority></url>
+  <url><loc>https://reptifymedia.com/faq.html</loc><lastmod>2026-09-02</lastmod><priority>0.8</priority></url>
+  <url><loc>https://reptifymedia.com/contact.html</loc><lastmod>2026-09-02</lastmod><priority>0.8</priority></url>
+  <url><loc>https://reptifymedia.com/privacy.html</loc><lastmod>2026-09-02</lastmod><priority>0.2</priority></url>
+  <url><loc>https://reptifymedia.com/terms.html</loc><lastmod>2026-09-02</lastmod><priority>0.2</priority></url>
+  <url><loc>https://reptifymedia.com/journal.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/you-cannot-automate-a-process-you-have-not-written-down.html</loc><lastmod>2026-09-02</lastmod></url>
+<url><loc>https://reptifymedia.com/journal/vibe-coding-and-the-four-rungs-above-it.html</loc><lastmod>2026-09-02</lastmod></url>
+<url><loc>https://reptifymedia.com/journal/your-ai-agent-is-not-the-system.html</loc><lastmod>2026-09-02</lastmod></url>
+<url><loc>https://reptifymedia.com/journal/ai-for-small-wineries.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/schema-markup-in-plain-english.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/the-business-record-ai-reads.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/what-a-website-has-to-do-now.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/what-ai-can-see-about-your-business.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://reptifymedia.com/journal/why-your-business-is-missing-from-ai-answers.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url>
+    <loc>https://reptifymedia.com/locations.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

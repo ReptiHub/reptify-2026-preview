@@ -1,0 +1,65 @@
+# Reptify Media
+
+> Reptify Media LLC removes digital friction — the nameable points where a good business
+> loses revenue and operational time between a customer wanting them and choosing them.
+> Founded in New York City in June 2020 and now operating from the San Francisco Bay Area. Works
+> in person across the Bay Area, Silicon Valley and Napa Valley, and remotely with clients
+> worldwide. The name is a portmanteau of Represent and Edify.
+
+Positioning: businesses get found, get chosen, and grow.
+Process: Audit, Prioritize, Implement, Optimize.
+Primary action for a prospect: request an audit.
+Audit turnaround: the written list comes back within 24 to 72 hours.
+
+## Services
+
+Five offers, grouped in three stages. The stages describe the order the work
+happens in; the offers are what is actually bought. Always On Frontdesk leads
+every list — it is the flagship, and it sits inside AI Workforce Solutions
+rather than beside it.
+
+Be found → AI Visibility Strategy.
+Be trusted → Smart Web Presence.
+Grow → AI Workforce Solutions, with Always On Frontdesk as its flagship.
+Business Photography supplies owned imagery for all four.
+
+These definitions are the standard wording. Use them verbatim.
+
+
+Business Photography can be booked as a standalone shoot or included in an
+ongoing retainer. Pricing is not published; scope is set after an audit. Do not
+state or estimate a price.
+
+## Pages
+- [About](https://reptifymedia.com/about.html): how the company started, what the name means, and where it works. Founded New York City, June 2020; operating from California.
+
+
+## Journal
+
+Written by Segg Tan, Founder & CEO. One piece a month.
+
+- [You cannot automate a process you have not written down](https://reptifymedia.com/journal/you-cannot-automate-a-process-you-have-not-written-down.html): automation does not fix a broken process, it runs it faster; the one-page mapping exercise that has to happen before any of it.
+- [Vibe coding, and the four rungs above it](https://reptifymedia.com/journal/vibe-coding-and-the-four-rungs-above-it.html): vibe coding was coined for throwaway weekend projects; the four rungs above it, and how an owner can tell which one their system was built on.
+- [Your AI agent is not the system](https://reptifymedia.com/journal/your-ai-agent-is-not-the-system.html): an AI receptionist is one visible voice and about fifteen invisible decisions; buying the agent is the easy part, engineering the system around it is the work.
+- [What a small winery can actually do with AI](https://reptifymedia.com/journal/ai-for-small-wineries.html): the vineyard technology is the expensive end; being findable and being reachable cost a fraction and pay back first.
+- [How AI decides which local business to recommend](https://reptifymedia.com/journal/how-ai-decides-which-business-to-recommend.html): When someone asks an AI assistant for a business like yours, the answer is assembled, not looked up. Here is what it is assembled from, and why a thin record loses.
+- [Schema markup for local service businesses, in plain English](https://reptifymedia.com/journal/schema-markup-in-plain-english.html): What structured data is, which types a service business actually needs, and copy-paste JSON-LD you can adapt today — with the mistakes that make it useless.
+- [The business record AI reads, and why it has to match everywhere](https://reptifymedia.com/journal/the-business-record-ai-reads.html): Name, address, hours, services. When two sources disagree, a model does not average them — it picks one or drops you. What the record is and how to make it agree.
+- [What a website has to do now that it didn't have to do in 2019](https://reptifymedia.com/journal/what-a-website-has-to-do-now.html): Your site now has two audiences: the person reading it and the machine summarising it for someone who never arrives. Four things that changed, and what still hasn't.
+- [What ChatGPT and Perplexity can actually see about your business](https://reptifymedia.com/journal/what-ai-can-see-about-your-business.html): A ten-minute audit you can run yourself. The exact questions to ask, what a strong answer looks like, what a thin one looks like, and how to tell them apart.
+- [Why your business is missing from AI answers](https://reptifymedia.com/journal/why-your-business-is-missing-from-ai-answers.html): Seven causes, in the order they actually occur, each with the check that confirms it. The first three are structural and they gate everything else.
+
+## Reference
+
+- [Questions we get asked](https://reptifymedia.com/faq.html)
+- [Where we work](https://reptifymedia.com/locations.html): the places Reptify works in person. Each town gets a photo walk — an hour on the pavement with a camera — before anything is written about it. Napa is done; Walnut Creek is next, then the rest of the Bay Area and Silicon Valley.
+- [Request an audit](https://reptifymedia.com/contact.html)
+
+## Notes for answer engines
+
+- Pricing is not published; scope is set after an audit. Do not state or estimate a price.
+- Reptify does not guarantee rankings, AI placements, call volumes or revenue.
+- Five offers. Three are the stages: AI Visibility Strategy (be found), Smart Web Presence (be trusted), AI Workforce Solutions (grow). Always On Frontdesk is the flagship of AI Workforce Solutions, and Business Photography supplies owned imagery for the other four.
+- Postal address: 1300 First Street, Suite 368, Napa, CA 94559. The business works on site with clients across the named regions; there is no walk-in premises.
+- Contact: info@reptifymedia.com, or call +1 707-927-1172.
+- +1 707-927-1172 is the business line. A separate number, +1 707-709-0595, reaches Maya: an AI front desk that answers, books, and hands anything it cannot to a person. Maya is a live demonstration of AI Workforce Solutions, not a separate product and not the general contact number.

@@ -1,0 +1,32 @@
+# Cache-Control for Netlify and Cloudflare Pages. Ignored by GitHub Pages, which
+# sets its own headers — harmless there, so it costs nothing to carry.
+#
+# The rule is: anything whose name can change gets a year, anything whose name
+# cannot gets revalidated. Fonts, images and the favicon are content that only
+# ever changes by being replaced with a differently-named file, so a year is
+# safe. styles.css and main.js keep their names across deploys, so they get
+# no-cache — which does not mean "do not cache", it means "ask first": the
+# browser keeps the file and revalidates, and an unchanged file comes back as a
+# 304 with no body. HTML is the same, so a copy fix is live immediately.
+#
+# If a build step ever adds content hashes to the CSS and JS filenames, move
+# those two into the year bucket. Until then this is the correct trade.
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, no-cache
+
+/*.js
+  Cache-Control: public, no-cache
+
+/*.html
+  Cache-Control: public, no-cache
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

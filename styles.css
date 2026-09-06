@@ -10780,6 +10780,20 @@ h1.statement--sm { font-weight: 900; }
    its two-column block and its five-column index all start at x70. */
 #here > .wrap > .nf__note { margin-left: 0; }
 
+/* ── ( 06 ) FADES WHERE IT STANDS ─────────────────────────────────────────
+   The rise the owner is seeing is not the letters, which carry transform:
+   none. It is [data-reveal] itself: the global rule lifts every block 10px as
+   it fades, so the headline, the pull quote, the standfirst, the note AND the
+   solutions all arrived travelling.
+
+   Same call, and the same words, as .nmid--stat above: "the prose fades where
+   it stands... the transform is neutralised in both states so nothing is left
+   to travel." Opacity only here too. Neutralised in BOTH states rather than
+   just the resting one, because leaving the start at translateY(10px) and the
+   end at none is precisely what makes it travel. */
+.js #here [data-reveal],
+.js #here [data-reveal].in { transform: none; }
+
 /* The pull quote in ( 06 ). .pull has been in the sheet since the journal work
    and nothing ever used it; it is the right device and only needs tuning to
    this page's language. Two changes: the rule goes to the hairline weight the

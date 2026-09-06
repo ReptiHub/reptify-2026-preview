@@ -10277,7 +10277,7 @@ h1.statement--sm { font-weight: 900; }
   position: absolute; z-index: -1;
   right: clamp(.75rem, 2vw, 2rem); top: 50%; transform: translateY(-50%);
   font-family: var(--state); font-weight: 900;
-  font-size: clamp(3.5rem, 6vw, 5.5rem); line-height: .8;
+  font-size: clamp(4.75rem, 8.2vw, 8rem); line-height: .8;
   letter-spacing: -.06em;
   color: var(--ink); opacity: .08;
   pointer-events: none; user-select: none;
@@ -10316,12 +10316,25 @@ h1.statement--sm { font-weight: 900; }
    is content nobody can open. Below the gate the row becomes a stack and every
    description is simply visible, which is why nothing here is trapped. */
 @media (hover: hover) and (pointer: fine) and (min-width: 1100px) {
+  /* Three columns inside the row, at the owner's call: the name, the subtitle,
+     then the description. .npil__sum stops being a box so its two children
+     become grid items themselves; below this gate it is an ordinary block and
+     the three stack. The right padding reserves the numeral's lane rather than
+     giving it a fourth track, so it can still bleed to its own edge. */
+  .npil__sum { display: contents; }
   .npil__i {
     display: grid; align-items: center;
-    grid-template-columns: minmax(0, 27ch) minmax(0, 1fr);
-    column-gap: clamp(1.5rem, 4vw, 3.5rem);
-    padding-right: clamp(4.5rem, 8vw, 8rem);
+    /* 9.2 / 14 / rest, measured rather than picked. At 11.5em three of the five
+       subtitles ran to three lines and the rows came out 112/138/138/138/112;
+       at 16em the description column is squeezed and row four's paragraph goes
+       to three. At 14em every row is 2 lines of name, 2 of subtitle and 2 of
+       description, and all five rows are exactly 112px, which is what keeps the
+       hover from shifting anything. */
+    grid-template-columns: minmax(0, 9.2em) minmax(0, 14em) minmax(0, 1fr);
+    column-gap: clamp(1.25rem, 3vw, 2.75rem);
+    padding-right: clamp(5.5rem, 10vw, 10rem);
   }
+  .npil__s { margin-top: 0; }
   .npil__b { opacity: 0; }
   .npil__b p { border-top: 0; padding-top: 0; margin-top: 0; max-width: none; }
   @media (prefers-reduced-motion: no-preference) {

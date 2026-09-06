@@ -10200,9 +10200,21 @@ h1.statement--sm { font-weight: 900; }
 }
 
 /* numbered principles: number, name, grey subtitle, hairline, small paragraph */
+/* Five, not four. AI Workforce Solutions joined the set, and five is a prime —
+   it does not divide into the old 2 and 4 tracks without leaving a lone item on
+   a row of its own, which reads as something missing rather than as the last of
+   five. So: three then two below 1200, and a single row of five above it, where
+   the whole set can be taken in at once.
+
+   The column gap tightens at five because it has to be paid for out of the same
+   1260px. At the old 6vw gutter, five tracks measured 185px each and
+   "AI Visibility Strategy" broke to three lines; at 3vw they measure 218px and
+   it sets in two. The row gap keeps --v5 for the 3+2 case. */
 .nprin { display: grid; gap: var(--v5) clamp(2.5rem, 6vw, 6rem); margin-top: var(--v6); }
-@media (min-width: 861px) { .nprin { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1200px) { .nprin { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 861px) { .nprin { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) {
+  .nprin { grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: clamp(1.5rem, 3vw, 3rem); }
+}
 .nprin__i { display: grid; align-content: start; gap: var(--v1); }
 .nprin__n { font-family: var(--work); font-size: var(--a7); color: var(--ink-65); font-variant-numeric: tabular-nums; }
 .nf--ink .nprin__n { color: var(--chalk-40); }

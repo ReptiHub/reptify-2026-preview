@@ -10256,7 +10256,7 @@ h1.statement--sm { font-weight: 900; }
   /* --a6, back down from --a5 at the owner's call, and it was the right read:
      the horizontal strip was the fault, not the size. In a ruled column small
      type stops being chrome and becomes an index — a set of entries rather than
-     a set of labels — and it holds its rows tighter, which is what makes seven
+     a set of labels — and it holds its rows tighter, which is what makes eight
      of them look deliberate instead of long.
 
      Colour back to --ink-70 and the rows back to .46em, at the owner's call:
@@ -10271,20 +10271,9 @@ h1.statement--sm { font-weight: 900; }
   border-top: 1px solid var(--ink-15);
 }
 /* the last rule closes the ledger; without it the column ends on air and the
-   final fault reads as unfinished rather than as the last of seven */
+   final fault reads as unfinished rather than as the last of eight */
 .nfric li:last-child { border-bottom: 1px solid var(--ink-15); }
 
-/* The coda. The ledger lists seven faults without saying whether any of them is
-   the reader's — which is the honest position, since nobody here has looked at
-   their business yet. This line says that out loud, and it is the sentence that
-   turns a list into a question the reader answers themselves. Set at the
-   ledger's own size and indented by nothing: it belongs to the column above it,
-   not to the prose beside it. */
-.nfric__coda {
-  font-family: var(--work); font-size: var(--a6); color: var(--ink-70);
-  line-height: 1.5; max-width: 34ch;
-  margin: clamp(1rem, 2vw, 1.5rem) 0 0;
-}
 .nfric li:first-child { padding-left: 0; border-left: 0; }
 .nf--ink .nfric li { color: var(--chalk-65); border-left-color: var(--chalk-line); }
 

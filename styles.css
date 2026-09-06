@@ -10511,39 +10511,9 @@ h1.statement--sm { font-weight: 900; }
    A column with rules between rows is a ledger, which is what a list of found
    faults should look like. --a5, so it shares the body's rank rather than
    sitting below it: this is evidence, not a caption. */
-.nfric {
-  display: grid;
-  list-style: none; padding: 0;
-  /* --v4, the gap every other block in the fold uses. At margin 0 the first
-     rule sat on the baseline of "...go looking for them." with nothing between
-     them, so the sentence read as the list's first row rather than as its
-     introduction. */
-  margin: var(--v4) 0 0;
-}
-.nfric li {
-  /* --a6, back down from --a5 at the owner's call, and it was the right read:
-     the horizontal strip was the fault, not the size. In a ruled column small
-     type stops being chrome and becomes an index — a set of entries rather than
-     a set of labels — and it holds its rows tighter, which is what makes eight
-     of them look deliberate instead of long.
-
-     Colour back to --ink-70 and the rows back to .46em, at the owner's call:
-     "these were smaller before and I like them with that size." The size never
-     moved — --a6 then, --a6 now — so what had grown was the block, not the
-     type. Full ink and .72em rows made each fault a 42px band; at --ink-70 and
-     .46em they are 35px, which is the weight the horizontal strip had before
-     the ledger, in a column that still reads as an index. */
-  font-family: var(--work); font-size: var(--a6); color: var(--ink-70);
-  line-height: 1.4;
-  padding: .46em 0;
-  border-top: 1px solid var(--ink-15);
-}
 /* the last rule closes the ledger; without it the column ends on air and the
    final fault reads as unfinished rather than as the last of eight */
-.nfric li:last-child { border-bottom: 1px solid var(--ink-15); }
 
-.nfric li:first-child { padding-left: 0; border-left: 0; }
-.nf--ink .nfric li { color: var(--chalk-65); border-left-color: var(--chalk-line); }
 
 /* a fold's second head, mid-fold, after a run of photographs */
 .nf__head + .nf__say { margin-top: var(--v4); }
@@ -10709,17 +10679,6 @@ h1.statement--sm { font-weight: 900; }
 #walk figcaption,
 #walk .eyebrow { color: var(--ink); }
 
-.nask { list-style: none; margin: var(--v5) 0 0; padding: 0; display: grid; gap: clamp(.5rem, 1.2vw, .8rem); }
-.nask li {
-  /* 500, down from 700. The size was never the problem — the weight was. At 700
-     these four questions outweighed the body they sit beside and the standfirst
-     they sit under, which is what made the eye jump back up the fold. At 500
-     they are the standfirst's twin: same family, same size, same weight, one
-     rank used twice. */
-  font-family: var(--state); font-weight: 500;
-  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
-}
-@media (min-width: 861px) { .nask { margin-left: 12%; } }
 
 /* a bold beat inside running copy holds full strength on the ink ground,
    where the note around it sits at 65% */
@@ -10768,10 +10727,6 @@ h1.statement--sm { font-weight: 900; }
   .nmid--cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
                   column-gap: clamp(2rem, 5vw, 5rem); align-items: start; }
   .nmid--cols > div > .nf__note { max-width: none; }
-  /* .nask carries a 12% indent everywhere else on the page. In this column it
-     is the last of four blocks sharing one left edge, and 12% would break the
-     only vertical line the composition has. */
-  .nmid--cols > div > .nask { margin-left: 0; margin-top: var(--v4); }
 
 /* ( 06 )'s closing line was the only element in its fold at x221. The 12%
    cascade indent .nf__note carries is right inside ( 01 )'s half-column split,
@@ -10779,6 +10734,51 @@ h1.statement--sm { font-weight: 900; }
    .wrap and the indent aligned it to nothing, against a fold whose meta line,
    its two-column block and its five-column index all start at x70. */
 #here > .wrap > .nf__note { margin-left: 0; }
+
+/* ── ( 05 ) THE AUDIT ──────────────────────────────────────────────────────
+   Was .nfric, eight faults ruled down a column, and .nask, four questions
+   under it. Two lists doing one job with nothing joining them. Both are gone;
+   this is the pair.
+
+   No new type. The question takes the rank .nask already had — --a4 at weight
+   500, which is the standfirst's twin — and the faults take --a6 at --ink-70,
+   which is what the ledger rows were. Measured after: the fold still shows six
+   sizes, same as before — the saving is one block, not one rank, and claiming
+   otherwise would have been easy to write and wrong.
+
+   Ruled above each group rather than between every row. Eight hairlines for
+   eight faults was the ledger's shape and it is the wrong one here: the rule
+   now marks where a new question starts, so the eye gets four groups instead
+   of twelve items. */
+.naud { margin: var(--v4) 0 0; }
+.naud__g {
+  border-top: 1px solid var(--ink-15);
+  padding-top: var(--v2);
+  margin-top: var(--v2);
+}
+.naud__g:first-child { margin-top: 0; }
+.naud__q {
+  margin: 0 0 .5rem;
+  font-family: var(--state); font-weight: 500;
+  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
+  color: var(--ink);
+}
+.naud dd {
+  margin: 0; padding-left: 1.1em; position: relative;
+  font-family: var(--work); font-size: var(--a6); line-height: 1.5;
+  color: var(--ink-70);
+}
+.naud dd + dd { margin-top: .28em; }
+/* a hairline dash, not a bullet: these are symptoms listed under a question,
+   and the page has no bulleted list anywhere else */
+.naud dd::before {
+  content: ''; position: absolute; left: 0; top: .72em;
+  width: .55em; height: 1px; background: var(--ink-40, rgba(21,24,27,.4));
+}
+.nf--ink .naud__g { border-top-color: var(--chalk-line); }
+.nf--ink .naud__q { color: var(--chalk); }
+.nf--ink .naud dd { color: var(--chalk-65); }
+.nf--ink .naud dd::before { background: var(--chalk-40); }
 
 /* ── ( 06 ) FADES WHERE IT STANDS ─────────────────────────────────────────
    The rise the owner is seeing is not the letters, which carry transform:
@@ -10822,10 +10822,6 @@ h1.statement--sm { font-weight: 900; }
   .nmid--cols { display: flex; flex-direction: column; }
   #owners .nf__head    { order: 1; }
   #owners .nf__say     { order: 2; }
-  #owners .nfric__lead { order: 3; }
-  #owners .nfric       { order: 4; }
-  #owners .nmid--cols > div > .nf__note:not(.nfric__lead) { order: 5; }
-  #owners .nask { order: 6; }
   #owners .nmid--cols > div > .nf__note:last-child { order: 7; }
 }
 
@@ -10855,9 +10851,9 @@ h1.statement--sm { font-weight: 900; }
    right-hand column that answered to nothing. One column here until .nmid takes
    its second one. */
 @media (min-width: 861px) {
-  .nf__grid > .nf__say, .nf__grid > .nf__note, .nf__grid > .nfric, .nf__grid > .nask,
-  .nf__grid > div > .nf__note, .nf__grid > div > .nask { margin-left: 0; }
-  .nf__grid > .nf__say, .nf__grid > .nf__note, .nf__grid > .nfric, .nf__grid > .nask,
+  /* .nfric and .nask came out of this list with the fold that used them; the
+     line was also duplicated verbatim, which changed nothing and hid that. */
+  .nf__grid > .nf__say, .nf__grid > .nf__note,
   .nf__grid > div > :first-child { margin-top: 0; }
 
   /* a lone note after a full-band element sits in the right field instead of
@@ -10965,7 +10961,6 @@ h1.statement--sm { font-weight: 900; }
   .nhero2 .nf__say { margin-left: 0; margin-top: var(--v4); max-width: 26ch; }
   /* text at the photograph's width: one column, one left edge, no solo
      cascade indents inside it */
-  .nhero2__main .nf__note, .nhero2__main .nask { margin-left: 0; }
 
   /* the Journal h1's exact spec — same face and weight already, so the match
      is size and set: --a0, solid line, -.045em. The rail is the same kind of

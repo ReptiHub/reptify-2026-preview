@@ -522,30 +522,43 @@
             <p>That gap is digital friction. Some of it may already exist in your business without being obvious to you, and there is a simple reason: you already know the answers. You know your hours, your services, how to book, where to go and who to call. Your customer does not. They have to go looking for those answers, and every place they struggle to find one creates friction.</p>
           </div>
 
-          <!-- THE LEDGER. Eight faults, the most concrete and most human thing
-               on the page: a reader recognises their own business in "Old
-               photographs" faster than in any paragraph around it. Down a
-               column with the rules running BETWEEN the rows, at --a6, it
-               reads as what it is — a list of things found. -->
-          <ul class="nfric" data-reveal>
-            <li>Wrong hours</li>
-            <li>An unanswered call</li>
-            <li>A confusing booking path</li>
-            <li>An inconsistent address</li>
-            <li>Old photographs</li>
-            <li>A service that&rsquo;s difficult to find</li>
-            <li>A question nobody answers online</li>
-            <li>A polished website that hides basic information</li>
-          </ul>
+          <!-- THE AUDIT. The eight faults and the four questions were two
+               lists doing one job: a ledger of symptoms, then a test, with
+               nothing joining them. Every fault is a failure of one of the
+               questions, so they are paired and the questions become the spine.
 
-          <!-- THE TEST. Four questions, the fold's closing rank, ending the
-               concrete column the eight faults began. -->
-          <ul class="nask" data-reveal>
-            <li>Can they find you?</li>
-            <li>Can they understand you?</li>
-            <li>Can they trust what they find?</li>
-            <li>Can they take the next step?</li>
-          </ul>
+               The mapping is real rather than decorative, which is what made
+               this shape worth building: all eight faults keep their place, two
+               under each question, and none had to be cut or invented to make
+               the arithmetic come out.
+
+               A <dl>, because that is what this is — four terms, each with the
+               symptoms that describe it. Better markup than two <ul>s for a
+               screen reader and for anything trying to answer a question about
+               the business. Not a table: CLAUDE.md section 10 rules out the
+               data grid, and this reads as an index, ruled as the ledger was. -->
+          <dl class="naud" data-reveal>
+            <div class="naud__g">
+              <dt class="naud__q">Can they find you?</dt>
+              <dd>An inconsistent address</dd>
+              <dd>A service that&rsquo;s difficult to find</dd>
+            </div>
+            <div class="naud__g">
+              <dt class="naud__q">Can they understand you?</dt>
+              <dd>A question nobody answers online</dd>
+              <dd>A polished website that hides basic information</dd>
+            </div>
+            <div class="naud__g">
+              <dt class="naud__q">Can they trust what they find?</dt>
+              <dd>Wrong hours</dd>
+              <dd>Old photographs</dd>
+            </div>
+            <div class="naud__g">
+              <dt class="naud__q">Can they take the next step?</dt>
+              <dd>An unanswered call</dd>
+              <dd>A confusing booking path</dd>
+            </div>
+          </dl>
         </div>
 
         <div>
@@ -557,8 +570,8 @@
           </div>
 
           <div class="nf__note" data-reveal>
-            <p>And can a search or AI system understand enough about the business to include you when somebody asks? That is the test.</p>
-            <p>The industry has names for pieces of this &mdash; SEO, AEO, GEO, local search, citation consistency, AI visibility. We care about the outcome: every unnecessary uncertainty gives someone another reason to keep searching.</p>
+            <p>And can a search or AI system understand enough to include you when somebody asks? That is the same four questions, asked by something that will not phone you to check.</p>
+            <p>Every unnecessary uncertainty gives someone another reason to keep searching.</p>
           </div>
         </div>
       </div>

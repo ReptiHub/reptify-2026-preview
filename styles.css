@@ -10599,6 +10599,15 @@ h1.statement--sm { font-weight: 900; }
 }
 .nhero2 figure { margin: 0; }
 .nhero2 img { display: block; width: 100%; height: auto; }
+
+/* The hero standfirst runs at 3x --a5, at the owner's call. Scoped to .nhero2
+   on purpose: the global .nf__say came DOWN twice on his instruction (--a3 to
+   --a4 to --a5) for the folds, and that stands. Only the hero's line grows.
+
+   The clamp is --a5's own clamp multiplied through, so the ratio holds at every
+   viewport rather than only at the width it was checked on:
+   3 x clamp(1.0625rem, .4167vw + .75rem, 1.3125rem). */
+.nhero2__rail .nf__say { font-size: clamp(3.1875rem, 1.25vw + 2.25rem, 3.9375rem); }
 @media (min-width: 861px) {
   .nhero2 {
     /* the Journal's own split, 1 : 1.58 — the photograph is the wide column

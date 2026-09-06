@@ -10250,7 +10250,12 @@ h1.statement--sm { font-weight: 900; }
    sitting below it: this is evidence, not a caption. */
 .nfric {
   display: grid;
-  list-style: none; padding: 0; margin: 0;
+  list-style: none; padding: 0;
+  /* --v4, the gap every other block in the fold uses. At margin 0 the first
+     rule sat on the baseline of "...go looking for them." with nothing between
+     them, so the sentence read as the list's first row rather than as its
+     introduction. */
+  margin: var(--v4) 0 0;
 }
 .nfric li {
   /* --a6, back down from --a5 at the owner's call, and it was the right read:
@@ -11583,13 +11588,14 @@ h1.statement--sm { font-weight: 900; }
     /* Starts above the 2025 tick and lands above 2026. The x values are the
        tick positions, so the figure is always over the year it is reporting
        rather than near it. */
-    /* The 10% stop carries opacity alone. Properties absent from a keyframe keep
-       interpolating between the ones that do declare them, so the counter and
-       the transform still run the full range while the figure fades in over the
-       first tenth of it. */
+    /* No opacity ramp any more, at the owner's call: "don't start the 6% as
+       invisible." It opened at 0 and reached full only a tenth of the way in,
+       which meant the first thing the reader met at the top of the climb was a
+       numeral they could barely read against the ink. The growth still carries
+       the reveal — .32 to 1 is a threefold change in size travelling the whole
+       lane, which is plenty of event without also dimming the figure. */
     @keyframes ngrow-climb {
-      from { --ngrow-n: 6;  opacity: 0; transform: translateX(0) scale(.32); }
-      10%  { opacity: 1; }
+      from { --ngrow-n: 6;  opacity: 1; transform: translateX(0) scale(.32); }
       /* 100cqw - 100%: the lane's width less the figure's own, which lands its
          RIGHT edge on the lane's right edge — the same edge 2026 is pinned to
          by --end. It was 33.33cqw - 50% when 2026 sat a third of the way along

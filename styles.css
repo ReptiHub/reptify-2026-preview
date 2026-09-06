@@ -10268,6 +10268,10 @@ h1.statement--sm { font-weight: 900; }
      the same factor cannot change that at any viewport. Stepping to --a2/--a5
      instead would have drifted, since --a5 is not a pure-vw clamp like the
      others: 2.00 at 1400 but 2.45 at 1920. */
+  /* .8 is the floor. The scale exists to buy air inside the three-column bar,
+     and below the gate there is no bar: the cards stack and the type is just
+     type. At .7 the subtitle measured 13.4px at 375, which is small for a
+     phone and buys nothing there. The bar's own .7 is set inside the gate. */
   --npil-scale: .8;
 }
 
@@ -10277,7 +10281,7 @@ h1.statement--sm { font-weight: 900; }
   border: 1px solid var(--ink-15);
   border-left: 2px solid transparent;
   border-radius: 2px;
-  padding: clamp(1.2rem, 2.4vw, 1.8rem) clamp(1.4rem, 3vw, 2.4rem);
+  padding: clamp(.85rem, 1.6vw, 1.25rem) clamp(1.4rem, 3vw, 2.4rem);
 }
 
 /* the numeral holds the right end of the row, behind everything. z-index -1
@@ -10345,6 +10349,7 @@ h1.statement--sm { font-weight: 900; }
      longest description and the next copy edit should not be able to break the
      one thing that keeps the hover from shifting anything. */
   .npil {
+    --npil-scale: .7;
     grid-auto-rows: 1fr;
     grid-template-columns: max-content max-content minmax(0, 1fr);
   }

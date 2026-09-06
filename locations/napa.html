@@ -522,41 +522,75 @@
             <p>That gap is digital friction. Some of it may already exist in your business without being obvious to you, and there is a simple reason: you already know the answers. You know your hours, your services, how to book, where to go and who to call. Your customer does not. They have to go looking for those answers, and every place they struggle to find one creates friction.</p>
           </div>
 
-          <!-- THE AUDIT. The eight faults and the four questions were two
-               lists doing one job: a ledger of symptoms, then a test, with
-               nothing joining them. Every fault is a failure of one of the
-               questions, so they are paired and the questions become the spine.
+          <!-- THE AUDIT, as two sides of the counter. The lead paragraph
+               already makes this argument — "you already know the answers...
+               your customer does not" — and until now the fold only stated it.
+               Here it is shown: every question carries what the owner knows
+               beside what the customer actually finds, and the gap between the
+               two columns IS the point.
 
-               The mapping is real rather than decorative, which is what made
-               this shape worth building: all eight faults keep their place, two
-               under each question, and none had to be cut or invented to make
-               the arithmetic come out.
+               The eight faults keep their place as the "they find" side, two
+               per question, and eight matching lines were written for the
+               other. Each pair is a real gap rather than a restatement.
 
-               A <dl>, because that is what this is — four terms, each with the
-               symptoms that describe it. Better markup than two <ul>s for a
-               screen reader and for anything trying to answer a question about
-               the business. Not a table: CLAUDE.md section 10 rules out the
-               data grid, and this reads as an index, ruled as the ledger was. -->
+               Reference: 21st's "Us vs Them Comparison" (id 21217) for the
+               paired-column structure. Its check and cross iconography is
+               deliberately NOT taken — CLAUDE.md section 10 rules out icon
+               grids, so the contrast is carried by type weight and a rule.
+               And it is not us against them: it is the owner against what the
+               street can see, which is a gap to close rather than a rival.
+
+               The labels are in the markup rather than in CSS content, so a
+               screen reader gets the pairing on every row. They are hidden
+               where the column heads do that job and shown where they do
+               not. -->
           <dl class="naud" data-reveal>
+            <div class="naud__head" aria-hidden="true">
+              <span>You know</span><span>They find</span>
+            </div>
             <div class="naud__g">
               <dt class="naud__q">Can they find you?</dt>
-              <dd>An inconsistent address</dd>
-              <dd>A service that&rsquo;s difficult to find</dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>The building, and the cross street everyone uses</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>An inconsistent address</span>
+              </dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>Every service you offer, including the one you are best at</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>A service that is difficult to find</span>
+              </dd>
             </div>
             <div class="naud__g">
               <dt class="naud__q">Can they understand you?</dt>
-              <dd>A question nobody answers online</dd>
-              <dd>A polished website that hides basic information</dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>The question you are asked every week</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>A question nobody answers online</span>
+              </dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>Where the important information is</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>A polished website that hides basic information</span>
+              </dd>
             </div>
             <div class="naud__g">
               <dt class="naud__q">Can they trust what they find?</dt>
-              <dd>Wrong hours</dd>
-              <dd>Old photographs</dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>When you are actually open</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>Wrong hours</span>
+              </dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>What the place looks like now</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>Old photographs</span>
+              </dd>
             </div>
             <div class="naud__g">
               <dt class="naud__q">Can they take the next step?</dt>
-              <dd>An unanswered call</dd>
-              <dd>A confusing booking path</dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>That you would have called them back</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>An unanswered call</span>
+              </dd>
+              <dd class="naud__p">
+                <span class="naud__k"><b class="naud__lbl">You know</b>How to book someone in</span>
+                <span class="naud__f"><b class="naud__lbl">They find</b>A confusing booking path</span>
+              </dd>
             </div>
           </dl>
         </div>

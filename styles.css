@@ -10735,50 +10735,6 @@ h1.statement--sm { font-weight: 900; }
    its two-column block and its five-column index all start at x70. */
 #here > .wrap > .nf__note { margin-left: 0; }
 
-/* ── ( 05 ) THE AUDIT ──────────────────────────────────────────────────────
-   Was .nfric, eight faults ruled down a column, and .nask, four questions
-   under it. Two lists doing one job with nothing joining them. Both are gone;
-   this is the pair.
-
-   No new type. The question takes the rank .nask already had — --a4 at weight
-   500, which is the standfirst's twin — and the faults take --a6 at --ink-70,
-   which is what the ledger rows were. Measured after: the fold still shows six
-   sizes, same as before — the saving is one block, not one rank, and claiming
-   otherwise would have been easy to write and wrong.
-
-   Ruled above each group rather than between every row. Eight hairlines for
-   eight faults was the ledger's shape and it is the wrong one here: the rule
-   now marks where a new question starts, so the eye gets four groups instead
-   of twelve items. */
-.naud { margin: var(--v4) 0 0; }
-.naud__g {
-  border-top: 1px solid var(--ink-15);
-  padding-top: var(--v2);
-  margin-top: var(--v2);
-}
-.naud__g:first-child { margin-top: 0; }
-.naud__q {
-  margin: 0 0 .5rem;
-  font-family: var(--state); font-weight: 500;
-  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
-  color: var(--ink);
-}
-.naud dd {
-  margin: 0; padding-left: 1.1em; position: relative;
-  font-family: var(--work); font-size: var(--a6); line-height: 1.5;
-  color: var(--ink-70);
-}
-.naud dd + dd { margin-top: .28em; }
-/* a hairline dash, not a bullet: these are symptoms listed under a question,
-   and the page has no bulleted list anywhere else */
-.naud dd::before {
-  content: ''; position: absolute; left: 0; top: .72em;
-  width: .55em; height: 1px; background: var(--ink-40, rgba(21,24,27,.4));
-}
-.nf--ink .naud__g { border-top-color: var(--chalk-line); }
-.nf--ink .naud__q { color: var(--chalk); }
-.nf--ink .naud dd { color: var(--chalk-65); }
-.nf--ink .naud dd::before { background: var(--chalk-40); }
 
 /* ── ( 06 ) FADES WHERE IT STANDS ─────────────────────────────────────────
    The rise the owner is seeing is not the letters, which carry transform:
@@ -10811,6 +10767,73 @@ h1.statement--sm { font-weight: 900; }
      the statement share one baseline and the two columns start together */
   .nmid--cols > div > :first-child { margin-top: 0; }
 }
+
+/* ── ( 05 ) THE AUDIT, TWO SIDES ───────────────────────────────────────────
+   OUTSIDE the 861 query, and it sat inside it for two commits. These rules
+   were written against an anchor that lives in that block, so every .naud rule
+   inherited the gate and the audit went unstyled below 861: the column head
+   showed, the labels were visible by accident rather than by design, and none
+   of the type or the rules applied. The structural checks passed throughout,
+   because an unstyled dl still stacks and still counts four groups and eight
+   rows. Only the base belongs out here; the two columns stay gated.
+
+   Every question carries what the owner knows beside what the customer finds.
+   The gap between the columns is the argument, so they are equal width and the
+   weight does the talking: known at --ink-70, found at full ink, because the
+   fault is the thing to notice.
+
+   From 21st's "Us vs Them Comparison" (id 21217), structure only. Its check
+   and cross rows are deliberately not taken: section 10 rules out icon grids,
+   so the contrast is a rule between the columns and a difference in weight.
+   And it is not us against them, it is the owner against what the street can
+   see, which is a gap to close rather than a rival.
+
+   No new type: question at --a4/500, both sides at --a6. */
+.naud { margin: var(--v4) 0 0; }
+.naud__head { display: none; }
+.naud__g { border-top: 1px solid var(--ink-15); padding-top: var(--v2); margin-top: var(--v2); }
+.naud__g:first-of-type { margin-top: 0; }
+.naud__q {
+  margin: 0 0 .6rem;
+  font-family: var(--state); font-weight: 500;
+  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em; color: var(--ink);
+}
+.naud__p { margin: 0; }
+.naud__p + .naud__p { margin-top: .5rem; }
+.naud__k, .naud__f { display: block; font-family: var(--work); font-size: var(--a6); line-height: 1.5; }
+.naud__k { color: var(--ink-70); }
+.naud__f { color: var(--ink); }
+/* the pairing for anyone who cannot see the columns. --ink-70, not the .45 I
+   first used: at 13px this is normal text and wants 4.5:1, and .45 measured
+   2.85 on the card ground. */
+.naud__lbl {
+  display: inline-block; min-width: 5.5em;
+  font-weight: 400; color: var(--ink-70);
+  font-size: .82em; letter-spacing: .04em; text-transform: uppercase;
+}
+
+@media (min-width: 861px) {
+  .naud__head {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(1.5rem, 3vw, 2.75rem);
+    font-family: var(--work); font-size: .78rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-70); padding-bottom: .5rem;
+  }
+  .naud__p {
+    display: grid; grid-template-columns: 1fr 1fr;
+    column-gap: clamp(1.5rem, 3vw, 2.75rem); align-items: start;
+  }
+  .naud__p + .naud__p { margin-top: .45rem; }
+  .naud__f { border-left: 1px solid var(--ink-15); padding-left: clamp(1rem, 2vw, 1.5rem); }
+  .naud__lbl { position: absolute; width: 1px; height: 1px; overflow: hidden;
+               clip-path: inset(50%); white-space: nowrap; }
+}
+
+.nf--ink .naud__g { border-top-color: var(--chalk-line); }
+.nf--ink .naud__q { color: var(--chalk); }
+.nf--ink .naud__k { color: var(--chalk-40); }
+.nf--ink .naud__f { color: var(--chalk); border-left-color: var(--chalk-line); }
+.nf--ink .naud__head, .nf--ink .naud__lbl { color: var(--chalk-65); }
+
 
 /* Stacking the two columns would read headline, lead, the eight faults, and
    only then the statement — the fold's opening sentence arriving after the list

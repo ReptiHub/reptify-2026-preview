@@ -10222,22 +10222,104 @@ h1.statement--sm { font-weight: 900; }
    1260px. At the old 6vw gutter, five tracks measured 185px each and
    "AI Visibility Strategy" broke to three lines; at 3vw they measure 218px and
    it sets in two. The row gap keeps --v5 for the 3+2 case. */
-.nprin { display: grid; gap: var(--v5) clamp(2.5rem, 6vw, 6rem); margin-top: var(--v6); }
-@media (min-width: 861px) { .nprin { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (min-width: 1200px) {
-  .nprin { grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: clamp(1.5rem, 3vw, 3rem); }
+/* ── THE FIVE SOLUTIONS ────────────────────────────────────────────────────
+   Was a five-across index of number, name, grey subtitle, hairline, paragraph.
+   Now an accordion of five wide cards with the numeral behind each one, at the
+   owner's call. Worth recording that this is a deliberate departure from
+   CLAUDE.md sections 6 and 10, which rule out a service-card grid on a location
+   page, and from this block's own former comment: "Not cards: nothing to hover,
+   nothing raised, nothing lit."
+
+   What keeps it inside the page's language rather than becoming a SaaS feature
+   grid: no shadow and no lift, the card is a lighter ground rather than a
+   raised object; 2px radius, which is .qcard's, the page's documented card
+   radius; the only accent is --brand on the open card's left rule, and it is
+   the one accent the site already uses; and the numeral is the same device the
+   index had, enlarged and put behind rather than above.
+
+   Native <details name="npil"> does the exclusive accordion. No script, no
+   state, nothing to clean up, keyboard and find-in-page work by default. */
+.npil { display: grid; gap: clamp(.6rem, 1.2vw, 1rem); margin-top: var(--v6); }
+
+.npil__i {
+  position: relative; isolation: isolate; overflow: clip;
+  background: var(--chalk);
+  border: 1px solid var(--ink-15);
+  border-left: 2px solid transparent;
+  border-radius: 2px;
 }
-.nprin__i { display: grid; align-content: start; gap: var(--v1); }
-.nprin__n { font-family: var(--work); font-size: var(--a7); color: var(--ink-65); font-variant-numeric: tabular-nums; }
-.nf--ink .nprin__n { color: var(--chalk-40); }
-.nprin__h { font-family: var(--state); font-weight: 700; font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; margin: 0; }
-.nprin__s { font-family: var(--state); font-weight: 500; font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; color: var(--ink-65); margin: 0; }
-.nf--ink .nprin__s { color: var(--chalk-40); }
-.nprin__i p:last-child {
-  border-top: 1px solid var(--ink-15); padding-top: var(--v2); margin-top: var(--v2);
+.npil__i[open] { border-left-color: var(--brand); }
+@media (prefers-reduced-motion: no-preference) {
+  .npil__i { transition: border-color .28s var(--ease), background-color .28s var(--ease); }
+}
+.npil__i:hover, .npil__i:focus-within { border-color: var(--ink-40, rgba(21,24,27,.4)); }
+.npil__i:hover { border-left-color: var(--brand); }
+.npil__i[open]:hover { border-left-color: var(--brand); }
+
+/* the numeral, bleeding off the right and sitting under everything. z-index -1
+   inside the card's own stacking context, so it cannot escape upward. */
+.npil__n {
+  position: absolute; z-index: -1;
+  right: -.06em; top: 50%; transform: translateY(-50%);
+  font-family: var(--state); font-weight: 900;
+  font-size: clamp(5rem, 11vw, 10rem); line-height: .8;
+  letter-spacing: -.06em;
+  color: var(--ink); opacity: .05;
+  pointer-events: none; user-select: none;
+}
+
+.npil__sum {
+  display: grid; align-items: baseline;
+  gap: .35rem clamp(1rem, 2.5vw, 2rem);
+  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.4rem);
+  cursor: pointer; list-style: none;
+}
+.npil__sum::-webkit-details-marker { display: none; }
+.npil__sum:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; }
+
+.npil__h {
+  margin: 0; font-family: var(--state); font-weight: 700;
+  font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; color: var(--ink);
+}
+.npil__s {
+  font-family: var(--state); font-weight: 500;
+  font-size: var(--a4); line-height: 1.14; letter-spacing: -.02em; color: var(--ink-65);
+}
+
+/* the +/- is the site's own accordion marker, from .qa in ( 07 ) */
+.npil__sum::after {
+  content: '+'; grid-area: mark; justify-self: end; align-self: center;
+  font-family: var(--work); font-size: var(--a4); line-height: 1; color: var(--ink-65);
+}
+.npil__i[open] .npil__sum::after { content: '\2013'; }
+
+.npil__b { padding: 0 clamp(1.4rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.2rem); }
+.npil__b p {
+  margin: 0; max-width: 64ch;
+  border-top: 1px solid var(--ink-15); padding-top: var(--v2);
   font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
 }
-.nf--ink .nprin__i p:last-child { border-top-color: var(--chalk-line); color: var(--chalk-65); }
+
+/* one row below the split, three columns above it: numeral column is the
+   bleed and takes no track, so the name and the subtitle share the line and
+   the marker holds the right edge. */
+.npil__sum { grid-template-areas: 'h mark' 's mark'; grid-template-columns: minmax(0,1fr) auto; }
+@media (min-width: 861px) {
+  .npil__sum {
+    grid-template-areas: 'h s mark';
+    grid-template-columns: minmax(0, 22ch) minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+.npil__h { grid-area: h; }
+.npil__s { grid-area: s; }
+
+/* the ink folds invert the same way every other device on this page does */
+.nf--ink .npil__i { background: var(--ink-lift-2, rgba(255,255,255,.04)); border-color: var(--chalk-line); }
+.nf--ink .npil__n { color: var(--chalk); opacity: .07; }
+.nf--ink .npil__h { color: var(--chalk); }
+.nf--ink .npil__s, .nf--ink .npil__sum::after { color: var(--chalk-40); }
+.nf--ink .npil__b p { border-top-color: var(--chalk-line); color: var(--chalk-65); }
 
 /* the hero's head is the one --a0 on the page */
 .nf__head--hero { font-size: var(--a0); max-width: 20ch; }

@@ -10471,6 +10471,35 @@ h1.statement--sm { font-weight: 900; }
    ledger's right column rather than the fold's last beat. --v6 is the same step
    the fold uses to separate itself from the one above. */
 .nf__grid--test { margin-top: var(--v6); }
+
+/* ── ONE GRID FOR THE WHOLE FOLD ───────────────────────────────────────────
+   ( 05 ) was running two different grids and they did not line up. .nmid sets
+   595px tracks with a 70px gutter, so the standfirst opens at x735; .nf__grid
+   sets 614px tracks with a 32px gutter, so the prose beneath it opened at x716.
+   Nineteen pixels apart is the worst kind of misalignment — near enough to look
+   intended, far enough to look wrong — and the prose then stopped 163px short
+   of the standfirst's right edge because of its own 38ch cap.
+
+   The fold's opening statement owns the rails and everything below follows it.
+   Scoped to #owners rather than changed on .nf__grid, which other folds use
+   with the tighter gutter they were designed around.
+
+   The cap comes off with it. 38ch was right when this note sat in a 614px
+   column beside a full-width band; in a 595px column whose only job is to hold
+   it, the cap left a third of the measure empty and broke the right edge the
+   standfirst had already established. */
+@media (min-width: 861px) {
+  #owners .nf__grid { column-gap: clamp(2rem, 5vw, 5rem); }
+  #owners .nf__grid > .nf__note { max-width: none; }
+}
+/* And the same breakpoint, not only the same track. .nmid splits at 950 and
+   .nf__grid at 861, so between those two widths the fold ran one stacked grid
+   above two split ones — the standfirst full width, the prose beneath it in a
+   right-hand column that answered to nothing. One column here until .nmid takes
+   its second one. */
+@media (min-width: 861px) and (max-width: 949px) {
+  #owners .nf__grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--v4); }
+}
 @media (min-width: 861px) {
   .nf__grid > .nf__say, .nf__grid > .nf__note, .nf__grid > .nfric, .nf__grid > .nask,
   .nf__grid > div > .nf__note, .nf__grid > div > .nask { margin-left: 0; }

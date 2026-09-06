@@ -10110,8 +10110,13 @@ h1.statement--sm { font-weight: 900; }
 }
 .nf__say {
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a3); line-height: 1.2; letter-spacing: -.01em;
-  max-width: 30ch; margin: var(--v5) 0 0;
+  /* --a4, not --a3. At --a3 this measured 28.6px against the headline's 44.7 —
+     64% of it, close enough that the two read as one long shout rather than a
+     statement and its setup. --a4 is 22.8px, half the headline, and it is the
+     same rank the questions now sit on, so the fold has one supporting size
+     instead of two. */
+  font-size: var(--a4); line-height: 1.28; letter-spacing: -.01em;
+  max-width: 34ch; margin: var(--v5) 0 0;
 }
 .nf__note { font-size: var(--a5); line-height: 1.62; max-width: 38ch; margin: var(--v4) 0 0; }
 .nf__note > p + p { margin-top: 1em; }
@@ -10212,11 +10217,32 @@ h1.statement--sm { font-weight: 900; }
 /* the friction row: eight short labels, hairline-separated, wrapping. A list
    rather than eight cards — the direction rules out an icon grid, and these are
    symptoms to scan, not features to sell. */
-.nfric { display: flex; flex-wrap: wrap; gap: .55rem 0; list-style: none; padding: 0; margin: var(--v4) 0 0; }
-.nfric li {
-  font-family: var(--work); font-size: var(--a6); color: var(--ink-70);
-  padding: 0 clamp(.7rem, 1.6vw, 1.1rem); border-left: 1px solid var(--ink-15);
+/* ── THE LEDGER ────────────────────────────────────────────────────────────
+   Seven faults down a column, ruled between the rows. It was a flex row: seven
+   items across 1260px at --a6, the smallest type in the fold, separated by a
+   left border each. Three things were wrong with that. A horizontal strip of
+   short phrases divided by hairlines is the shape of a utility nav, so the eye
+   skimmed it as chrome. It was the quietest element in a fold whose most
+   concrete content it holds — a reader recognises their own business in "Old
+   photographs" faster than in any paragraph beside it. And it left the fold's
+   left column empty beneath the headline.
+
+   A column with rules between rows is a ledger, which is what a list of found
+   faults should look like. --a5, so it shares the body's rank rather than
+   sitting below it: this is evidence, not a caption. */
+.nfric {
+  display: grid;
+  list-style: none; padding: 0; margin: 0;
 }
+.nfric li {
+  font-family: var(--work); font-size: var(--a5); color: var(--ink);
+  line-height: 1.35;
+  padding: .68em 0;
+  border-top: 1px solid var(--ink-15);
+}
+/* the last rule closes the ledger; without it the column ends on air and the
+   final fault reads as unfinished rather than as the last of seven */
+.nfric li:last-child { border-bottom: 1px solid var(--ink-15); }
 .nfric li:first-child { padding-left: 0; border-left: 0; }
 .nf--ink .nfric li { color: var(--chalk-65); border-left-color: var(--chalk-line); }
 
@@ -10386,8 +10412,13 @@ h1.statement--sm { font-weight: 900; }
 
 .nask { list-style: none; margin: var(--v5) 0 0; padding: 0; display: grid; gap: clamp(.5rem, 1.2vw, .8rem); }
 .nask li {
-  font-family: var(--state); font-weight: 700;
-  font-size: var(--a4); line-height: 1.12; letter-spacing: -.02em;
+  /* 500, down from 700. The size was never the problem — the weight was. At 700
+     these four questions outweighed the body they sit beside and the standfirst
+     they sit under, which is what made the eye jump back up the fold. At 500
+     they are the standfirst's twin: same family, same size, same weight, one
+     rank used twice. */
+  font-family: var(--state); font-weight: 500;
+  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
 }
 @media (min-width: 861px) { .nask { margin-left: 12%; } }
 
@@ -10408,10 +10439,16 @@ h1.statement--sm { font-weight: 900; }
    by the second column. Below 861 the grid never engages and the stack keeps
    its phone rhythm. */
 .nf__grid { margin-top: var(--v5); }
+/* The closing movement gets its own air. The ledger and the test share the same
+   two rails, which is what makes the fold read as one grid rather than three
+   layouts — but at the shared --v5 the test looked like a continuation of the
+   ledger's right column rather than the fold's last beat. --v6 is the same step
+   the fold uses to separate itself from the one above. */
+.nf__grid--test { margin-top: var(--v6); }
 @media (min-width: 861px) {
-  .nf__grid > .nf__say, .nf__grid > .nf__note,
+  .nf__grid > .nf__say, .nf__grid > .nf__note, .nf__grid > .nfric, .nf__grid > .nask,
   .nf__grid > div > .nf__note, .nf__grid > div > .nask { margin-left: 0; }
-  .nf__grid > .nf__say, .nf__grid > .nf__note,
+  .nf__grid > .nf__say, .nf__grid > .nf__note, .nf__grid > .nfric, .nf__grid > .nask,
   .nf__grid > div > :first-child { margin-top: 0; }
 
   /* a lone note after a full-band element sits in the right field instead of

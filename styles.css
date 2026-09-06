@@ -10286,6 +10286,15 @@ h1.statement--sm { font-weight: 900; }
 .npil__h {
   margin: 0; font-family: var(--state); font-weight: 700;
   font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; color: var(--ink);
+  /* Two lines for every name, at the owner's call, and it needs its own measure
+     to get there: the column is set by the subtitle, which wants two lines out
+     of up to 41 characters, and at that width all five names fit on one.
+
+     8.4em, not a pixel value, so the break is font-relative and survives --a4
+     moving. Measured at 22.82px, where it resolves to 192px: at 210px "AI
+     Visibility Strategy" stays on one line, at 190px all five names break to
+     two and all five subtitles hold at two. */
+  max-width: 8.4em; text-wrap: balance;
 }
 .npil__s {
   display: block; margin-top: .3rem;

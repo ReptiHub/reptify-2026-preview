@@ -10796,29 +10796,64 @@ h1.statement--sm { font-weight: 900; }
    meta lines; the others were already safe and are unaffected. */
 .nf .nf__meta b { white-space: nowrap; }
 
+/* ── ( 05 ) THE AUDIT ──────────────────────────────────────────────────────
+   Four questions that hold still, and one region beneath them that swaps.
+
+   This was a hover accordion first. Measured on two baked snapshots rather
+   than a class toggle, because this pane does not restyle: hovering the third
+   question moved that question 131px up, out from under the cursor and onto
+   the second, which would open and move everything again. Panels were 66px
+   and 44px, so it could not be balanced flat either. The homepage already
+   solved this — .help__list keeps its names still and swaps one caption slot —
+   and this is that device.
+
+   The panes are stacked in one grid cell, so the region is as tall as the
+   tallest and nothing reflows when the pick changes. Opacity only, .28s, the
+   same value .help__say uses.
+
+   Driven by main.js's wire() on pointerenter, focusin and the fold's own pass
+   through the viewport, so it opens on scroll as well as on hover. A
+   hover-only reveal would be content nobody on a phone could reach. */
 .naud { margin: var(--v4) 0 0; }
-.naud__head { display: none; }
-.naud__g { border-top: 1px solid var(--ink-15); padding-top: var(--v2); margin-top: var(--v2); }
-.naud__g:first-of-type { margin-top: 0; }
-.naud__q {
-  margin: 0 0 .6rem;
+
+.naud__qs { list-style: none; margin: 0; padding: 0; }
+.naud__qs li {
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em; color: var(--ink);
+  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
+  color: rgba(21, 24, 27, .5);
+  border-top: 1px solid var(--ink-15); padding: .5rem 0;
 }
+.naud__qs li:first-child { border-top: 0; padding-top: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .naud__qs li { transition: color .28s var(--ease); }
+}
+/* the flagship is lit before anyone points at anything */
+/* the guard sits on the ul, not on .naud: wire() puts --picked and --live on
+   the list it was handed, which is the ul. On .naud the :not() never matched
+   and the first question stayed lit alongside the picked one. */
+.naud__qs:not(.naud__qs--picked):not(.naud__qs--live) li:first-child { color: var(--ink); }
+.naud__qs--picked li.is-picked, .naud__qs--live li.is-picked { color: var(--ink); }
+
+.naud__panels { display: grid; margin-top: var(--v3); }
+.naud__head { display: none; }
+.naud__pane {
+  grid-area: 2 / 1; margin: 0; opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .naud__pane { transition: opacity .28s var(--ease); }
+}
+.naud:not([data-sol]) .naud__pane:first-of-type { opacity: 1; }
+.naud[data-sol="1"] .naud__pane:nth-of-type(1),
+.naud[data-sol="2"] .naud__pane:nth-of-type(2),
+.naud[data-sol="3"] .naud__pane:nth-of-type(3),
+.naud[data-sol="4"] .naud__pane:nth-of-type(4) { opacity: 1; }
+
 .naud__p { margin: 0; }
 .naud__p + .naud__p { margin-top: .5rem; }
 .naud__k, .naud__f { display: block; font-family: var(--work); font-size: var(--a6); line-height: 1.5; }
 .naud__k { color: var(--ink-70); }
 .naud__f { color: var(--ink); }
-/* the pairing for anyone who cannot see the columns. --ink-70, not the .45 I
-   first used: at 13px this is normal text and wants 4.5:1, and .45 measured
-   2.85 on the card ground. */
 .naud__lbl {
-  /* Its own line, not an inline column. min-width: 5.5em was meant to hold the
-     values in a column and did not: once a value wraps, the second line starts
-     at the left edge anyway, so the indent bought nothing and the label sat
-     hard against the text — "YOU KNOWThe building" with no gap at all.
-     Stacked, the pairing is unmistakable and nothing collides. */
   display: block; margin-bottom: .15em;
   font-weight: 400; color: var(--ink-70);
   font-size: .78em; letter-spacing: .08em; text-transform: uppercase;
@@ -10828,7 +10863,8 @@ h1.statement--sm { font-weight: 900; }
 
 @media (min-width: 861px) {
   .naud__head {
-    display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(1.5rem, 3vw, 2.75rem);
+    grid-area: 1 / 1; display: grid;
+    grid-template-columns: 1fr 1fr; column-gap: clamp(1.5rem, 3vw, 2.75rem);
     font-family: var(--work); font-size: .78rem; letter-spacing: .08em;
     text-transform: uppercase; color: var(--ink-70); padding-bottom: .5rem;
   }
@@ -10836,15 +10872,15 @@ h1.statement--sm { font-weight: 900; }
     display: grid; grid-template-columns: 1fr 1fr;
     column-gap: clamp(1.5rem, 3vw, 2.75rem); align-items: start;
   }
-  .naud__p + .naud__p { margin-top: .45rem; }
   .naud__k, .naud__f { margin-bottom: 0; }
   .naud__f { border-left: 1px solid var(--ink-15); padding-left: clamp(1rem, 2vw, 1.5rem); }
   .naud__lbl { position: absolute; width: 1px; height: 1px; overflow: hidden;
                clip-path: inset(50%); white-space: nowrap; }
 }
 
-.nf--ink .naud__g { border-top-color: var(--chalk-line); }
-.nf--ink .naud__q { color: var(--chalk); }
+.nf--ink .naud__qs li { border-top-color: var(--chalk-line); color: var(--chalk-40); }
+.nf--ink .naud__qs:not(.naud__qs--picked):not(.naud__qs--live) li:first-child,
+.nf--ink .naud__qs--picked li.is-picked, .nf--ink .naud__qs--live li.is-picked { color: var(--chalk); }
 .nf--ink .naud__k { color: var(--chalk-40); }
 .nf--ink .naud__f { color: var(--chalk); border-left-color: var(--chalk-line); }
 .nf--ink .naud__head, .nf--ink .naud__lbl { color: var(--chalk-65); }

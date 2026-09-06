@@ -738,6 +738,13 @@
      arguments; the rows are its children either way. */
   var np = document.querySelector('.npil');
   if (np) wire(np, np, 'npil');
+
+  /* and ( 05 )'s audit, which is the same device again: hovering a question
+     opens it, and the fold's own pass through the viewport opens them in turn
+     for anyone who never moves a mouse. The <dl>'s children are exactly the
+     four groups — the column head was moved out for that reason. */
+  var nq = document.querySelector('.naud__qs');
+  if (nq) wire(nq, nq.closest('.naud'), 'naud__qs');
 })();
 
 /* ── the client stories ────────────────────────────────────

@@ -10789,6 +10789,13 @@ h1.statement--sm { font-weight: 900; }
    see, which is a gap to close rather than a rival.
 
    No new type: question at --a4/500, both sides at --a6. */
+/* The fold number never breaks. ( 05 ) is the only one that did: it carries a
+   visible tag AND the longest tag text on the page, so the flex row squeezed it
+   to 29px against the 38px every other fold gets, and "( 05 )" split across two
+   lines with the bracket alone on the second. Measured at 375 across all nine
+   meta lines; the others were already safe and are unaffected. */
+.nf .nf__meta b { white-space: nowrap; }
+
 .naud { margin: var(--v4) 0 0; }
 .naud__head { display: none; }
 .naud__g { border-top: 1px solid var(--ink-15); padding-top: var(--v2); margin-top: var(--v2); }
@@ -10807,10 +10814,17 @@ h1.statement--sm { font-weight: 900; }
    first used: at 13px this is normal text and wants 4.5:1, and .45 measured
    2.85 on the card ground. */
 .naud__lbl {
-  display: inline-block; min-width: 5.5em;
+  /* Its own line, not an inline column. min-width: 5.5em was meant to hold the
+     values in a column and did not: once a value wraps, the second line starts
+     at the left edge anyway, so the indent bought nothing and the label sat
+     hard against the text — "YOU KNOWThe building" with no gap at all.
+     Stacked, the pairing is unmistakable and nothing collides. */
+  display: block; margin-bottom: .15em;
   font-weight: 400; color: var(--ink-70);
-  font-size: .82em; letter-spacing: .04em; text-transform: uppercase;
+  font-size: .78em; letter-spacing: .08em; text-transform: uppercase;
 }
+.naud__k, .naud__f { margin-bottom: .45em; }
+.naud__f { margin-bottom: 0; }
 
 @media (min-width: 861px) {
   .naud__head {
@@ -10823,6 +10837,7 @@ h1.statement--sm { font-weight: 900; }
     column-gap: clamp(1.5rem, 3vw, 2.75rem); align-items: start;
   }
   .naud__p + .naud__p { margin-top: .45rem; }
+  .naud__k, .naud__f { margin-bottom: 0; }
   .naud__f { border-left: 1px solid var(--ink-15); padding-left: clamp(1rem, 2vw, 1.5rem); }
   .naud__lbl { position: absolute; width: 1px; height: 1px; overflow: hidden;
                clip-path: inset(50%); white-space: nowrap; }

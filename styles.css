@@ -1752,7 +1752,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    the way past, which is what it did before and still reads correctly. */
 @supports (animation-timeline: view()) {
   @media (min-width: 861px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
-    .js .cta {
+    /* :has(.cta__pin), because the runway is only half the device. The other
+       half is the sticky pin that holds inside it, and only index.html has
+       that markup. Every other page with a closing CTA was getting a 200vh
+       block with nothing to stick in it: measured 2200px of section around
+       975px of content on Napa and around 380px on smart-web-presence, which
+       is 1225px and 1820px of dead air before the footer. Six pages.
+
+       Keyed on the markup rather than on a page name so that any page which
+       later adds the pin gets the hold, and any page without it keeps the
+       100svh fold. :has() is safe here by construction: this block already
+       sits inside @supports (animation-timeline: view()), which no browser
+       shipped before :has(). */
+    .js .cta:has(.cta__pin) {
       display: block;
       min-height: 0;
       height: 200vh;
@@ -10509,6 +10521,13 @@ h1.statement--sm { font-weight: 900; }
      is the last of four blocks sharing one left edge, and 12% would break the
      only vertical line the composition has. */
   .nmid--owners > div > .nask { margin-left: 0; margin-top: var(--v4); }
+
+/* ( 06 )'s closing line was the only element in its fold at x221. The 12%
+   cascade indent .nf__note carries is right inside ( 01 )'s half-column split,
+   where it is one of two designed columns; here the note is a direct child of
+   .wrap and the indent aligned it to nothing, against a fold whose meta line,
+   its two-column block and its five-column index all start at x70. */
+#here > .wrap > .nf__note { margin-left: 0; }
   /* first thing in each column starts at the column's top, so the headline and
      the statement share one baseline and the two columns start together */
   .nmid--owners > div > :first-child { margin-top: 0; }

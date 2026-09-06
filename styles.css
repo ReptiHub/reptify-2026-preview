@@ -10285,7 +10285,7 @@ h1.statement--sm { font-weight: 900; }
 
 .npil__h {
   margin: 0; font-family: var(--state); font-weight: 700;
-  font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; color: var(--ink);
+  font-size: var(--a3); line-height: 1.06; letter-spacing: -.025em; color: var(--ink);
   /* Two lines for every name, at the owner's call, and it needs its own measure
      to get there: the column is set by the subtitle, which wants two lines out
      of up to 41 characters, and at that width all five names fit on one.
@@ -10322,15 +10322,25 @@ h1.statement--sm { font-weight: 900; }
      the three stack. The right padding reserves the numeral's lane rather than
      giving it a fourth track, so it can still bleed to its own edge. */
   .npil__sum { display: contents; }
+  /* Every row as tall as the tallest, so equal height is a property of the
+     layout rather than a coincidence of the current copy. The ratio below is
+     tuned so nothing needs it today, but AI Workforce Solutions already has the
+     longest description and the next copy edit should not be able to break the
+     one thing that keeps the hover from shifting anything. */
+  .npil { grid-auto-rows: 1fr; }
   .npil__i {
     display: grid; align-items: center;
-    /* 9.2 / 14 / rest, measured rather than picked. At 11.5em three of the five
-       subtitles ran to three lines and the rows came out 112/138/138/138/112;
-       at 16em the description column is squeezed and row four's paragraph goes
-       to three. At 14em every row is 2 lines of name, 2 of subtitle and 2 of
-       description, and all five rows are exactly 112px, which is what keeps the
-       hover from shifting anything. */
-    grid-template-columns: minmax(0, 9.2em) minmax(0, 14em) minmax(0, 1fr);
+    /* fr, not em, and this was a real bug. em in grid-template-columns resolves
+       against .npil__i's own font size, which is the body's, while --a3 and
+       --a4 are vw clamps that grow with the window. So the tracks sat frozen at
+       156px and 238px while the type climbed to 31px at 1920, and the name went
+       to three and four lines inside a track that never moved. The description
+       column swallowed the difference: 600px at 1400, 1060px at 1920.
+
+       In fr the three tracks keep their proportion at every width and the
+       name's own max-width, which IS in em and so does scale with its type,
+       decides where it breaks. */
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 2.25fr);
     column-gap: clamp(1.25rem, 3vw, 2.75rem);
     padding-right: clamp(5.5rem, 10vw, 10rem);
   }

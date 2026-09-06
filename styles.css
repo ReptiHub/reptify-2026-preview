@@ -10494,8 +10494,36 @@ h1.statement--sm { font-weight: 900; }
    it, the cap left a third of the measure empty and broke the right edge the
    standfirst had already established. */
 @media (min-width: 861px) {
+  /* ( 05 )'s two stacked columns. Same gutter the fold already used, and the
+     prose loses its 50ch cap because in a 595px column whose only job is to
+     hold it the cap left a third of the measure empty. */
+  .nmid--owners { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                  column-gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .nmid--owners > div > .nf__note { max-width: none; }
+  /* The closing test keeps the same tracks. Left to the default .nf__grid it
+     opened its prose at x716 against the ledger's x735 above it — nineteen
+     pixels apart, which is the worst kind of misalignment, near enough to look
+     intended and far enough to look wrong. Same gutter, same cap removed. */
   #owners .nf__grid { column-gap: clamp(2rem, 5vw, 5rem); }
   #owners .nf__grid > .nf__note { max-width: none; }
+  /* first thing in each column starts at the column's top, so the headline and
+     the statement share one baseline and the two columns start together */
+  .nmid--owners > div > :first-child { margin-top: 0; }
+}
+
+/* Stacking the two columns would read headline, lead, the eight faults, and
+   only then the statement — the fold's opening sentence arriving after the list
+   it is supposed to introduce. The wrappers exist for the desktop columns and
+   nothing else, so below the split they stop being boxes and the five blocks
+   order themselves back into the sentence order they are written in. */
+@media (max-width: 860px) {
+  .nmid--owners > div { display: contents; }
+  .nmid--owners { display: flex; flex-direction: column; }
+  #owners .nf__head    { order: 1; }
+  #owners .nf__say     { order: 2; }
+  #owners .nfric__lead { order: 3; }
+  #owners .nfric       { order: 4; }
+  #owners .nmid--owners .nf__note:not(.nfric__lead) { order: 5; }
 }
 
 /* ( 05 )'s opening statement goes back up to --a3, the size it began at, at the
@@ -10509,15 +10537,20 @@ h1.statement--sm { font-weight: 900; }
    500 and the ledger sits at --a6, so the fold now runs one loud rank, one
    reading rank and one index rank, in that order down the page. The statement
    is the loud one. */
-#owners .nmid > .nf__say { font-size: var(--a3); line-height: 1.24; }
+#owners .nf__say { font-size: var(--a3); line-height: 1.24; }
+
+/* The lead sits in the ledger's own cell, above it, so the sentence that names
+   digital friction is the last thing read before the eight faults rather than
+   two blocks up in the other column. It borrows .nf__note's type wholesale and
+   only cancels the top margin that device carries: it is the first thing in its
+   cell, and the margin would drop the ledger below the prose it is supposed to
+   sit level with. */
+
 /* And the same breakpoint, not only the same track. .nmid splits at 950 and
    .nf__grid at 861, so between those two widths the fold ran one stacked grid
    above two split ones — the standfirst full width, the prose beneath it in a
    right-hand column that answered to nothing. One column here until .nmid takes
    its second one. */
-@media (min-width: 861px) and (max-width: 949px) {
-  #owners .nf__grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--v4); }
-}
 @media (min-width: 861px) {
   .nf__grid > .nf__say, .nf__grid > .nf__note, .nf__grid > .nfric, .nf__grid > .nask,
   .nf__grid > div > .nf__note, .nf__grid > div > .nask { margin-left: 0; }

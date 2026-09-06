@@ -1,0 +1,29 @@
+/* THE KINETIC GRID — portable.
+   ----------------------------------------------------------------------------
+   Four lines of geometry; everything else is in kgrid.js. See that file for the
+   markup contract and the porting notes.
+
+   The colour is a token so a host on a light ground can flip it without
+   touching the module. It is written as a bare "r,g,b" triplet rather than a
+   colour, because the script composes it with a dozen different alphas and
+   canvas has no colour-mix.
+
+   House device — Reptify's own pages and microsites only. Never carried into a
+   client build; a signature move that appears on two clients is a template.
+   ---------------------------------------------------------------------------- */
+:root { --kgrid-ink: 255, 255, 255; }
+
+/* No-op on a display:contents host — .cta__pin is one below its gate — because
+   an element that generates no box cannot be positioned, so the nearest
+   positioned ancestor becomes the containing block instead. That is exactly
+   what the sky and the vignette already do beside it, and it means the module
+   needs no branch for the two cases. */
+[data-kgrid] { position: relative; }
+
+.kgrid {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}

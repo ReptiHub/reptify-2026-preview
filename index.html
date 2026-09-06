@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Indexing hold: released only when the owner has approved, every DEMO PLACEHOLDER
@@ -20,6 +21,7 @@
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="lib/circuit.css">
+<link rel="stylesheet" href="lib/kgrid.css">
 <link rel="stylesheet" href="styles.css">
 <!-- Google Analytics 4 — stream "reptifymedia.com - GA4", ID 4940016306.
 
@@ -152,7 +154,7 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Always On Frontdesk",
+              "name": "Always On Front Desk",
               "category": "AI Workforce Solutions",
               "description": "Calls answered day and night, not sent to voicemail."
             }
@@ -716,7 +718,7 @@
            was not pointing at any of them — the footer carried the site's only
            internal links to the service pages, so the contextual link from the
            offer's own name was missing. The two AI Workforce entries share a
-           destination, which is what the footer already does: Always On Frontdesk
+           destination, which is what the footer already does: Always On Front Desk
            is the flagship of that offer, not a separate one.
 
            main.js drives this list on pointerenter and focusin, never on click,
@@ -728,7 +730,7 @@
            pages ship, and the noindex on them comes off in the same move. -->
       <div class="help__mid">
         <ul class="help__list">
-          <li><span><span data-sweep>Always On Frontdesk</span></span></li>
+          <li><span><span data-sweep>Always On Front Desk</span></span></li>
           <li><span><span data-sweep>Smart Web Presence</span></span></li>
           <li><span><span data-sweep>AI Visibility Strategy</span></span></li>
           <li><span><span data-sweep>AI Workforce Solutions</span></span></li>
@@ -1077,7 +1079,7 @@
          It is display:contents until the gate in styles.css opens, so on a short
          screen, without JS, or without scroll-driven animation this wrapper is
          not in the layout at all and the fold is exactly what it was. -->
-    <div class="cta__pin">
+    <div class="cta__pin" data-kgrid>
     <div class="cta__bg" aria-hidden="true"></div>
     <div class="cta__vig" aria-hidden="true"></div>
     <div class="cta__inner wrap">
@@ -1104,7 +1106,7 @@
       <h2>Solutions</h2>
       <div class="ftr__sol__cols">
         <ul>
-          <li><a href="index.html#solutions">Always On Frontdesk</a></li>
+          <li><a href="index.html#solutions">Always On Front Desk</a></li>
           <li><a href="index.html#solutions">Smart Web Presence</a></li>
           <li><a href="index.html#solutions">AI Visibility Strategy</a></li>
         </ul>
@@ -1167,6 +1169,7 @@
 
 <script src="main.js" defer></script>
 <script src="lib/circuit.js" defer></script>
+<script src="lib/kgrid.js" defer></script>
 
 <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a9b9af439356933b87a0e92" data-source="WEB_USER"></script>
 </body>

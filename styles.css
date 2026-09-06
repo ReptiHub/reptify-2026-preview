@@ -1654,7 +1654,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     linear-gradient(to bottom, rgba(21,24,27,.55) 0, rgba(21,24,27,0) 22%);
 }
 
-.cta__inner { text-align: center; }
+/* above the grid. The canvas sits at z-index 0 between the vignette and the
+   type; .cta__inner had no position and no z-index, so a positioned canvas at 0
+   would have painted straight over the words. */
+.cta__inner { text-align: center; position: relative; z-index: 1; }
 .cta__eyebrow {
   /* tracking eases as the size grows — .22em is right at 13px and far too wide
      at 26px, where the letters stop reading as words */

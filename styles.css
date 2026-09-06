@@ -10290,7 +10290,7 @@ h1.statement--sm { font-weight: 900; }
 .npil__s {
   display: block; margin-top: .3rem;
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a5); line-height: 1.2; letter-spacing: 0; color: var(--ink-65);
+  font-size: var(--a6); line-height: 1.35; letter-spacing: 0; color: var(--ink-65);
 }
 .npil__b p {
   margin: var(--v2) 0 0; font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
@@ -10323,7 +10323,12 @@ h1.statement--sm { font-weight: 900; }
      to fit by nothing at all, inside a box with overflow: clip that would hide
      the failure. Measured at 375: it fits by zero margin today. It wraps there
      instead. */
-  .npil__h, .npil__s { white-space: nowrap; }
+  .npil__h { white-space: nowrap; }
+  /* The subtitle takes two lines and its own measure, at the owner's call. In a
+     max-content track a wrapping element still resolves to its one-line width,
+     so the break has to come from a max-width; in em, so it scales with the
+     type rather than snapping at one window size. */
+  .npil__s { max-width: 11em; }
   /* Every row as tall as the tallest, so equal height is a property of the
      layout rather than a coincidence of the current copy. The ratio below is
      tuned so nothing needs it today, but AI Workforce Solutions already has the
@@ -10351,7 +10356,7 @@ h1.statement--sm { font-weight: 900; }
     column-gap: clamp(1.25rem, 3vw, 2.75rem);
     padding-right: clamp(3.75rem, 5.5vw, 6rem);
   }
-  .npil__s { margin-top: 0; white-space: nowrap; }
+  .npil__s { margin-top: 0; }
   .npil__b { opacity: 0; }
   .npil__b p { border-top: 0; padding-top: 0; margin-top: 0; max-width: none; }
   @media (prefers-reduced-motion: no-preference) {
@@ -10379,8 +10384,14 @@ h1.statement--sm { font-weight: 900; }
      names are large text by WCAG and want 3:1: measured on the card ground,
      .35 gives 2.18 and fails, .5 gives 3.28. */
   .npil__b { opacity: 0; }
-  .npil__i .npil__h,
-  .npil__i .npil__s { color: rgba(21, 24, 27, .5); }
+  /* Two dims, because the two ranks are on opposite sides of the WCAG large
+     text line and shrinking the subtitle moved it across. The name is 44.7px
+     at 1400, large text, so its bar is 3:1 and .5 gives 3.28. The subtitle is
+     now 14.6px, normal text, so its bar is 4.5:1 and .5 gives the same 3.28 and
+     fails it. Measured on the card ground: .55 gives 3.81, .60 gives 4.45,
+     .62 gives 4.74. */
+  .npil__i .npil__h { color: rgba(21, 24, 27, .5); }
+  .npil__i .npil__s { color: rgba(21, 24, 27, .62); }
   .npil__i { border-left-color: transparent; }
 
   .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__b { opacity: 1; }

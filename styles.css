@@ -10260,7 +10260,16 @@ h1.statement--sm { font-weight: 900; }
    now, on instruction. What keeps it in the page's language: no shadow and no
    lift, the card is a lighter ground rather than a raised object; 2px radius,
    which is .qcard's; one accent, --brand, which is the site's only accent. */
-.npil { display: grid; gap: clamp(.5rem, 1vw, .85rem); margin-top: var(--v6); }
+.npil {
+  display: grid; gap: clamp(.5rem, 1vw, .85rem); margin-top: var(--v6);
+  /* One number for both ranks, so "smaller, same ratio" is structural rather
+     than a pair of tokens that happen to look right at one width. --a1 and --a4
+     are three steps apart on a 1.25 scale, which is 1.95; multiplying both by
+     the same factor cannot change that at any viewport. Stepping to --a2/--a5
+     instead would have drifted, since --a5 is not a pure-vw clamp like the
+     others: 2.00 at 1400 but 2.45 at 1920. */
+  --npil-scale: .8;
+}
 
 .npil__i {
   position: relative; isolation: isolate; overflow: clip;
@@ -10285,12 +10294,12 @@ h1.statement--sm { font-weight: 900; }
 
 .npil__h {
   margin: 0; font-family: var(--state); font-weight: 700;
-  font-size: var(--a1); line-height: 1; letter-spacing: -.035em; color: var(--ink);
+  font-size: calc(var(--a1) * var(--npil-scale)); line-height: 1.02; letter-spacing: -.032em; color: var(--ink);
 }
 .npil__s {
   display: block; margin-top: .3rem;
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a4); line-height: 1.24; letter-spacing: -.015em; color: var(--ink-65);
+  font-size: calc(var(--a4) * var(--npil-scale)); line-height: 1.26; letter-spacing: -.012em; color: var(--ink-65);
   text-align: left; text-wrap: initial;
 }
 .npil__b p {

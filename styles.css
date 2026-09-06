@@ -10239,27 +10239,47 @@ h1.statement--sm { font-weight: 900; }
 
    Native <details name="npil"> does the exclusive accordion. No script, no
    state, nothing to clean up, keyboard and find-in-page work by default. */
-.npil { display: grid; gap: clamp(.6rem, 1.2vw, 1rem); margin-top: var(--v6); }
+/* ── THE FIVE SOLUTIONS ────────────────────────────────────────────────────
+   The homepage's solutions fold and this one now run the same mechanic. There,
+   .help__say stacks all five descriptions in one grid cell and toggles opacity
+   as the pointer moves down the list; the copy never leaves the DOM, so a
+   screen reader and a crawler get all five while a visitor sees the one they
+   are on. Here each row owns its own description instead of sharing one slot,
+   which means no data-sol and no JS: the row's own :hover does it.
+
+   The important property both share is that NOTHING MOVES. The description
+   occupies its column whether it is showing or not, so revealing it cannot
+   reflow the row, the fold or the page. The previous version animated
+   flex-grow, which is layout, and this replaces it.
+
+   Same easing and same duration as the homepage: .28s var(--ease).
+
+   A deliberate departure from CLAUDE.md sections 6 and 10, which rule out a
+   service-card grid on a location page, and from this block's former comment,
+   "Not cards: nothing to hover, nothing raised, nothing lit." Both are wrong
+   now, on instruction. What keeps it in the page's language: no shadow and no
+   lift, the card is a lighter ground rather than a raised object; 2px radius,
+   which is .qcard's; one accent, --brand, which is the site's only accent. */
+.npil { display: grid; gap: clamp(.5rem, 1vw, .85rem); margin-top: var(--v6); }
 
 .npil__i {
   position: relative; isolation: isolate; overflow: clip;
-  display: grid; align-content: start;
   background: var(--chalk);
   border: 1px solid var(--ink-15);
   border-left: 2px solid transparent;
   border-radius: 2px;
-  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.4rem);
+  padding: clamp(1.2rem, 2.4vw, 1.8rem) clamp(1.4rem, 3vw, 2.4rem);
 }
 
-/* the numeral, bleeding off the right, under everything. z-index -1 inside the
-   card's own stacking context so it cannot escape upward. */
+/* the numeral holds the right end of the row, behind everything. z-index -1
+   inside the card's own stacking context, so it cannot escape upward. */
 .npil__n {
   position: absolute; z-index: -1;
-  right: -.06em; top: 50%; transform: translateY(-50%);
+  right: clamp(.75rem, 2vw, 2rem); top: 50%; transform: translateY(-50%);
   font-family: var(--state); font-weight: 900;
-  font-size: clamp(5rem, 11vw, 10rem); line-height: .8;
+  font-size: clamp(3.5rem, 6vw, 5.5rem); line-height: .8;
   letter-spacing: -.06em;
-  color: var(--ink); opacity: .05;
+  color: var(--ink); opacity: .08;
   pointer-events: none; user-select: none;
 }
 
@@ -10268,76 +10288,60 @@ h1.statement--sm { font-weight: 900; }
   font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; color: var(--ink);
 }
 .npil__s {
-  display: block; margin-top: .35rem;
+  display: block; margin-top: .3rem;
   font-family: var(--state); font-weight: 500;
   font-size: var(--a4); line-height: 1.14; letter-spacing: -.02em; color: var(--ink-65);
 }
 .npil__b p {
-  margin: 0; max-width: 46ch;
-  border-top: 1px solid var(--ink-15); padding-top: var(--v2); margin-top: var(--v2);
-  font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
+  margin: var(--v2) 0 0; font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
+  border-top: 1px solid var(--ink-15); padding-top: var(--v2); max-width: 60ch;
 }
 
-/* ── HORIZONTAL, ONE OPEN ──────────────────────────────────────────────────
-   Five columns; one is wide and the rest are narrow, and hovering a narrow one
-   widens it while the previous falls back. Two selectors do the whole thing:
-   the group's hover resets every card to 1, and the card's own hover overrides
-   it. The first card is the resting state, so the fold opens on Always On
-   Front Desk and returns to it when the pointer leaves.
+/* ── THE ROW ───────────────────────────────────────────────────────────────
+   Name and subtitle at the left, the description in the middle, the numeral
+   holding the right. Reserved on the right by padding rather than by a third
+   track, so the numeral can bleed to its own edge and the description still
+   stops clear of it.
 
-   flex-grow is the only animated property. It is layout, not transform, which
-   this sheet normally avoids animating; it is accepted here because the whole
-   device IS the width change and there are five boxes on one row, not a list
-   of many. :focus-within is carried alongside :hover so a keyboard reaching a
-   link inside a panel opens the same panel.
-
-   Gated on a fine pointer as well as width. On touch there is no hover, so a
-   hover accordion would be a wall of five columns nobody can open; below the
-   gate the cards stack at full width with every paragraph already visible,
-   which is why nothing on this fold is trapped behind an interaction. */
-@media (hover: hover) and (pointer: fine) and (min-width: 1200px) {
-  .npil { display: flex; align-items: stretch; }
-  .npil__i { flex: 1 1 0; min-width: 0; }
-  .npil__i, .npil__b { transition: none; }
-  @media (prefers-reduced-motion: no-preference) {
-    .npil__i { transition: flex-grow .55s var(--ease), border-color .3s var(--ease); }
-    .npil__b { transition: opacity .3s var(--ease), visibility 0s .3s; }
+   Gated on a fine pointer as well as width: a hover reveal on a touch screen
+   is content nobody can open. Below the gate the row becomes a stack and every
+   description is simply visible, which is why nothing here is trapped. */
+@media (hover: hover) and (pointer: fine) and (min-width: 1100px) {
+  .npil__i {
+    display: grid; align-items: center;
+    grid-template-columns: minmax(0, 27ch) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding-right: clamp(4.5rem, 8vw, 8rem);
   }
-
-  .npil__i { flex-grow: 1; }
-  .npil__i:first-child { flex-grow: 2.8; }
-  .npil:hover .npil__i, .npil:focus-within .npil__i { flex-grow: 1; }
-  .npil:hover .npil__i:hover,
-  .npil:focus-within .npil__i:focus-within { flex-grow: 2.8; }
-
-  /* the paragraph belongs to the open card only: a narrow column cannot hold
-     it, and visibility rather than opacity keeps it out of tab order and out
-     of a text selection while it is closed */
-  .npil__b { opacity: 0; visibility: hidden; }
-  .npil__i:first-child .npil__b { opacity: 1; visibility: visible; }
-  .npil:hover .npil__i .npil__b,
-  .npil:focus-within .npil__i .npil__b { opacity: 0; visibility: hidden; }
-  .npil:hover .npil__i:hover .npil__b,
-  .npil:focus-within .npil__i:focus-within .npil__b { opacity: 1; visibility: visible; }
+  .npil__b { opacity: 0; }
+  .npil__b p { border-top: 0; padding-top: 0; margin-top: 0; max-width: none; }
   @media (prefers-reduced-motion: no-preference) {
-    .npil__i:first-child .npil__b,
-    .npil:hover .npil__i:hover .npil__b,
-    .npil:focus-within .npil__i:focus-within .npil__b {
-      transition: opacity .4s .12s var(--ease), visibility 0s;
-    }
+    .npil__b { transition: opacity .28s var(--ease); }
+    .npil__i { transition: border-color .28s var(--ease); }
   }
-
+  /* before the reader has chosen anything, the first offer's line stands.
+     Exactly what .help:not([data-sol]) does on the homepage. */
+  .npil__i:first-child .npil__b { opacity: 1; }
   .npil__i:first-child { border-left-color: var(--brand); }
-  .npil:hover .npil__i, .npil:focus-within .npil__i { border-left-color: transparent; }
+
+  /* .npil__i in the middle is not decoration: it lifts these to (0,4,0) so they
+     beat .npil__i:first-child .npil__b at (0,3,0) on specificity rather than on
+     being written later in the file. Source-order ties are the kind of thing a
+     later edit silently reverses. */
+  .npil:hover .npil__i .npil__b,
+  .npil:focus-within .npil__i .npil__b { opacity: 0; }
+  .npil:hover .npil__i:hover .npil__b,
+  .npil:focus-within .npil__i:focus-within .npil__b { opacity: 1; }
+
+  .npil:hover .npil__i:not(:hover),
+  .npil:focus-within .npil__i:not(:focus-within) { border-left-color: transparent; }
   .npil:hover .npil__i:hover,
   .npil:focus-within .npil__i:focus-within { border-left-color: var(--brand); }
-
-  .npil__n { font-size: clamp(4rem, 6vw, 7rem); }
 }
 
 /* the ink folds invert the way every other device on this page does */
 .nf--ink .npil__i { background: var(--ink-lift-2, rgba(255,255,255,.04)); border-color: var(--chalk-line); }
-.nf--ink .npil__n { color: var(--chalk); opacity: .07; }
+.nf--ink .npil__n { color: var(--chalk); opacity: .1; }
 .nf--ink .npil__h { color: var(--chalk); }
 .nf--ink .npil__s { color: var(--chalk-40); }
 .nf--ink .npil__b p { border-top-color: var(--chalk-line); color: var(--chalk-65); }

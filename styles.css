@@ -10290,7 +10290,8 @@ h1.statement--sm { font-weight: 900; }
 .npil__s {
   display: block; margin-top: .3rem;
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a6); line-height: 1.35; letter-spacing: 0; color: var(--ink-65);
+  font-size: var(--a5); line-height: 1.32; letter-spacing: 0; color: var(--ink-65);
+  text-align: left; text-wrap: initial;
 }
 .npil__b p {
   margin: var(--v2) 0 0; font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
@@ -10334,7 +10335,10 @@ h1.statement--sm { font-weight: 900; }
      tuned so nothing needs it today, but AI Workforce Solutions already has the
      longest description and the next copy edit should not be able to break the
      one thing that keeps the hover from shifting anything. */
-  .npil { grid-auto-rows: 1fr; }
+  .npil {
+    grid-auto-rows: 1fr;
+    grid-template-columns: max-content max-content minmax(0, 1fr);
+  }
   .npil__i {
     display: grid; align-items: center;
     /* fr, not em, and this was a real bug. em in grid-template-columns resolves
@@ -10347,12 +10351,18 @@ h1.statement--sm { font-weight: 900; }
        In fr the three tracks keep their proportion at every width and the
        name's own max-width, which IS in em and so does scale with its type,
        decides where it breaks. */
-    /* max-content, because the name and the subtitle are now nowrap and the
-       track has to be whatever one line needs. fr would have cut them off; a
-       fixed measure is what put the name on four lines in the first place.
-       Measured one-line widths: widest name 405px and widest subtitle 564px at
-       1920, 295 and 412 at 1400, so the description keeps 489px and 290px. */
-    grid-template-columns: max-content max-content minmax(0, 1fr);
+    /* SUBGRID, and this was a bug for three commits. Each .npil__i is its own
+       grid container, so max-content sized its tracks against that row's own
+       content and nothing else: measured at 1400 the subtitle started at 544,
+       567, 588 and 604 across the five rows and the description at five
+       different x values. Five rows, no columns. I never saw it because every
+       measurement I took read row zero.
+
+       The tracks belong to the list, and each row borrows them. max-content is
+       right once it is resolved across all five rows at once, which is exactly
+       what subgrid does. */
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
     column-gap: clamp(1.25rem, 3vw, 2.75rem);
     padding-right: clamp(3.75rem, 5.5vw, 6rem);
   }

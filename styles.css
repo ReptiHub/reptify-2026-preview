@@ -10323,6 +10323,40 @@ h1.statement--sm { font-weight: 900; }
      Exactly what .help:not([data-sol]) does on the homepage. */
   .npil__i:first-child .npil__b { opacity: 1; }
   .npil__i:first-child { border-left-color: var(--brand); }
+  /* ── THE RADIO-BUTTON LIGHT, from .help__list ──────────────────────────
+     The homepage's own words for it: "The flagship is lit before anyone
+     touches the list, and the list behaves like a set of radio buttons:
+     hovering anything dims everything, then the one under the pointer lights.
+     Let go and the flagship takes the light back."
+
+     The one thing not copied is the alpha. The homepage dims to
+     rgba(21,24,27,.35), which is right at 4.8vw where the names run about
+     90px. These names are --a4, 22.8px at weight 700, which is large text by
+     WCAG and so wants 3:1; measured against the card ground, .35 gives 2.18
+     and fails. .50 gives 3.28 and reads as dimmed just as clearly. Same
+     device, same behaviour, a value chosen for this type size.
+
+     Inside the hover gate on purpose: without a pointer there is nothing to
+     light, and four permanently greyed names on a phone would be a fault
+     rather than a state. Below the gate every name is full ink. */
+  .npil__i .npil__h,
+  .npil__i .npil__s { color: rgba(21, 24, 27, .5); }
+  .npil__i:first-child .npil__h { color: var(--ink); }
+  .npil__i:first-child .npil__s { color: var(--ink-65); }
+
+  .npil:hover .npil__i .npil__h,
+  .npil:hover .npil__i .npil__s,
+  .npil:focus-within .npil__i .npil__h,
+  .npil:focus-within .npil__i .npil__s { color: rgba(21, 24, 27, .5); }
+  .npil:hover .npil__i:hover .npil__h,
+  .npil:focus-within .npil__i:focus-within .npil__h { color: var(--ink); }
+  .npil:hover .npil__i:hover .npil__s,
+  .npil:focus-within .npil__i:focus-within .npil__s { color: var(--ink-65); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .npil__h, .npil__s { transition: color .28s var(--ease); }
+  }
+
 
   /* .npil__i in the middle is not decoration: it lifts these to (0,4,0) so they
      beat .npil__i:first-child .npil__b at (0,3,0) on specificity rather than on

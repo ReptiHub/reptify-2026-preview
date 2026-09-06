@@ -10447,40 +10447,6 @@ h1.statement--sm { font-weight: 900; }
      step, which is what reduced motion should get anyway. */
   .npil__i .npil__h .ltr { color: rgba(21, 24, 27, .5); transition-delay: 0s; }
 
-  /* ── THE MASK REVEAL ───────────────────────────────────────────────────
-     Per-character stagger rising from below the line, clipped by the line
-     itself. 0.03s between letters, and power3.out written out as the
-     cubic-bezier it is: GSAP's Power3 is quart, so easeOutQuart, which is
-     cubic-bezier(.165, .84, .44, 1). Not Power2/cubic's (.215, .61, .355, 1),
-     which is the one usually pasted for this.
-
-     NO GSAP AND NO SPLITTYPE, and not out of stubbornness: SplitText is a
-     paid Club GreenSock plugin, this site has no package.json and ships no
-     third-party JS, and the two things that stack would give are already
-     here. data-sweep splits the name into .ltr spans and stamps each with its
-     index, which is what SplitType does. .npil carries data-reveal and the
-     IntersectionObserver adds .in as the fold arrives, which is what
-     ScrollTrigger would do. The stagger is the index times the step and the
-     easing is a bezier, so the whole effect is one transition and two rules.
-
-     The line is the mask. .npil__h is already nowrap and one line inside the
-     gate, so clipping it is the "overflow: hidden line wrapper" exactly. The
-     padding-bottom is descender room — Always, Visibility, Strategy and
-     Photography all have them, and a tight clip on line-height 1.02 would
-     shave them. The matching negative margin keeps the row height it had. */
-  .npil__h { overflow: clip; padding-bottom: .18em; margin-bottom: -.18em; }
-  @media (prefers-reduced-motion: no-preference) {
-    .js .npil[data-reveal] .npil__h .ltr {
-      display: inline-block;
-      transform: translateY(115%);
-      transition: transform .85s cubic-bezier(.165, .84, .44, 1),
-                  color .28s var(--ease);
-    }
-    .js .npil[data-reveal].in .npil__h .ltr {
-      transform: none;
-      transition-delay: calc(var(--i, 0) * .03s), 0s;
-    }
-  }
 
   .npil__i { border-left-color: transparent; }
 
@@ -10504,7 +10470,7 @@ h1.statement--sm { font-weight: 900; }
     .npil--picked .npil__i.is-picked .npil__h .ltr,
     .npil--live   .npil__i.is-picked .npil__h .ltr,
     .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h .ltr {
-      transition-delay: calc(var(--i, 0) * .03s), calc(var(--i, 0) * 26ms);
+      transition-delay: calc(var(--i, 0) * 26ms);
     }
   }
   .npil--picked .npil__i.is-picked .npil__s,

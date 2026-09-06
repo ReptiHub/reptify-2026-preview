@@ -10110,13 +10110,19 @@ h1.statement--sm { font-weight: 900; }
 }
 .nf__say {
   font-family: var(--state); font-weight: 500;
-  /* --a4, not --a3. At --a3 this measured 28.6px against the headline's 44.7 —
-     64% of it, close enough that the two read as one long shout rather than a
-     statement and its setup. --a4 is 22.8px, half the headline, and it is the
-     same rank the questions now sit on, so the fold has one supporting size
-     instead of two. */
-  font-size: var(--a4); line-height: 1.28; letter-spacing: -.01em;
-  max-width: 34ch; margin: var(--v5) 0 0;
+  /* Down twice, at the owner's call: --a3 to --a4 to --a5. It began at 28.6px
+     against a 44.7px headline — 64% of it, so the two read as one long shout
+     rather than a statement and its setup — and is now 17.8px, the body's own
+     size.
+
+     Which does not make it body text. It keeps --state and weight 500 while the
+     prose runs --work at 400, so it is set apart by voice rather than by scale.
+     That is the quieter way to mark a standfirst and it costs the fold nothing,
+     because the fold no longer needs a second loud thing: it builds to the four
+     questions instead, which is the one rank left above the reading size. Quiet
+     setup, loud close. */
+  font-size: var(--a5); line-height: 1.42; letter-spacing: -.005em;
+  max-width: 46ch; margin: var(--v5) 0 0;
 }
 .nf__note { font-size: var(--a5); line-height: 1.62; max-width: 38ch; margin: var(--v4) 0 0; }
 .nf__note > p + p { margin-top: 1em; }
@@ -10251,6 +10257,18 @@ h1.statement--sm { font-weight: 900; }
 /* the last rule closes the ledger; without it the column ends on air and the
    final fault reads as unfinished rather than as the last of seven */
 .nfric li:last-child { border-bottom: 1px solid var(--ink-15); }
+
+/* The coda. The ledger lists seven faults without saying whether any of them is
+   the reader's — which is the honest position, since nobody here has looked at
+   their business yet. This line says that out loud, and it is the sentence that
+   turns a list into a question the reader answers themselves. Set at the
+   ledger's own size and indented by nothing: it belongs to the column above it,
+   not to the prose beside it. */
+.nfric__coda {
+  font-family: var(--work); font-size: var(--a6); color: var(--ink-70);
+  line-height: 1.5; max-width: 34ch;
+  margin: clamp(1rem, 2vw, 1.5rem) 0 0;
+}
 .nfric li:first-child { padding-left: 0; border-left: 0; }
 .nf--ink .nfric li { color: var(--chalk-65); border-left-color: var(--chalk-line); }
 

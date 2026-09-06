@@ -740,6 +740,29 @@
   if (np) wire(np, np, 'npil');
 })();
 
+/* ── ( 05 ): one question is always open ───────────────────
+   <details name> gives exclusivity for free but not a floor. Clicking the open
+   question closes it, and because only one can be open, that leaves the fold
+   showing four bare questions with a chevron each and nothing inside — which
+   reads as an empty list rather than as an accordion somebody collapsed. The
+   markup opens the first one, and this is what keeps a floor under it after
+   the reader starts clicking.
+
+   Cancelling the click on the already-open summary is the whole mechanism.
+   Enter and Space on a focused <summary> dispatch a click too, so the keyboard
+   is covered by the same three lines and nothing needs a key handler.
+
+   Deliberately not the toggle event: by the time that fires the details has
+   already closed, and reopening it there is a second frame of the fold with a
+   hole in it. */
+(function () {
+  document.querySelectorAll('.naud > details > summary').forEach(function (s) {
+    s.addEventListener('click', function (e) {
+      if (s.parentNode.open) e.preventDefault();
+    });
+  });
+})();
+
 /* ── the client stories ────────────────────────────────────
    Two arrows stepping through the slots. Written against whatever slots are
    present rather than a fixed count, so adding a real testimonial is a matter of

@@ -10859,7 +10859,7 @@ h1.statement--sm { font-weight: 900; }
   color: rgba(21, 24, 27, .62);
 }
 .naud summary::-webkit-details-marker { display: none; }
-.naud details[open] > summary { color: var(--ink); }
+.naud details[open] > summary { color: var(--ink); cursor: default; }
 .naud details:not([open]) > summary:hover { color: var(--ink-70); }
 
 /* The chevron. Two borders on an empty box, rotated — no SVG to inline, no

@@ -10382,7 +10382,16 @@ h1.statement--sm { font-weight: 900; }
   }
   .npil__s { margin-top: 0; }
   .npil__b { opacity: 0; }
-  .npil__b p { border-top: 0; padding-top: 0; margin-top: 0; max-width: none; }
+  /* Air on both sides of the paragraph, at the owner's call. Symmetric padding
+     rather than a max-width alone, which would only have moved the right edge
+     and left the text hard against the subtitle.
+
+     The 60ch cap on top of it is for the wide case: at 1920 the column runs
+     841px, which is 79 characters at --a6 and past the comfortable measure.
+     At 1400 the padding has already taken it to about 62ch so the cap barely
+     bites; at 1920 it is what stops the line getting long. */
+  .npil__b { padding-inline: clamp(1.25rem, 3vw, 3.25rem); }
+  .npil__b p { border-top: 0; padding-top: 0; margin-top: 0; max-width: 60ch; }
   @media (prefers-reduced-motion: no-preference) {
     .npil__b { transition: opacity .28s var(--ease); }
     .npil__i { transition: border-color .28s var(--ease); }

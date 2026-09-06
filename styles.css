@@ -10505,12 +10505,10 @@ h1.statement--sm { font-weight: 900; }
   .nmid--owners { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
                   column-gap: clamp(2rem, 5vw, 5rem); align-items: start; }
   .nmid--owners > div > .nf__note { max-width: none; }
-  /* The closing test keeps the same tracks. Left to the default .nf__grid it
-     opened its prose at x716 against the ledger's x735 above it — nineteen
-     pixels apart, which is the worst kind of misalignment, near enough to look
-     intended and far enough to look wrong. Same gutter, same cap removed. */
-  #owners .nf__grid { column-gap: clamp(2rem, 5vw, 5rem); }
-  #owners .nf__grid > .nf__note { max-width: none; }
+  /* .nask carries a 12% indent everywhere else on the page. In this column it
+     is the last of four blocks sharing one left edge, and 12% would break the
+     only vertical line the composition has. */
+  .nmid--owners > div > .nask { margin-left: 0; margin-top: var(--v4); }
   /* first thing in each column starts at the column's top, so the headline and
      the statement share one baseline and the two columns start together */
   .nmid--owners > div > :first-child { margin-top: 0; }
@@ -10528,7 +10526,9 @@ h1.statement--sm { font-weight: 900; }
   #owners .nf__say     { order: 2; }
   #owners .nfric__lead { order: 3; }
   #owners .nfric       { order: 4; }
-  #owners .nmid--owners .nf__note:not(.nfric__lead) { order: 5; }
+  #owners .nmid--owners > div > .nf__note:not(.nfric__lead) { order: 5; }
+  #owners .nask { order: 6; }
+  #owners .nmid--owners > div > .nf__note:last-child { order: 7; }
 }
 
 /* ( 05 )'s opening statement goes back up to --a3, the size it began at, at the

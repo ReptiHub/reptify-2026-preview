@@ -10508,6 +10508,19 @@ h1.statement--sm { font-weight: 900; }
   #owners .nf__grid { column-gap: clamp(2rem, 5vw, 5rem); }
   #owners .nf__grid > .nf__note { max-width: none; }
 }
+
+/* ( 05 )'s opening statement goes back up to --a3, the size it began at, at the
+   owner's call. It came down twice — --a3 to --a4 to --a5 — and this puts only
+   this one back, scoped to #owners, because the other folds' standfirsts were
+   never what he was looking at and the global rule still reads --a5.
+
+   What made 28.6px wrong the first time is no longer true. It was a lone loud
+   thing under a 44.7px headline with the four questions at 22.8px/700 below it,
+   three ranks fighting in one fold. The questions have since dropped to weight
+   500 and the ledger sits at --a6, so the fold now runs one loud rank, one
+   reading rank and one index rank, in that order down the page. The statement
+   is the loud one. */
+#owners .nmid > .nf__say { font-size: var(--a3); line-height: 1.24; }
 /* And the same breakpoint, not only the same track. .nmid splits at 950 and
    .nf__grid at 861, so between those two widths the fold ran one stacked grid
    above two split ones — the standfirst full width, the prose beneath it in a

@@ -514,7 +514,7 @@
            Stacked, the eight faults begin directly under the headline they
            belong to, and the lead that names digital friction is the last line
            read before them. -->
-      <div class="nmid nmid--owners">
+      <div class="nmid nmid--cols">
         <div>
           <h2 class="nf__head" data-reveal>You may already be doing the hard part.</h2>
 
@@ -573,17 +573,25 @@
   <section class="nf nf--pale" id="here" aria-labelledby="here-h">
     <div class="wrap">
       <p class="nf__meta"><b>( 06 )</b><span class="nf__tag vh" id="here-h">What we do here</span></p>
-      <div class="nmid">
-        <h2 class="nf__head" data-reveal>We find the friction. We remove it.</h2>
+      <!-- Two stacked columns, the same shape ( 05 ) runs and for the same
+           reason: .nmid's row grid makes row one as tall as the 88px headline,
+           which left 37px of air under a 51px standfirst on the right. -->
+      <div class="nmid nmid--cols">
+        <div>
+          <h2 class="nf__head" data-reveal>We find the friction. We remove it.</h2>
 
-        <blockquote class="pull" data-reveal>
-          <p>Not every business needs all five. That&rsquo;s part of the point. The first job is figuring out <strong>where the friction actually is</strong> &mdash; and then removing it, rather than handing back a report full of homework.</p>
-        </blockquote>
-        <p class="nf__say" data-reveal>Reptify Media works on the space between &ldquo;I need this&rdquo; and &ldquo;I found the right business.&rdquo; In Napa, that rarely means looking at a website in isolation.</p>
+          <blockquote class="pull" data-reveal>
+            <p>Not every business needs all five. That&rsquo;s part of the point. The first job is figuring out <strong>where the friction actually is</strong> &mdash; and then removing it, rather than handing back a report full of homework.</p>
+          </blockquote>
+        </div>
 
-        <div class="nf__note" data-reveal>
-        <p>We look at the whole digital version of the business: its name, location, hours, services, photographs, booking path, calls, answers, listings and the information people encounter before deciding what to do next.</p>
-          <p>Our postal address is 1300 First Street, Suite 368, Napa, CA 94559. It is not a walk-in storefront. We work throughout Napa, Napa Valley and the wider Bay Area, and when understanding the physical business matters, we go there.</p>
+        <div>
+          <p class="nf__say" data-reveal>Reptify Media works on the space between &ldquo;I need this&rdquo; and &ldquo;I found the right business.&rdquo; In Napa, that rarely means looking at a website in isolation.</p>
+
+          <div class="nf__note" data-reveal>
+          <p>We look at the whole digital version of the business: its name, location, hours, services, photographs, booking path, calls, answers, listings and the information people encounter before deciding what to do next.</p>
+            <p>Our postal address is 1300 First Street, Suite 368, Napa, CA 94559. It is not a walk-in storefront. We work throughout Napa, Napa Valley and the wider Bay Area, and when understanding the physical business matters, we go there.</p>
+          </div>
         </div>
       </div>
 
@@ -592,47 +600,54 @@
            the numeral behind them, the first open. Native <details name>, so the
            exclusive behaviour is the browser's and no script runs. Without name
            support every panel opens independently, which is a working page. -->
+      <!-- Five cards, horizontal above 1200px: one is wide, hovering another
+           widens it and lets the previous one fall back. Plain elements rather
+           than <details>: a disclosure widget is a click-and-keyboard control
+           and driving it from hover would be wrong for both. Nothing here is
+           behind an interaction that a keyboard or a screen reader cannot
+           perform, because below 1200px, and on any device without a fine
+           pointer, the five cards stack and every paragraph is simply open. -->
       <div class="npil" data-reveal>
-        <details class="npil__i" name="npil" open>
-          <summary class="npil__sum">
-            <span class="npil__n" aria-hidden="true">1</span>
+        <div class="npil__i">
+          <span class="npil__n" aria-hidden="true">1</span>
+          <div class="npil__sum">
             <h3 class="npil__h">Always On Front Desk</h3>
             <span class="npil__s">Calls don&rsquo;t have to wait until tomorrow</span>
-          </summary>
+          </div>
           <div class="npil__b"><p>Calls and messages that arrive while you&rsquo;re busy or after you&rsquo;ve locked up can still be answered and moved toward the appropriate next step.</p></div>
-        </details>
-        <details class="npil__i" name="npil">
-          <summary class="npil__sum">
-            <span class="npil__n" aria-hidden="true">2</span>
+        </div>
+        <div class="npil__i">
+          <span class="npil__n" aria-hidden="true">2</span>
+          <div class="npil__sum">
             <h3 class="npil__h">Smart Web Presence</h3>
             <span class="npil__s">The website answers the real question</span>
-          </summary>
+          </div>
           <div class="npil__b"><p>Build the information around what customers actually need to know instead of making them hunt through unnecessary pages and dead ends.</p></div>
-        </details>
-        <details class="npil__i" name="npil">
-          <summary class="npil__sum">
-            <span class="npil__n" aria-hidden="true">3</span>
+        </div>
+        <div class="npil__i">
+          <span class="npil__n" aria-hidden="true">3</span>
+          <div class="npil__sum">
             <h3 class="npil__h">AI Visibility Strategy</h3>
             <span class="npil__s">Easier to understand and recommend</span>
-          </summary>
+          </div>
           <div class="npil__b"><p>Help Google, ChatGPT and other discovery systems understand what the business actually does when somebody asks for a place like it.</p></div>
-        </details>
-        <details class="npil__i" name="npil">
-          <summary class="npil__sum">
-            <span class="npil__n" aria-hidden="true">4</span>
+        </div>
+        <div class="npil__i">
+          <span class="npil__n" aria-hidden="true">4</span>
+          <div class="npil__sum">
             <h3 class="npil__h">AI Workforce Solutions</h3>
             <span class="npil__s">Give repetitive work somewhere else to go</span>
-          </summary>
+          </div>
           <div class="npil__b"><p>Build AI-assisted systems for the work a small team cannot staff around the clock &mdash; intake, follow-up, qualification, routing and the other repeatable tasks that quietly consume a day.</p></div>
-        </details>
-        <details class="npil__i" name="npil">
-          <summary class="npil__sum">
-            <span class="npil__n" aria-hidden="true">5</span>
+        </div>
+        <div class="npil__i">
+          <span class="npil__n" aria-hidden="true">5</span>
+          <div class="npil__sum">
             <h3 class="npil__h">Business Photography</h3>
             <span class="npil__s">Let people see the real business</span>
-          </summary>
+          </div>
           <div class="npil__b"><p>Show the actual place, people, details and experience instead of imagery that could belong to almost anyone.</p></div>
-        </details>
+        </div>
       </div>
 
     </div>

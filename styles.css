@@ -10243,21 +10243,16 @@ h1.statement--sm { font-weight: 900; }
 
 .npil__i {
   position: relative; isolation: isolate; overflow: clip;
+  display: grid; align-content: start;
   background: var(--chalk);
   border: 1px solid var(--ink-15);
   border-left: 2px solid transparent;
   border-radius: 2px;
+  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.4rem);
 }
-.npil__i[open] { border-left-color: var(--brand); }
-@media (prefers-reduced-motion: no-preference) {
-  .npil__i { transition: border-color .28s var(--ease), background-color .28s var(--ease); }
-}
-.npil__i:hover, .npil__i:focus-within { border-color: var(--ink-40, rgba(21,24,27,.4)); }
-.npil__i:hover { border-left-color: var(--brand); }
-.npil__i[open]:hover { border-left-color: var(--brand); }
 
-/* the numeral, bleeding off the right and sitting under everything. z-index -1
-   inside the card's own stacking context, so it cannot escape upward. */
+/* the numeral, bleeding off the right, under everything. z-index -1 inside the
+   card's own stacking context so it cannot escape upward. */
 .npil__n {
   position: absolute; z-index: -1;
   right: -.06em; top: 50%; transform: translateY(-50%);
@@ -10268,57 +10263,83 @@ h1.statement--sm { font-weight: 900; }
   pointer-events: none; user-select: none;
 }
 
-.npil__sum {
-  display: grid; align-items: baseline;
-  gap: .35rem clamp(1rem, 2.5vw, 2rem);
-  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.4rem);
-  cursor: pointer; list-style: none;
-}
-.npil__sum::-webkit-details-marker { display: none; }
-.npil__sum:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; }
-
 .npil__h {
   margin: 0; font-family: var(--state); font-weight: 700;
   font-size: var(--a4); line-height: 1.08; letter-spacing: -.02em; color: var(--ink);
 }
 .npil__s {
+  display: block; margin-top: .35rem;
   font-family: var(--state); font-weight: 500;
   font-size: var(--a4); line-height: 1.14; letter-spacing: -.02em; color: var(--ink-65);
 }
-
-/* the +/- is the site's own accordion marker, from .qa in ( 07 ) */
-.npil__sum::after {
-  content: '+'; grid-area: mark; justify-self: end; align-self: center;
-  font-family: var(--work); font-size: var(--a4); line-height: 1; color: var(--ink-65);
-}
-.npil__i[open] .npil__sum::after { content: '\2013'; }
-
-.npil__b { padding: 0 clamp(1.4rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.2rem); }
 .npil__b p {
-  margin: 0; max-width: 64ch;
-  border-top: 1px solid var(--ink-15); padding-top: var(--v2);
+  margin: 0; max-width: 46ch;
+  border-top: 1px solid var(--ink-15); padding-top: var(--v2); margin-top: var(--v2);
   font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
 }
 
-/* one row below the split, three columns above it: numeral column is the
-   bleed and takes no track, so the name and the subtitle share the line and
-   the marker holds the right edge. */
-.npil__sum { grid-template-areas: 'h mark' 's mark'; grid-template-columns: minmax(0,1fr) auto; }
-@media (min-width: 861px) {
-  .npil__sum {
-    grid-template-areas: 'h s mark';
-    grid-template-columns: minmax(0, 22ch) minmax(0, 1fr) auto;
-    align-items: center;
-  }
-}
-.npil__h { grid-area: h; }
-.npil__s { grid-area: s; }
+/* ── HORIZONTAL, ONE OPEN ──────────────────────────────────────────────────
+   Five columns; one is wide and the rest are narrow, and hovering a narrow one
+   widens it while the previous falls back. Two selectors do the whole thing:
+   the group's hover resets every card to 1, and the card's own hover overrides
+   it. The first card is the resting state, so the fold opens on Always On
+   Front Desk and returns to it when the pointer leaves.
 
-/* the ink folds invert the same way every other device on this page does */
+   flex-grow is the only animated property. It is layout, not transform, which
+   this sheet normally avoids animating; it is accepted here because the whole
+   device IS the width change and there are five boxes on one row, not a list
+   of many. :focus-within is carried alongside :hover so a keyboard reaching a
+   link inside a panel opens the same panel.
+
+   Gated on a fine pointer as well as width. On touch there is no hover, so a
+   hover accordion would be a wall of five columns nobody can open; below the
+   gate the cards stack at full width with every paragraph already visible,
+   which is why nothing on this fold is trapped behind an interaction. */
+@media (hover: hover) and (pointer: fine) and (min-width: 1200px) {
+  .npil { display: flex; align-items: stretch; }
+  .npil__i { flex: 1 1 0; min-width: 0; }
+  .npil__i, .npil__b { transition: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .npil__i { transition: flex-grow .55s var(--ease), border-color .3s var(--ease); }
+    .npil__b { transition: opacity .3s var(--ease), visibility 0s .3s; }
+  }
+
+  .npil__i { flex-grow: 1; }
+  .npil__i:first-child { flex-grow: 2.8; }
+  .npil:hover .npil__i, .npil:focus-within .npil__i { flex-grow: 1; }
+  .npil:hover .npil__i:hover,
+  .npil:focus-within .npil__i:focus-within { flex-grow: 2.8; }
+
+  /* the paragraph belongs to the open card only: a narrow column cannot hold
+     it, and visibility rather than opacity keeps it out of tab order and out
+     of a text selection while it is closed */
+  .npil__b { opacity: 0; visibility: hidden; }
+  .npil__i:first-child .npil__b { opacity: 1; visibility: visible; }
+  .npil:hover .npil__i .npil__b,
+  .npil:focus-within .npil__i .npil__b { opacity: 0; visibility: hidden; }
+  .npil:hover .npil__i:hover .npil__b,
+  .npil:focus-within .npil__i:focus-within .npil__b { opacity: 1; visibility: visible; }
+  @media (prefers-reduced-motion: no-preference) {
+    .npil__i:first-child .npil__b,
+    .npil:hover .npil__i:hover .npil__b,
+    .npil:focus-within .npil__i:focus-within .npil__b {
+      transition: opacity .4s .12s var(--ease), visibility 0s;
+    }
+  }
+
+  .npil__i:first-child { border-left-color: var(--brand); }
+  .npil:hover .npil__i, .npil:focus-within .npil__i { border-left-color: transparent; }
+  .npil:hover .npil__i:hover,
+  .npil:focus-within .npil__i:focus-within { border-left-color: var(--brand); }
+
+  .npil__n { font-size: clamp(4rem, 6vw, 7rem); }
+}
+
+/* the ink folds invert the way every other device on this page does */
 .nf--ink .npil__i { background: var(--ink-lift-2, rgba(255,255,255,.04)); border-color: var(--chalk-line); }
 .nf--ink .npil__n { color: var(--chalk); opacity: .07; }
 .nf--ink .npil__h { color: var(--chalk); }
-.nf--ink .npil__s, .nf--ink .npil__sum::after { color: var(--chalk-40); }
+.nf--ink .npil__s { color: var(--chalk-40); }
 .nf--ink .npil__b p { border-top-color: var(--chalk-line); color: var(--chalk-65); }
 
 /* the hero's head is the one --a0 on the page */
@@ -10596,13 +10617,13 @@ h1.statement--sm { font-weight: 900; }
   /* ( 05 )'s two stacked columns. Same gutter the fold already used, and the
      prose loses its 50ch cap because in a 595px column whose only job is to
      hold it the cap left a third of the measure empty. */
-  .nmid--owners { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  .nmid--cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
                   column-gap: clamp(2rem, 5vw, 5rem); align-items: start; }
-  .nmid--owners > div > .nf__note { max-width: none; }
+  .nmid--cols > div > .nf__note { max-width: none; }
   /* .nask carries a 12% indent everywhere else on the page. In this column it
      is the last of four blocks sharing one left edge, and 12% would break the
      only vertical line the composition has. */
-  .nmid--owners > div > .nask { margin-left: 0; margin-top: var(--v4); }
+  .nmid--cols > div > .nask { margin-left: 0; margin-top: var(--v4); }
 
 /* ( 06 )'s closing line was the only element in its fold at x221. The 12%
    cascade indent .nf__note carries is right inside ( 01 )'s half-column split,
@@ -10618,7 +10639,7 @@ h1.statement--sm { font-weight: 900; }
    2px solid ink, and the size moves from --t-500 to the Journal --a4 scale the
    page is normalised to, per CLAUDE.md section 2. */
 #here .pull {
-  margin: 0; padding-left: clamp(1rem, 2.2vw, 1.6rem);
+  margin: var(--v4) 0 0; padding-left: clamp(1rem, 2.2vw, 1.6rem);
   border-left: 1px solid var(--ink-15);
   font-size: var(--a4); line-height: 1.3;
 }
@@ -10626,7 +10647,7 @@ h1.statement--sm { font-weight: 900; }
 #here .pull strong { font-weight: 700; }
   /* first thing in each column starts at the column's top, so the headline and
      the statement share one baseline and the two columns start together */
-  .nmid--owners > div > :first-child { margin-top: 0; }
+  .nmid--cols > div > :first-child { margin-top: 0; }
 }
 
 /* Stacking the two columns would read headline, lead, the eight faults, and
@@ -10635,15 +10656,15 @@ h1.statement--sm { font-weight: 900; }
    nothing else, so below the split they stop being boxes and the five blocks
    order themselves back into the sentence order they are written in. */
 @media (max-width: 860px) {
-  .nmid--owners > div { display: contents; }
-  .nmid--owners { display: flex; flex-direction: column; }
+  .nmid--cols > div { display: contents; }
+  .nmid--cols { display: flex; flex-direction: column; }
   #owners .nf__head    { order: 1; }
   #owners .nf__say     { order: 2; }
   #owners .nfric__lead { order: 3; }
   #owners .nfric       { order: 4; }
-  #owners .nmid--owners > div > .nf__note:not(.nfric__lead) { order: 5; }
+  #owners .nmid--cols > div > .nf__note:not(.nfric__lead) { order: 5; }
   #owners .nask { order: 6; }
-  #owners .nmid--owners > div > .nf__note:last-child { order: 7; }
+  #owners .nmid--cols > div > .nf__note:last-child { order: 7; }
 }
 
 /* ( 05 )'s opening statement goes back up to --a3, the size it began at, at the
@@ -11061,15 +11082,6 @@ h1.statement--sm { font-weight: 900; }
   .nmid .nf__head { grid-column: 1; grid-row: 1 / span 2; }
   .nmid .nf__say  { grid-column: 2; grid-row: 1; margin-top: 0; max-width: none; }
   .nmid .nf__note { grid-column: 2; grid-row: 2; max-width: 46ch; }
-  /* ( 06 ) only. The headline stops spanning both rows and the quote takes the
-     one beneath it, which is where the reader is told to look next and also
-     where 256px of nothing used to sit. Safe here and not in ( 05 ): row one is
-     as tall as the taller of head and standfirst, and here the standfirst is
-     51px against an 88px head, so row two starts directly under the headline.
-     In ( 05 ) the standfirst is 212px and the same move would reopen the void,
-     which is why that fold runs stacked columns instead. */
-  #here .nmid .nf__head { grid-row: 1; }
-  #here .nmid .pull { grid-column: 1; grid-row: 2; margin-top: var(--v4); }
 
   /* ( 03 ) splits the same grid differently, at the owner's call: the
      standfirst joins the title in the left column instead of heading the

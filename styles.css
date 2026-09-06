@@ -10971,24 +10971,35 @@ h1.statement--sm { font-weight: 900; }
   .nmid--cols { display: flex; flex-direction: column; }
   #owners .nf__head    { order: 1; }
   #owners .naud        { order: 3; }
+  /* The standfirst sits at 4, AFTER the audit, and it used to sit at 2. Ahead
+     of the lead it puts two paragraphs that both open "You know…" back to back
+     on a phone, which is the adjacency the rewrite exists to avoid — they read
+     as one thought said twice when nothing separates them. Behind the audit
+     each column keeps its own movement: the headline and the lead set up the
+     eight faults, then the statement opens the second argument and the notes
+     carry it. */
+  #owners .nf__say     { order: 4; }
   /* .nfric__lead carries .nf__note too, so it is matched by the rule below at
      the same specificity and has to sit after it to win. */
-  #owners .nf__note    { order: 4; }
+  #owners .nf__note    { order: 5; }
   #owners .nfric__lead { order: 2; }
-  #owners .nmid--cols > div > .nf__note:last-child { order: 5; }
+  #owners .nmid--cols > div > .nf__note:last-child { order: 6; }
 }
 
-/* ( 05 ) has no standfirst. It carried one at --a3, put back up to that size at
-   the owner's call after coming down twice, and the size was never the problem
-   with it: the new lead paragraph opens on "You know…" and pivots on "The
-   friction appears…" exactly as the statement did, so the fold made the same
-   move twice — side by side at 1400 and one after the other at 375. The lead
-   is the better of the two and it is the one that sits over the questions it
-   introduces, so the statement went rather than the lead.
+/* ( 05 )'s standfirst, back at --a3 — the size the owner set it to, kept
+   through its removal and return because the size was never what was wrong
+   with it. What was wrong was that it and the lead made the same move twice:
+   both opened on "You know…" and both pivoted on "The friction appears…". The
+   rewrite keeps the opening and changes the pivot to "The challenge is making
+   sure that knowledge survives…", so the two paragraphs now hand off instead
+   of repeating — the lead ends on what the customer finds, this one starts on
+   where the business gets encountered.
 
-   The fold now runs one loud rank, one reading rank and one index rank down
-   the page: the headline at 44.7px, the lead and the notes at 17.8px, the
-   ledger at --a6. */
+   It is also the right column's entry point. Without it that column opened on
+   17.8px prose level with a 44.7px headline and finished 177px short of the
+   left. */
+#owners .nf__say { font-size: var(--a3); line-height: 1.24; }
+
 
 /* The lead sits in the ledger's own cell, above it, so the sentence that sets
    up the eight faults is the last thing read before them rather than two blocks

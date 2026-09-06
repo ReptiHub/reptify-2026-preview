@@ -10235,9 +10235,17 @@ h1.statement--sm { font-weight: 900; }
   list-style: none; padding: 0; margin: 0;
 }
 .nfric li {
-  font-family: var(--work); font-size: var(--a5); color: var(--ink);
-  line-height: 1.35;
-  padding: .68em 0;
+  /* --a6, back down from --a5 at the owner's call, and it was the right read:
+     the horizontal strip was the fault, not the size. In a ruled column small
+     type stops being chrome and becomes an index — a set of entries rather than
+     a set of labels — and it holds its rows tighter, which is what makes seven
+     of them look deliberate instead of long.
+
+     Colour stays at full ink rather than returning to --ink-70. Smaller text
+     needs more contrast, not less, and this is content. */
+  font-family: var(--work); font-size: var(--a6); color: var(--ink);
+  line-height: 1.4;
+  padding: .72em 0;
   border-top: 1px solid var(--ink-15);
 }
 /* the last rule closes the ledger; without it the column ends on air and the

@@ -10528,6 +10528,20 @@ h1.statement--sm { font-weight: 900; }
    .wrap and the indent aligned it to nothing, against a fold whose meta line,
    its two-column block and its five-column index all start at x70. */
 #here > .wrap > .nf__note { margin-left: 0; }
+
+/* The pull quote in ( 06 ). .pull has been in the sheet since the journal work
+   and nothing ever used it; it is the right device and only needs tuning to
+   this page's language. Two changes: the rule goes to the hairline weight the
+   rest of Napa uses (1px --ink-15 on the ledger, on the fold seams) instead of
+   2px solid ink, and the size moves from --t-500 to the Journal --a4 scale the
+   page is normalised to, per CLAUDE.md section 2. */
+#here .pull {
+  margin: 0; padding-left: clamp(1rem, 2.2vw, 1.6rem);
+  border-left: 1px solid var(--ink-15);
+  font-size: var(--a4); line-height: 1.3;
+}
+#here .pull p { margin: 0; }
+#here .pull strong { font-weight: 700; }
   /* first thing in each column starts at the column's top, so the headline and
      the statement share one baseline and the two columns start together */
   .nmid--owners > div > :first-child { margin-top: 0; }
@@ -10965,6 +10979,15 @@ h1.statement--sm { font-weight: 900; }
   .nmid .nf__head { grid-column: 1; grid-row: 1 / span 2; }
   .nmid .nf__say  { grid-column: 2; grid-row: 1; margin-top: 0; max-width: none; }
   .nmid .nf__note { grid-column: 2; grid-row: 2; max-width: 46ch; }
+  /* ( 06 ) only. The headline stops spanning both rows and the quote takes the
+     one beneath it, which is where the reader is told to look next and also
+     where 256px of nothing used to sit. Safe here and not in ( 05 ): row one is
+     as tall as the taller of head and standfirst, and here the standfirst is
+     51px against an 88px head, so row two starts directly under the headline.
+     In ( 05 ) the standfirst is 212px and the same move would reopen the void,
+     which is why that fold runs stacked columns instead. */
+  #here .nmid .nf__head { grid-row: 1; }
+  #here .nmid .pull { grid-column: 1; grid-row: 2; margin-top: var(--v4); }
 
   /* ( 03 ) splits the same grid differently, at the owner's call: the
      standfirst joins the title in the left column instead of heading the

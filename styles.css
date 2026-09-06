@@ -10797,57 +10797,120 @@ h1.statement--sm { font-weight: 900; }
 .nf .nf__meta b { white-space: nowrap; }
 
 /* ── ( 05 ) THE AUDIT ──────────────────────────────────────────────────────
-   Four questions that hold still, and one region beneath them that swaps.
+   Four questions, and the pair that answers one opens beneath it.
 
-   This was a hover accordion first. Measured on two baked snapshots rather
-   than a class toggle, because this pane does not restyle: hovering the third
+   OUTSIDE the 861 query, and it sat inside it for two commits. These rules
+   were written against an anchor that lives in that block, so every .naud rule
+   inherited the gate and the audit went unstyled below 861. The structural
+   checks passed throughout, because an unstyled list still stacks and still
+   counts four groups and eight rows. Only the two columns stay gated.
+
+   This was a hover accordion first, and it oscillated: hovering the third
    question moved that question 131px up, out from under the cursor and onto
    the second, which would open and move everything again. Panels were 66px
-   and 44px, so it could not be balanced flat either. The homepage already
-   solved this — .help__list keeps its names still and swaps one caption slot —
-   and this is that device.
+   and 44px, so it could not be balanced flat. That was answered for a while
+   by holding the questions still and swapping one region beneath them, the
+   homepage's .help__list device.
 
-   The panes are stacked in one grid cell, so the region is as tall as the
-   tallest and nothing reflows when the pick changes. Opacity only, .28s, the
-   same value .help__say uses.
+   It is a real accordion again, on instruction, and click is what makes that
+   safe. Reflow under a pointer that did not ask for it is the fault; reflow
+   the reader just requested is the answer arriving. Nothing opens on hover,
+   so nothing can chase the cursor.
 
-   Driven by main.js's wire() on pointerenter, focusin and the fold's own pass
-   through the viewport, so it opens on scroll as well as on hover. A
-   hover-only reveal would be content nobody on a phone could reach. */
-.naud { margin: var(--v4) 0 0; }
+   Native <details name="naud">, the same mechanic ( 07 ) uses two folds down,
+   and the same summary grammar: display grid, 1fr max-content, the marker in
+   ::after, the native triangle off. ( 07 ) marks itself with + and –, which is
+   a plus/minus on a list of questions; this one is a chevron, because the ask
+   was an arrow and because the two folds are doing different jobs — one is an
+   FAQ, this is an audit that opens onto two columns.
 
-.naud__qs { list-style: none; margin: 0; padding: 0; }
-.naud__qs li {
+   Every question carries what the owner knows beside what the customer finds.
+   The gap between the columns is the argument, so they are equal width and the
+   weight does the talking: known at --ink-70, found at full ink, because the
+   fault is the thing to notice.
+
+   From 21st's "Us vs Them Comparison" (id 21217), structure only. Its check
+   and cross rows are deliberately not taken: section 10 rules out icon grids,
+   so the contrast is a rule between the columns and a difference in weight.
+   And it is not us against them, it is the owner against what the street can
+   see, which is a gap to close rather than a rival.
+
+   No new type: question at --a4/500, both sides at --a6. */
+.naud { margin: var(--v4) 0 0; border-bottom: 1px solid var(--ink-15); }
+.naud details { border-top: 1px solid var(--ink-15); }
+.naud details:first-of-type { border-top: 0; }
+
+.naud summary {
+  display: grid; grid-template-columns: 1fr max-content;
+  gap: clamp(1rem, 2vw, 1.5rem); align-items: center;
+  /* 44px minimum at 375, where --a4 is 19.2px on a 1.24 leading: 23.8px of
+     type plus 2 x 10.4px is 44.6. The old list ran .5rem and measured 39.8,
+     which was fine for a line of text and is not fine for a control. */
+  padding-block: clamp(.65rem, 1.1vw, .85rem);
+  cursor: pointer; list-style: none;
   font-family: var(--state); font-weight: 500;
   font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
-  color: rgba(21, 24, 27, .5);
-  border-top: 1px solid var(--ink-15); padding: .5rem 0;
+  /* .62, not the .5 the questions carried as a passive list. At 1400 this is
+     22.8px at weight 500, which is NOT WCAG large text — that needs 24px unless
+     the weight is 700 — so the bar is 4.5:1 and .5 measured 3.28 over --chalk.
+     .61 is the threshold and .62 measures 4.74. A closed question is a control
+     now, and a control's own label cannot be the thing that fails. The ladder
+     still reads: .62 closed, .70 hovered, full ink open. */
+  color: rgba(21, 24, 27, .62);
 }
-.naud__qs li:first-child { border-top: 0; padding-top: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .naud__qs li { transition: color .28s var(--ease); }
-}
-/* the flagship is lit before anyone points at anything */
-/* the guard sits on the ul, not on .naud: wire() puts --picked and --live on
-   the list it was handed, which is the ul. On .naud the :not() never matched
-   and the first question stayed lit alongside the picked one. */
-.naud__qs:not(.naud__qs--picked):not(.naud__qs--live) li:first-child { color: var(--ink); }
-.naud__qs--picked li.is-picked, .naud__qs--live li.is-picked { color: var(--ink); }
+.naud summary::-webkit-details-marker { display: none; }
+.naud details[open] > summary { color: var(--ink); }
+.naud details:not([open]) > summary:hover { color: var(--ink-70); }
 
-.naud__panels { display: grid; margin-top: var(--v3); }
+/* The chevron. Two borders on an empty box, rotated — no SVG to inline, no
+   glyph whose metrics change with the font stack. Sized in px rather than em
+   so it stays a control at every step of --a4: at 1920 an em-sized chevron
+   would be 17px of 1.5px stroke, which is a spindly arrow rather than a mark.
+
+   The translate is optical centring, and it is derived rather than nudged. The
+   box is a square with two adjacent borders; rotating it 45deg sends the drawn
+   corner to (size/2)·√2 below the centre while the two arm ends stay level with
+   it, so the ink sits between +size/2 and +size·.707 — a centroid .354·size
+   low. Move it back by exactly that and the arrow reads centred against the
+   question instead of hanging under it. Sign flips with the rotation.
+
+   translateY is written BEFORE rotate so it applies in the page's axes rather
+   than the rotated element's; the other order moves the arrow diagonally. */
+.naud summary::after {
+  --ch: clamp(9px, 1vw, 13px);
+  content: ''; align-self: center; justify-self: end;
+  width: var(--ch); height: var(--ch);
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: translateY(calc(var(--ch) * -.354)) rotate(45deg);
+  opacity: .55;
+}
+.naud details[open] > summary::after {
+  transform: translateY(calc(var(--ch) * .354)) rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .naud summary { transition: color .28s var(--ease); }
+  .naud summary::after { transition: transform .28s var(--ease); }
+}
+
+/* The open. A closed <details> is display:none, which no transition can cross,
+   so this needs ::details-content and interpolate-size to have a height to
+   interpolate at all. Both are recent; where they are missing the panel snaps
+   open, which is what native does and is not a fault. Guarded rather than
+   assumed — the height rule alone, unsupported, would collapse every panel. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+    .naud { interpolate-size: allow-keywords; }
+    .naud details::details-content {
+      block-size: 0; overflow: clip;
+      transition: block-size .32s var(--ease), content-visibility .32s allow-discrete;
+    }
+    .naud details[open]::details-content { block-size: auto; }
+  }
+}
+
+.naud__pane { padding-bottom: clamp(.9rem, 1.8vw, 1.35rem); }
 .naud__head { display: none; }
-.naud__pane {
-  grid-area: 2 / 1; margin: 0; opacity: 0;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .naud__pane { transition: opacity .28s var(--ease); }
-}
-.naud:not([data-sol]) .naud__pane:first-of-type { opacity: 1; }
-.naud[data-sol="1"] .naud__pane:nth-of-type(1),
-.naud[data-sol="2"] .naud__pane:nth-of-type(2),
-.naud[data-sol="3"] .naud__pane:nth-of-type(3),
-.naud[data-sol="4"] .naud__pane:nth-of-type(4) { opacity: 1; }
-
 .naud__p { margin: 0; }
 .naud__p + .naud__p { margin-top: .5rem; }
 .naud__k, .naud__f { display: block; font-family: var(--work); font-size: var(--a6); line-height: 1.5; }
@@ -10862,11 +10925,14 @@ h1.statement--sm { font-weight: 900; }
 .naud__f { margin-bottom: 0; }
 
 @media (min-width: 861px) {
+  /* the column head rides inside each panel now rather than once above the
+     stack, because there is no longer one shared region for it to sit over.
+     Only one panel is open at a time, so only one head is ever on screen. */
   .naud__head {
-    grid-area: 1 / 1; display: grid;
+    display: grid; margin: 0 0 .5rem;
     grid-template-columns: 1fr 1fr; column-gap: clamp(1.5rem, 3vw, 2.75rem);
     font-family: var(--work); font-size: .78rem; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--ink-70); padding-bottom: .5rem;
+    text-transform: uppercase; color: var(--ink-70);
   }
   .naud__p {
     display: grid; grid-template-columns: 1fr 1fr;
@@ -10878,10 +10944,12 @@ h1.statement--sm { font-weight: 900; }
                clip-path: inset(50%); white-space: nowrap; }
 }
 
-.nf--ink .naud__qs li { border-top-color: var(--chalk-line); color: var(--chalk-40); }
-.nf--ink .naud__qs:not(.naud__qs--picked):not(.naud__qs--live) li:first-child,
-.nf--ink .naud__qs--picked li.is-picked, .nf--ink .naud__qs--live li.is-picked { color: var(--chalk); }
-.nf--ink .naud__k { color: var(--chalk-40); }
+.nf--ink .naud, .nf--ink .naud details { border-color: var(--chalk-line); }
+/* --chalk-65 and not --chalk-40, for the reason above mirrored: chalk at .40
+   over the ink ground measures 3.48, and at .65 it measures 7.11. */
+.nf--ink .naud summary { color: var(--chalk-65); }
+.nf--ink .naud details[open] > summary { color: var(--chalk); }
+.nf--ink .naud__k { color: var(--chalk-65); }
 .nf--ink .naud__f { color: var(--chalk); border-left-color: var(--chalk-line); }
 .nf--ink .naud__head, .nf--ink .naud__lbl { color: var(--chalk-65); }
 
@@ -10896,6 +10964,24 @@ h1.statement--sm { font-weight: 900; }
   .nmid--cols { display: flex; flex-direction: column; }
   #owners .nf__head    { order: 1; }
   #owners .nf__say     { order: 2; }
+  /* These two were missing and the block above was wrong about what it did.
+     Only the headline and the statement carried an order; .nfric__lead and
+     .naud fell through to the initial 0, which sorts BEFORE 1, so at 375 the
+     fold read lead, then all four questions, then the headline, then the
+     statement it was supposed to open with. Measured on the committed page:
+     lead at 8967, audit at 9243, headline at 10073, statement at 10174. Every
+     phone visitor met the audit before the sentence that introduces it.
+
+     An order on some flex children and not the others is not a partial fix, it
+     is an inversion — the unordered ones jump the queue rather than staying
+     put. All four are numbered now. */
+  #owners .naud        { order: 4; }
+  /* .nfric__lead carries .nf__note too, so it is matched by the rule above at
+     the same specificity and has to sit after it to win. Numbering it first and
+     leaving .nf__note unnumbered is what produced the inversion in the first
+     place. */
+  #owners .nf__note    { order: 5; }
+  #owners .nfric__lead { order: 3; }
   #owners .nmid--cols > div > .nf__note:last-child { order: 7; }
 }
 

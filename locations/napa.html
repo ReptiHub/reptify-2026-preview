@@ -526,81 +526,82 @@
                it, and the eight faults are all still here — two per question,
                nothing cut or invented to make the arithmetic work.
 
-               THE QUESTIONS NEVER MOVE, and that is the whole reason for this
-               shape. Built first as a hover accordion, where the panel opens
-               under the question you point at. Measured: hovering the third
-               question moved that question 131px UP, out from under the
-               cursor and onto the second one, which would then open and move
-               everything again. Panels are not even equal — 66px against 44px
-               — so it cannot be balanced away. A hover-driven accordion that
-               reflows above the pointer oscillates, and this one did.
+               An accordion, on instruction: the pair opens directly beneath
+               the question it answers, and a chevron says there is something
+               to open. CLICK, not hover, and that distinction is the whole
+               reason this shape works now. Built as a hover accordion first
+               and measured: hovering the third question moved that question
+               131px UP, out from under the cursor and onto the second, which
+               would open and move everything again. Panels are 66px against
+               44px, so it could not be balanced flat either.
 
-               So it runs the homepage's device instead, which already solved
-               this: .help__list holds the names still and swaps one caption
-               region beneath them. Four questions in a fixed list, four panes
-               stacked in one grid cell, opacity switched by main.js's picker
-               on pointer AND on scroll. Nothing reflows, so nothing can chase
-               the cursor, and a reader on a phone still gets all four as the
-               fold passes.
+               Click removes the oscillation rather than hiding it. Movement
+               under a pointer that did not ask for it is a fault; movement
+               the reader just asked for is the answer arriving. Nothing can
+               chase the cursor because nothing opens until it is told to.
 
-               Each pane keeps its own <dl> with the question repeated in a
-               hidden <dt> and tied back by aria-labelledby, so the pairing
-               survives for a screen reader even though the visible question
-               sits in the list above. -->
+               Native <details name="naud">, the same mechanic as ( 07 ) two
+               folds down. No script and no state: one open at a time, keyboard
+               and find-in-page work by default, and the copy stays in the DOM
+               for a crawler whether a panel is open or shut. The first is
+               open so the pattern is legible before anyone clicks. -->
           <div class="naud" data-reveal>
-            <ul class="naud__qs">
-              <li id="naq1">Can they find you?</li>
-              <li id="naq2">Can they understand you?</li>
-              <li id="naq3">Can they trust what they find?</li>
-              <li id="naq4">Can they take the next step?</li>
-            </ul>
-            <div class="naud__panels">
-              <div class="naud__head" aria-hidden="true"><span>You know</span><span>They find</span></div>
-              <dl class="naud__pane" aria-labelledby="naq1">
-                <dt class="vh">Can they find you?</dt>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>The building, and the cross street everyone uses</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>An inconsistent address</span>
-                  </dd>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>Every service you offer, including the one you are best at</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>A service that is difficult to find</span>
-                  </dd>
-              </dl>
-              <dl class="naud__pane" aria-labelledby="naq2">
-                <dt class="vh">Can they understand you?</dt>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>The question you are asked every week</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>A question nobody answers online</span>
-                  </dd>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>Where the important information is</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>A polished website that hides basic information</span>
-                  </dd>
-              </dl>
-              <dl class="naud__pane" aria-labelledby="naq3">
-                <dt class="vh">Can they trust what they find?</dt>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>When you are actually open</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>Wrong hours</span>
-                  </dd>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>What the place looks like now</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>Old photographs</span>
-                  </dd>
-              </dl>
-              <dl class="naud__pane" aria-labelledby="naq4">
-                <dt class="vh">Can they take the next step?</dt>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>That you would have called them back</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>An unanswered call</span>
-                  </dd>
-                  <dd class="naud__p">
-                    <span class="naud__k"><b class="naud__lbl">You know</b>How to book someone in</span>
-                    <span class="naud__f"><b class="naud__lbl">They find</b>A confusing booking path</span>
-                  </dd>
-              </dl>
-            </div>
+            <details name="naud" open>
+              <summary>Can they find you?</summary>
+              <div class="naud__pane">
+                <p class="naud__head" aria-hidden="true"><span>You know</span><span>They find</span></p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>The building, and the cross street everyone uses</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>An inconsistent address</span>
+                </p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>Every service you offer, including the one you are best at</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>A service that is difficult to find</span>
+                </p>
+              </div>
+            </details>
+            <details name="naud">
+              <summary>Can they understand you?</summary>
+              <div class="naud__pane">
+                <p class="naud__head" aria-hidden="true"><span>You know</span><span>They find</span></p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>The question you are asked every week</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>A question nobody answers online</span>
+                </p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>Where the important information is</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>A polished website that hides basic information</span>
+                </p>
+              </div>
+            </details>
+            <details name="naud">
+              <summary>Can they trust what they find?</summary>
+              <div class="naud__pane">
+                <p class="naud__head" aria-hidden="true"><span>You know</span><span>They find</span></p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>When you are actually open</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>Wrong hours</span>
+                </p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>What the place looks like now</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>Old photographs</span>
+                </p>
+              </div>
+            </details>
+            <details name="naud">
+              <summary>Can they take the next step?</summary>
+              <div class="naud__pane">
+                <p class="naud__head" aria-hidden="true"><span>You know</span><span>They find</span></p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>That you would have called them back</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>An unanswered call</span>
+                </p>
+                <p class="naud__p">
+                  <span class="naud__k"><b class="naud__lbl">You know</b>How to book someone in</span>
+                  <span class="naud__f"><b class="naud__lbl">They find</b>A confusing booking path</span>
+                </p>
+              </div>
+            </details>
           </div>
         </div>
 

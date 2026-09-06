@@ -10435,9 +10435,17 @@ h1.statement--sm { font-weight: 900; }
      name wipes in letter by letter and clears in one move; a staggered fade-out
      reads as the row being slow to let go.
 
+     THE LETTERS MUST CARRY THE COLOUR THEMSELVES. color: inherit does not
+     stagger: an inherited value tracks the parent's currently-animating colour
+     continuously, so the letters follow the parent's one transition and turn
+     dark together no matter what delay they carry. There is no discrete change
+     on the child to interpolate. So the parent snaps and each letter runs its
+     own transition from its own declared value.
+
      If the sweep did not run — no view() support, or reduced motion — there are
-     no .ltr spans and the colour on .npil__h above still does the whole job. */
-  .npil__i .npil__h .ltr { color: inherit; transition-delay: 0s; }
+     no .ltr spans and the colour on .npil__h still does the whole job in one
+     step, which is what reduced motion should get anyway. */
+  .npil__i .npil__h .ltr { color: rgba(21, 24, 27, .5); transition-delay: 0s; }
   .npil__i { border-left-color: transparent; }
 
   .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__b { opacity: 1; }
@@ -10451,16 +10459,25 @@ h1.statement--sm { font-weight: 900; }
   .npil--live   .npil__i.is-picked { border-left-color: var(--brand); }
   .npil--picked .npil__i.is-picked .npil__h,
   .npil--live   .npil__i.is-picked .npil__h { color: var(--ink); }
+  .npil--picked .npil__i.is-picked .npil__h .ltr,
+  .npil--live   .npil__i.is-picked .npil__h .ltr,
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h .ltr {
+    color: var(--ink);
+  }
   @media (prefers-reduced-motion: no-preference) {
     .npil--picked .npil__i.is-picked .npil__h .ltr,
-    .npil--live   .npil__i.is-picked .npil__h .ltr { transition-delay: calc(var(--i, 0) * 26ms); }
-    .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h .ltr { transition-delay: calc(var(--i, 0) * 26ms); }
+    .npil--live   .npil__i.is-picked .npil__h .ltr,
+    .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h .ltr {
+      transition-delay: calc(var(--i, 0) * 26ms);
+    }
   }
   .npil--picked .npil__i.is-picked .npil__s,
   .npil--live   .npil__i.is-picked .npil__s { color: var(--ink-65); }
 
   @media (prefers-reduced-motion: no-preference) {
-    .npil__h, .npil__s, .npil__h .ltr { transition: color .28s var(--ease); }
+    /* .npil__h is deliberately NOT in this list. If the parent animates its
+       colour, every letter inherits that animation and they move as one. */
+    .npil__s, .npil__h .ltr { transition: color .28s var(--ease); }
   }
 }
 

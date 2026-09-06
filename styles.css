@@ -10259,11 +10259,15 @@ h1.statement--sm { font-weight: 900; }
      a set of labels — and it holds its rows tighter, which is what makes seven
      of them look deliberate instead of long.
 
-     Colour stays at full ink rather than returning to --ink-70. Smaller text
-     needs more contrast, not less, and this is content. */
-  font-family: var(--work); font-size: var(--a6); color: var(--ink);
+     Colour back to --ink-70 and the rows back to .46em, at the owner's call:
+     "these were smaller before and I like them with that size." The size never
+     moved — --a6 then, --a6 now — so what had grown was the block, not the
+     type. Full ink and .72em rows made each fault a 42px band; at --ink-70 and
+     .46em they are 35px, which is the weight the horizontal strip had before
+     the ledger, in a column that still reads as an index. */
+  font-family: var(--work); font-size: var(--a6); color: var(--ink-70);
   line-height: 1.4;
-  padding: .72em 0;
+  padding: .46em 0;
   border-top: 1px solid var(--ink-15);
 }
 /* the last rule closes the ledger; without it the column ends on air and the

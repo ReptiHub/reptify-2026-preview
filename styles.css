@@ -10954,49 +10954,41 @@ h1.statement--sm { font-weight: 900; }
 .nf--ink .naud__head, .nf--ink .naud__lbl { color: var(--chalk-65); }
 
 
-/* Stacking the two columns would read headline, lead, the eight faults, and
-   only then the statement — the fold's opening sentence arriving after the list
-   it is supposed to introduce. The wrappers exist for the desktop columns and
-   nothing else, so below the split they stop being boxes and the five blocks
-   order themselves back into the sentence order they are written in. */
+/* The wrappers exist for the desktop columns and nothing else, so below the
+   split they stop being boxes and ( 05 )'s five blocks order themselves into
+   the sequence they are meant to be read in: headline, lead, the eight faults,
+   then the two notes that follow from them.
+
+   EVERY child is numbered, and that is the point rather than a tidiness. The
+   block once numbered only two of them and left the rest on the initial 0,
+   which sorts BEFORE 1, so the unordered ones jumped the queue instead of
+   staying put. Measured on the page as it shipped: lead 8967, the audit 9243,
+   headline 10073. Every phone visitor met the audit before the sentence that
+   introduces it. An order on some flex children and not the others is not a
+   partial fix, it is an inversion. */
 @media (max-width: 860px) {
   .nmid--cols > div { display: contents; }
   .nmid--cols { display: flex; flex-direction: column; }
   #owners .nf__head    { order: 1; }
-  #owners .nf__say     { order: 2; }
-  /* These two were missing and the block above was wrong about what it did.
-     Only the headline and the statement carried an order; .nfric__lead and
-     .naud fell through to the initial 0, which sorts BEFORE 1, so at 375 the
-     fold read lead, then all four questions, then the headline, then the
-     statement it was supposed to open with. Measured on the committed page:
-     lead at 8967, audit at 9243, headline at 10073, statement at 10174. Every
-     phone visitor met the audit before the sentence that introduces it.
-
-     An order on some flex children and not the others is not a partial fix, it
-     is an inversion — the unordered ones jump the queue rather than staying
-     put. All four are numbered now. */
-  #owners .naud        { order: 4; }
-  /* .nfric__lead carries .nf__note too, so it is matched by the rule above at
-     the same specificity and has to sit after it to win. Numbering it first and
-     leaving .nf__note unnumbered is what produced the inversion in the first
-     place. */
-  #owners .nf__note    { order: 5; }
-  #owners .nfric__lead { order: 3; }
-  #owners .nmid--cols > div > .nf__note:last-child { order: 7; }
+  #owners .naud        { order: 3; }
+  /* .nfric__lead carries .nf__note too, so it is matched by the rule below at
+     the same specificity and has to sit after it to win. */
+  #owners .nf__note    { order: 4; }
+  #owners .nfric__lead { order: 2; }
+  #owners .nmid--cols > div > .nf__note:last-child { order: 5; }
 }
 
-/* ( 05 )'s opening statement goes back up to --a3, the size it began at, at the
-   owner's call. It came down twice — --a3 to --a4 to --a5 — and this puts only
-   this one back, scoped to #owners, because the other folds' standfirsts were
-   never what he was looking at and the global rule still reads --a5.
+/* ( 05 ) has no standfirst. It carried one at --a3, put back up to that size at
+   the owner's call after coming down twice, and the size was never the problem
+   with it: the new lead paragraph opens on "You know…" and pivots on "The
+   friction appears…" exactly as the statement did, so the fold made the same
+   move twice — side by side at 1400 and one after the other at 375. The lead
+   is the better of the two and it is the one that sits over the questions it
+   introduces, so the statement went rather than the lead.
 
-   What made 28.6px wrong the first time is no longer true. It was a lone loud
-   thing under a 44.7px headline with the four questions at 22.8px/700 below it,
-   three ranks fighting in one fold. The questions have since dropped to weight
-   500 and the ledger sits at --a6, so the fold now runs one loud rank, one
-   reading rank and one index rank, in that order down the page. The statement
-   is the loud one. */
-#owners .nf__say { font-size: var(--a3); line-height: 1.24; }
+   The fold now runs one loud rank, one reading rank and one index rank down
+   the page: the headline at 44.7px, the lead and the notes at 17.8px, the
+   ledger at --a6. */
 
 /* The lead sits in the ledger's own cell, above it, so the sentence that sets
    up the eight faults is the last thing read before them rather than two blocks

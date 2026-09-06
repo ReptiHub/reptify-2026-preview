@@ -10285,12 +10285,12 @@ h1.statement--sm { font-weight: 900; }
 
 .npil__h {
   margin: 0; font-family: var(--state); font-weight: 700;
-  font-size: var(--a2); line-height: 1.02; letter-spacing: -.03em; color: var(--ink);
+  font-size: var(--a1); line-height: 1; letter-spacing: -.035em; color: var(--ink);
 }
 .npil__s {
   display: block; margin-top: .3rem;
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a4); line-height: 1.08; letter-spacing: -.025em; color: var(--ink-65);
+  font-size: var(--a5); line-height: 1.2; letter-spacing: 0; color: var(--ink-65);
 }
 .npil__b p {
   margin: var(--v2) 0 0; font-size: var(--a6); line-height: 1.58; color: var(--ink-70);
@@ -10306,7 +10306,10 @@ h1.statement--sm { font-weight: 900; }
    Gated on a fine pointer as well as width: a hover reveal on a touch screen
    is content nobody can open. Below the gate the row becomes a stack and every
    description is simply visible, which is why nothing here is trapped. */
-@media (hover: hover) and (pointer: fine) and (min-width: 1100px) {
+/* No (hover: hover) on this gate any more. The state is .is-picked, which the
+   scroll path sets as readily as the pointer, so a touch laptop gets the device
+   too. Width alone decides whether there is room for three columns. */
+@media (min-width: 1100px) {
   /* Three columns inside the row, at the owner's call: the name, the subtitle,
      then the description. .npil__sum stops being a box so its two children
      become grid items themselves; below this gate it is an ordinary block and
@@ -10357,56 +10360,46 @@ h1.statement--sm { font-weight: 900; }
   }
   /* before the reader has chosen anything, the first offer's line stands.
      Exactly what .help:not([data-sol]) does on the homepage. */
-  .npil__i:first-child .npil__b { opacity: 1; }
-  .npil__i:first-child { border-left-color: var(--brand); }
-  /* ── THE RADIO-BUTTON LIGHT, from .help__list ──────────────────────────
-     The homepage's own words for it: "The flagship is lit before anyone
-     touches the list, and the list behaves like a set of radio buttons:
-     hovering anything dims everything, then the one under the pointer lights.
-     Let go and the flagship takes the light back."
+  /* ── STATE ─────────────────────────────────────────────────────────────
+     .is-picked, not :hover, and that is the point of this version. main.js
+     sets the class from pointerenter, from focusin, AND from the fold's own
+     position as it crosses the viewport, so a reader who never moves the mouse
+     still walks all five. The pointer wins while it is claiming a row and
+     hands back to the scroll after 40px of movement. That code is the
+     homepage's, parameterised to take a list, a fold and a class prefix, and
+     called twice.
 
-     The one thing not copied is the alpha. The homepage dims to
-     rgba(21,24,27,.35), which is right at 4.8vw where the names run about
-     90px. These names are --a4, 22.8px at weight 700, which is large text by
-     WCAG and so wants 3:1; measured against the card ground, .35 gives 2.18
-     and fails. .50 gives 3.28 and reads as dimmed just as clearly. Same
-     device, same behaviour, a value chosen for this type size.
+     Keying the CSS on the class rather than on :hover is the whole reason the
+     scroll path can drive the same four things the pointer does: the
+     description, the rule, the name and the subtitle.
 
-     Inside the hover gate on purpose: without a pointer there is nothing to
-     light, and four permanently greyed names on a phone would be a fault
-     rather than a state. Below the gate every name is full ink. */
+     Every row rests dim; picked lifts out of it. Before anything is picked the
+     first row stands, which is .help's "flagship is lit before anyone touches
+     the list". The alpha is .5 rather than the homepage's .35 because these
+     names are large text by WCAG and want 3:1: measured on the card ground,
+     .35 gives 2.18 and fails, .5 gives 3.28. */
+  .npil__b { opacity: 0; }
   .npil__i .npil__h,
   .npil__i .npil__s { color: rgba(21, 24, 27, .5); }
-  .npil__i:first-child .npil__h { color: var(--ink); }
-  .npil__i:first-child .npil__s { color: var(--ink-65); }
+  .npil__i { border-left-color: transparent; }
 
-  .npil:hover .npil__i .npil__h,
-  .npil:hover .npil__i .npil__s,
-  .npil:focus-within .npil__i .npil__h,
-  .npil:focus-within .npil__i .npil__s { color: rgba(21, 24, 27, .5); }
-  .npil:hover .npil__i:hover .npil__h,
-  .npil:focus-within .npil__i:focus-within .npil__h { color: var(--ink); }
-  .npil:hover .npil__i:hover .npil__s,
-  .npil:focus-within .npil__i:focus-within .npil__s { color: var(--ink-65); }
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__b { opacity: 1; }
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child { border-left-color: var(--brand); }
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h { color: var(--ink); }
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__s { color: var(--ink-65); }
+
+  .npil--picked .npil__i.is-picked .npil__b,
+  .npil--live   .npil__i.is-picked .npil__b { opacity: 1; }
+  .npil--picked .npil__i.is-picked,
+  .npil--live   .npil__i.is-picked { border-left-color: var(--brand); }
+  .npil--picked .npil__i.is-picked .npil__h,
+  .npil--live   .npil__i.is-picked .npil__h { color: var(--ink); }
+  .npil--picked .npil__i.is-picked .npil__s,
+  .npil--live   .npil__i.is-picked .npil__s { color: var(--ink-65); }
 
   @media (prefers-reduced-motion: no-preference) {
     .npil__h, .npil__s { transition: color .28s var(--ease); }
   }
-
-
-  /* .npil__i in the middle is not decoration: it lifts these to (0,4,0) so they
-     beat .npil__i:first-child .npil__b at (0,3,0) on specificity rather than on
-     being written later in the file. Source-order ties are the kind of thing a
-     later edit silently reverses. */
-  .npil:hover .npil__i .npil__b,
-  .npil:focus-within .npil__i .npil__b { opacity: 0; }
-  .npil:hover .npil__i:hover .npil__b,
-  .npil:focus-within .npil__i:focus-within .npil__b { opacity: 1; }
-
-  .npil:hover .npil__i:not(:hover),
-  .npil:focus-within .npil__i:not(:focus-within) { border-left-color: transparent; }
-  .npil:hover .npil__i:hover,
-  .npil:focus-within .npil__i:focus-within { border-left-color: var(--brand); }
 }
 
 /* the ink folds invert the way every other device on this page does */

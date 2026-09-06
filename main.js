@@ -661,71 +661,83 @@
  * done choosing. A threshold rather than any scroll at all: momentum and the
  * odd stray pixel should not count as a decision. */
 (function () {
-  var list = document.querySelector('.help__list');
-  if (!list) return;
+  /* Parameterised, because ( 06 ) of the location pages runs the same device.
+     Was hardcoded to .help__list and .help; the body below is unchanged apart
+     from taking the list, the fold and a class prefix as arguments. The Napa
+     rows are the second caller. */
+  function wire(list, fold, prefix) {
+    if (!list || !fold) return;
 
-  var items = Array.prototype.slice.call(list.children);
-  if (items.length < 2) return;
+    var items = Array.prototype.slice.call(list.children);
+    if (items.length < 2) return;
 
-  var fold = list.closest ? list.closest('.help') : null;
-  var liveIdx = -1;
+    var liveIdx = -1;
+    var pickedAt = 0;
 
-  var pickedAt = 0;
+    function pick(li) {
+      items.forEach(function (n) { n.classList.toggle('is-picked', n === li); });
+      list.classList.add(prefix + '--picked');
+      list.classList.remove(prefix + '--live');
+      liveIdx = -1;
+      /* the frame column reads this — the offer's position is the only thing the
+         stylesheet needs to know to bring the matching photograph up */
+      fold.setAttribute('data-sol', String(items.indexOf(li) + 1));
+      pickedAt = window.scrollY;
+    }
 
-  function pick(li) {
-    items.forEach(function (n) { n.classList.toggle('is-picked', n === li); });
-    list.classList.add('help__list--picked');
-    list.classList.remove('help__list--live');
-    liveIdx = -1;
-    /* the frame column reads this — the offer's position is the only thing the
-       stylesheet needs to know to bring the matching photograph up */
-    if (fold) fold.setAttribute('data-sol', String(items.indexOf(li) + 1));
-    pickedAt = window.scrollY;
-  }
+    items.forEach(function (li) {
+      li.addEventListener('pointerenter', function () { pick(li); });
+      li.addEventListener('focusin', function () { pick(li); });
+    });
 
-  items.forEach(function (li) {
-    li.addEventListener('pointerenter', function () { pick(li); });
-    li.addEventListener('focusin', function () { pick(li); });
-  });
+    /* ── the fold reads itself as it passes ──────────────────
+       A pointer is not the only way to be looking at something. Scrolling the
+       fold through the viewport walks the offers in order, dimming the rest and
+       bringing up the matching frame, so a reader who never moves the mouse
+       still sees all five — which on a trackpad or a phone-turned-laptop is
+       most of them.
 
-  /* ── the fold reads itself as it passes ──────────────────
-     A pointer is not the only way to be looking at something. Scrolling the fold
-     through the viewport walks the offers in order, dimming the rest and bringing
-     up the matching frame, so a reader who never moves the mouse still sees all
-     five — which on a trackpad or a phone-turned-laptop is most of them.
+       The pointer always wins while it is claiming a row; this only runs when
+       it is not. And releasing hands back to the scroll position rather than to
+       nothing, so the fold never blanks between the two. */
+    function fromScroll() {
+      if (list.classList.contains(prefix + '--picked')) return;
+      var r = fold.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (r.bottom < 0 || r.top > vh) return;
+      /* 0 as the fold's top meets the bottom of the screen, 1 as its bottom
+         leaves the top — the whole of its pass, not just the part on screen */
+      var p = (vh - r.top) / (vh + r.height);
+      p = Math.min(Math.max(p, 0), 0.9999);
+      var i = Math.floor(p * items.length);
+      if (i === liveIdx) return;
+      liveIdx = i;
+      items.forEach(function (n, k) { n.classList.toggle('is-picked', k === i); });
+      list.classList.add(prefix + '--live');
+      fold.setAttribute('data-sol', String(i + 1));
+    }
 
-     The pointer always wins while it is claiming a row; this only runs when it is
-     not. And releasing hands back to the scroll position rather than to nothing,
-     so the fold never blanks between the two. */
-  function fromScroll() {
-    if (!fold || list.classList.contains('help__list--picked')) return;
-    var r = fold.getBoundingClientRect();
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    if (r.bottom < 0 || r.top > vh) return;
-    /* 0 as the fold's top meets the bottom of the screen, 1 as its bottom
-       leaves the top — the whole of its pass, not just the part on screen */
-    var p = (vh - r.top) / (vh + r.height);
-    p = Math.min(Math.max(p, 0), 0.9999);
-    var i = Math.floor(p * items.length);
-    if (i === liveIdx) return;
-    liveIdx = i;
-    items.forEach(function (n, k) { n.classList.toggle('is-picked', k === i); });
-    list.classList.add('help__list--live');
-    fold.setAttribute('data-sol', String(i + 1));
-  }
-
-  window.addEventListener('scroll', fromScroll, { passive: true });
-  window.addEventListener('resize', fromScroll);
-  fromScroll();
-
-  window.addEventListener('scroll', function () {
-    if (!list.classList.contains('help__list--picked')) return;
-    if (Math.abs(window.scrollY - pickedAt) < 40) return;
-    list.classList.remove('help__list--picked');
-    items.forEach(function (n) { n.classList.remove('is-picked'); });
-    liveIdx = -1;
+    window.addEventListener('scroll', fromScroll, { passive: true });
+    window.addEventListener('resize', fromScroll);
     fromScroll();
-  }, { passive: true });
+
+    window.addEventListener('scroll', function () {
+      if (!list.classList.contains(prefix + '--picked')) return;
+      if (Math.abs(window.scrollY - pickedAt) < 40) return;
+      list.classList.remove(prefix + '--picked');
+      items.forEach(function (n) { n.classList.remove('is-picked'); });
+      liveIdx = -1;
+      fromScroll();
+    }, { passive: true });
+  }
+
+  var hl = document.querySelector('.help__list');
+  if (hl) wire(hl, hl.closest('.help'), 'help__list');
+
+  /* the location pages' ( 06 ). The list is its own fold here, so it is both
+     arguments; the rows are its children either way. */
+  var np = document.querySelector('.npil');
+  if (np) wire(np, np, 'npil');
 })();
 
 /* ── the client stories ────────────────────────────────────

@@ -10998,9 +10998,9 @@ h1.statement--sm { font-weight: 900; }
    is the loud one. */
 #owners .nf__say { font-size: var(--a3); line-height: 1.24; }
 
-/* The lead sits in the ledger's own cell, above it, so the sentence that names
-   digital friction is the last thing read before the eight faults rather than
-   two blocks up in the other column. It borrows .nf__note's type wholesale and
+/* The lead sits in the ledger's own cell, above it, so the sentence that sets
+   up the eight faults is the last thing read before them rather than two blocks
+   up in the other column. It borrows .nf__note's type wholesale and
    only cancels the top margin that device carries: it is the first thing in its
    cell, and the margin would drop the ledger below the prose it is supposed to
    sit level with. */

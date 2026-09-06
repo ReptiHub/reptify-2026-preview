@@ -10290,7 +10290,7 @@ h1.statement--sm { font-weight: 900; }
 .npil__s {
   display: block; margin-top: .3rem;
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a5); line-height: 1.32; letter-spacing: 0; color: var(--ink-65);
+  font-size: var(--a3); line-height: 1.16; letter-spacing: -.02em; color: var(--ink-65);
   text-align: left; text-wrap: initial;
 }
 .npil__b p {

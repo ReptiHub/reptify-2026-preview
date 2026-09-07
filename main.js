@@ -938,11 +938,20 @@ function splitLetters(root, skip, onChar) {
          custom properties inherit downward, so the card still reads every one
          of these */
       r.style.setProperty('--x', 'calc(' + off + ' * var(--car-step))');
-      /* the arc: 1 - cos across half a turn, so the middle card sits highest
-         and the pair at each end drop by the same amount */
-      r.style.setProperty('--y', 'calc(' + (1 - Math.cos(off / n * Math.PI)).toFixed(3) + ' * var(--car-lift))');
-      r.style.setProperty('--s', (1 - d * 0.075).toFixed(3));
-      r.style.setProperty('--o', (1 - d * 0.28).toFixed(2));
+      /* Linear in distance, not the reference's cosine. Across five cards the
+         cosine spends almost all its travel on the outer pair — 1 - cos(0.2pi)
+         is .19, so the neighbours dropped 8px of a 46px lift and the middle of
+         the deck read flat. Distance over the half-count drops them evenly. */
+      r.style.setProperty('--y', 'calc(' + (d / half).toFixed(3) + ' * var(--car-lift))');
+      /* and a tilt, which is what actually makes a deck look bent: a fan of
+         cards is rotated, not merely lowered */
+      r.style.setProperty('--rot', 'calc(' + off + ' * var(--car-tilt))');
+      /* steeper falloff than the reference's, on instruction, and it pays for
+         itself twice: a deck reads front-to-back through how fast the cards
+         shrink, and a smaller neighbour needs less room, which is what lets the
+         card stay 26cqw wide instead of dropping to 23. 1 / .76 / .52. */
+      r.style.setProperty('--s', (1 - d * 0.24).toFixed(3));
+      r.style.setProperty('--o', (1 - d * 0.33).toFixed(2));
       r.style.setProperty('--z', String(n - d));
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });

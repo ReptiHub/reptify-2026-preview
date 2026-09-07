@@ -12427,13 +12427,31 @@ h1.statement--sm { font-weight: 900; }
        deck spans 4 x step + .85 x width. At 18.5 and 26 that is 96.1cqw, which
        leaves a two percent margin at every width rather than at one. */
     container-type: inline-size;
+    /* 26cqw is a CEILING, not a taste. For the card beside the middle one to
+       show its own name, its left edge plus its padding has to clear the middle
+       card's right edge — step >= w/2 + w*s1/2 - pad — and the deck still has
+       to fit, 4*step + s2*w <= 96cqw. Solved across the plausible falloffs, 26
+       passes only with a steep one and 28 fails at every setting. 30 was tried
+       first and did exactly what the arithmetic says: the middle card ate the
+       left half of its neighbour's name, so the deck read "...force ...ns".
+
+       Bigger than this needs three cards on the arc rather than five, which
+       buys about 37cqw. That is a content decision, not a geometry one. */
     --car-w: 26cqw;
-    --car-h: clamp(11rem, 17cqw, 15rem);
-    --car-step: 18.5cqw;
-    --car-lift: 22px;
-    --car-bar: 4.25rem;
+    --car-h: clamp(13rem, 19cqw, 17rem);
+    --car-step: 20.5cqw;
+    /* the bend: 56px of drop across the arc against 22, and a real rotation
+       under it. Lift alone only ever moved the outer pair — the cosine put 8px
+       between the middle card and its neighbours and the deck read flat. */
+    --car-lift: 56px;
+    --car-tilt: 3.2deg;
+    --car-bar: 3rem;
+    /* description above the controls now, with air on both sides of it */
+    --car-air: 2.75rem;
+    --car-desc: 5.25rem;
     display: block; position: relative;
-    height: calc(var(--car-h) + var(--car-lift) + var(--car-bar) + 6rem);
+    height: calc(var(--car-h) + var(--car-lift) + var(--car-air)
+                 + var(--car-desc) + var(--car-air) + var(--car-bar) + 1.5rem);
     gap: 0;
   }
 
@@ -12460,14 +12478,15 @@ h1.statement--sm { font-weight: 900; }
     box-sizing: border-box;
     /* air, at the owner's call: 30 x 33 against 20 x 25. The card grew with it
        rather than the padding eating the content box. */
-    padding: clamp(1.2rem, 2.4cqw, 1.9rem) clamp(1.3rem, 2.6cqw, 2.1rem);
+    padding: clamp(1.4rem, 2.7cqw, 2.3rem) clamp(1.5rem, 2.9cqw, 2.5rem);
     background: var(--chalk);
     border: 1px solid var(--ink-15);
     border-left: 2px solid transparent;
     border-radius: 2px;
     overflow: clip; isolation: isolate;
     pointer-events: auto; cursor: pointer;
-    transform: translateX(-50%) translate(var(--x, 0), var(--y, 0)) scale(var(--s, 1));
+    transform: translateX(-50%) translate(var(--x, 0), var(--y, 0))
+               rotate(var(--rot, 0deg)) scale(var(--s, 1));
     z-index: var(--z, 1);
   }
   /* The card surface stays opaque and the RECESSION LIVES IN THE TEXT. Fading
@@ -12482,17 +12501,20 @@ h1.statement--sm { font-weight: 900; }
   .npil--car .npil__n { opacity: calc(.08 * var(--o, 1)); }
   .npil--car .npil__i.is-picked .npil__card { border-left-color: var(--brand); }
 
-  .npil--car .npil__n { font-size: 6.25rem; right: .7rem; }
-  .npil--car .npil__h { font-size: calc(var(--a2) * .88); white-space: normal; }
-  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * .92); margin-top: .5rem; }
+  .npil--car .npil__n { font-size: 8rem; right: .8rem; }
+  .npil--car .npil__h { font-size: var(--a2); white-space: normal; }
+  .npil--car .npil__s { max-width: none; font-size: var(--a5); margin-top: .65rem; }
 
   /* the description sits under the bar, all five in one place, and only the
      picked one is lit — the same stacked-slot device .help__say runs on the
      homepage rather than a second way of doing it */
+  /* the description reads before the controls, at the owner's call: the answer
+     first and the way to the next one after it */
   .npil--car .npil__b {
     position: absolute; left: 50%; transform: translateX(-50%);
-    top: calc(var(--car-h) + var(--car-lift) + var(--car-bar));
-    width: min(52ch, 100%);
+    top: calc(var(--car-h) + var(--car-lift) + var(--car-air));
+    min-height: var(--car-desc);
+    width: min(54ch, 100%);
     display: block; grid-template-rows: none;
     text-align: center;
   }
@@ -12503,7 +12525,8 @@ h1.statement--sm { font-weight: 900; }
   /* ── the bar: arrows, dots, and the count ───────────────────────────── */
   .npil__bar {
     position: absolute; left: 0; right: 0;
-    top: calc(var(--car-h) + var(--car-lift));
+    top: calc(var(--car-h) + var(--car-lift) + var(--car-air)
+              + var(--car-desc) + var(--car-air));
     height: var(--car-bar);
     display: flex; align-items: center; justify-content: center;
     gap: clamp(1rem, 2vw, 1.75rem);

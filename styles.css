@@ -11014,10 +11014,12 @@ h1.statement--sm { font-weight: 900; }
 .npil {
   --kb-char: 12ms;
   /* THE CARD LANDS FIRST, THEN IT SPEAKS, on instruction. The card takes
-     --fold-open to arrive; typing into it while it is still travelling gives
-     the eye two things at once and it follows neither. 720ms is that journey
-     plus a beat to register where it stopped. */
-  --kb-open: 720ms;
+     --car-move to arrive; typing into it while it is still travelling gives
+     the eye two things at once and it follows neither. 1080ms is that journey
+     plus a beat to register where it stopped — it grew with the travel, since
+     a head start measured against the old .62s would now start the typing
+     while the deck was still turning. */
+  --kb-open: 1080ms;
 }
 .naud__pane.is-typed .ltr { opacity: 0; }
 .naud.in details[open] .naud__pane.is-typed .ltr {
@@ -12387,10 +12389,16 @@ h1.statement--sm { font-weight: 900; }
    .npil rather than in it, because .npil is a stage whose children are
    absolutely placed — and because a label for the five solutions is worth
    having in the row device and the phone accordion too, not only on the deck. */
+/* Obvious, at the owner's call. It was a .82rem caption in --ink-70 doing the
+   job of a section heading — the same rank as a photo credit, introducing the
+   five things the page is selling. --a4 at full ink, in the display face, with
+   the tracking eased right down: at 22.8px the .18em that made a small label
+   read as a label makes a heading read as a sign. */
 .npil__eyebrow {
-  margin: var(--v5) 0 var(--v2);
-  font-family: var(--work); font-size: .82rem; font-weight: 500;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-70);
+  margin: var(--v5) 0 var(--v3);
+  font-family: var(--state); font-size: var(--a4); font-weight: 600;
+  line-height: 1.2; letter-spacing: -.01em; text-transform: none;
+  color: var(--ink);
 }
 .nf--ink .npil__eyebrow { color: var(--chalk-65); }
 
@@ -12483,6 +12491,19 @@ h1.statement--sm { font-weight: 900; }
        The radius grows with the flatter angle so the deck spreads wider rather
        than bunching: sin(19) is half of sin(38), so a longer arm is what keeps
        the same horizontal reach at a shallower turn. */
+    /* EXTRA SMOOTH, on instruction, and the deck gets its own timing rather
+       than borrowing the folds' .62s. An accordion opening is a short
+       mechanical move and .62 is right for it; five cards travelling round a
+       ring is a long one, and the same duration makes them look hurried. .95s
+       on a curve that leaves rest slowly, carries the middle, and settles
+       without a stop — the ease-out the folds use would arrive in the first
+       third and creep the rest, which on a deck reads as snapping into place.
+
+       Everything on a card rides this one clock: the travel, the turn, the
+       veil and the rank dimming. Three of them on .62 and one on .95 is what
+       makes a move feel loose rather than smooth. */
+    --car-move: .95s;
+    --car-ease: cubic-bezier(.42, .02, .16, 1);
     --car-r: 62cqw;
     --car-arc: 19deg;
     /* THE BEND IS A RATIO, NOT A NUMBER OF PIXELS, and it took losing it to
@@ -12708,12 +12729,12 @@ h1.statement--sm { font-weight: 900; }
 
   @media (prefers-reduced-motion: no-preference) {
     .npil--car .npil__card {
-      transition: transform var(--fold-open) var(--fold-ease),
-                  border-color var(--fold-open) var(--fold-ease);
+      transition: transform var(--car-move) var(--car-ease),
+                  border-color var(--car-move) var(--car-ease);
     }
     .npil--car .npil__sum,
-    .npil--car .npil__n { transition: opacity var(--fold-open) var(--fold-ease); }
-    .npil--car .npil__card::after { transition: opacity var(--fold-open) var(--fold-ease); }
+    .npil--car .npil__n { transition: opacity var(--car-move) var(--car-ease); }
+    .npil--car .npil__card::after { transition: opacity var(--car-move) var(--car-ease); }
   }
 }
 

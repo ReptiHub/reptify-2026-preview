@@ -915,8 +915,12 @@ function splitLetters(root, skip, onChar) {
     return 0;                       /* the CSS falls back to the first too */
   }
 
+  /* The stage keeps its own index, and that is the whole of the default. */
+  var carIdx = 0;
+
   function pick(i) {
     i = ((i % n) + n) % n;
+    carIdx = i;
     rows.forEach(function (r, k) { r.classList.toggle('is-picked', k === i); });
     list.classList.add('npil--picked');
     list.classList.remove('npil--live');
@@ -1069,9 +1073,26 @@ function splitLetters(root, skip, onChar) {
       if (list.classList.contains('npil--car')) e.stopPropagation();
     }, true);
 
+    /* THE STAGE OWNS ITS STATE, and this is what makes the first card the
+       default rather than whatever the scroll happened to leave behind.
+
+       wire() walks the list as the fold crosses the viewport — right for a
+       row list that holds still, wrong for a deck: arriving at the fold you
+       would find it already dealt to the third card, and it reshuffled under
+       you as you scrolled past, which is the opposite of smooth. Its pointer
+       path is swallowed at capture above; this is the scroll path. wire()
+       stands down while a pick is held, and releases after 40px of scroll —
+       so the deck simply takes the hold back whenever it is dropped.
+
+       The stage's own index is the authority. Anything that moves .is-picked
+       without going through pick() is put back. */
     new MutationObserver(function () {
       if (placing) return;
       placing = true;
+      if (list.classList.contains('npil--car') &&
+          (activeIdx() !== carIdx || !list.classList.contains('npil--picked'))) {
+        pick(carIdx);
+      }
       place();
       placing = false;
     }).observe(list, { subtree: true, attributes: true, attributeFilter: ['class'] });
@@ -1083,6 +1104,10 @@ function splitLetters(root, skip, onChar) {
       list.classList.add('npil--car');
       if (bar) bar.hidden = false;
       fit();
+      /* explicitly, not by the :first-child fallback in the sheet: the deck
+         should be ON card one, not merely look like it until something else
+         claims a pick */
+      pick(carIdx);
       place();
     } else {
       list.classList.remove('npil--car');

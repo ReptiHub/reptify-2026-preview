@@ -10278,6 +10278,15 @@ h1.statement--sm { font-weight: 900; }
   --npil-scale: .8;
 }
 
+/* Transparent everywhere except the stage. It exists so the card can be
+   transformed without taking the description into its coordinate space: a
+   transformed element becomes the containing block for its absolutely
+   positioned descendants, so with .npil__b still inside the card there is no
+   way to place the description anywhere but on top of the card it belongs to.
+   display:contents keeps the row device byte-for-byte what it was — the
+   numeral and the summary go on being .npil__i's own grid items. */
+.npil__card { display: contents; }
+
 .npil__i {
   position: relative; isolation: isolate; overflow: clip;
   background: var(--chalk);
@@ -12375,3 +12384,155 @@ h1.statement--sm { font-weight: 900; }
    section-heading step, to --a1, the step above it -- rather than a
    one-off size invented for this page alone. */
 .ty .figure { font-size: var(--a0); }
+
+
+/* ── ( 06 ) AS A STAGE ────────────────────────────────────────────────────
+   A carousel, on instruction, adjusted on three points before it was built.
+
+   ALL FIVE STAY VISIBLE. The reference hides everything past the two
+   neighbours and dims those to .3. This fold is the services list, on a page
+   whose third card reads "Help Google, ChatGPT and other discovery systems
+   understand what the business actually does" — a device that hides four of
+   five services would be the page contradicting itself in the same viewport.
+   Neighbours are recessed, not removed, and every word stays in the DOM.
+
+   NO AUTOPLAY. The reference advances every four seconds, which moves the
+   thing being read while it is being read. The house grammar is near-zero
+   motion and nothing here moves unless the reader asks.
+
+   NO DEPENDENCIES. framer-motion and lucide-react for an arc and two chevrons,
+   on a site whose pitch to its owner is that it has no build step. The maths
+   is thirty lines and the chevrons are two borders on an empty box.
+
+   The arc is much shallower than the reference's 100px: 22px of lift between
+   the middle card and the outer pair. Deep enough to read as a curve, shallow
+   enough that five flat editorial cards do not turn into a fairground wheel.
+
+   Positions come from JS as --x/--y/--s/--o/--z, the way the original computes
+   them in render, and the transition is the shared fold curve so the stage and
+   both accordions move as one gesture. */
+@media (min-width: 1100px) {
+  .npil--car {
+    /* 4 x step + width has to clear the wrap, which is 1260 at 1400: this is
+       1168. Overlap is 48px, enough to stack and not enough to swallow the
+       name on the card behind. */
+    --car-w: 17rem;
+    --car-h: 11.5rem;
+    --car-step: 14rem;
+    --car-lift: 22px;
+    --car-bar: 4.25rem;
+    display: block; position: relative;
+    height: calc(var(--car-h) + var(--car-lift) + var(--car-bar) + 6rem);
+    gap: 0;
+  }
+
+  /* every row becomes a full-area layer: the card places itself in the stage,
+     the description in the region under the bar, and the two are siblings
+     rather than parent and child, which is the whole point of .npil__card. */
+  .npil--car .npil__i {
+    position: absolute; inset: 0;
+    display: block; padding: 0; border: 0; background: none;
+    overflow: visible; pointer-events: none;
+  }
+
+  .npil--car .npil__card {
+    display: block; position: absolute; top: 0; left: 50%;
+    width: var(--car-w); height: var(--car-h);
+    box-sizing: border-box;
+    padding: clamp(.9rem, 1.4vw, 1.3rem) clamp(1.1rem, 1.8vw, 1.6rem);
+    background: var(--chalk);
+    border: 1px solid var(--ink-15);
+    border-left: 2px solid transparent;
+    border-radius: 2px;
+    overflow: clip; isolation: isolate;
+    pointer-events: auto; cursor: pointer;
+    transform: translateX(-50%) translate(var(--x, 0), var(--y, 0)) scale(var(--s, 1));
+    z-index: var(--z, 1);
+  }
+  /* The card surface stays opaque and the RECESSION LIVES IN THE TEXT. Fading
+     the card itself is what the reference does and it is wrong the moment two
+     cards overlap: a translucent card lets the one behind read straight through
+     it, so five cards on a deck become one field of colliding words. Measured
+     against the fold's own ground the difference is nine points of luminance —
+     chalk on pale — which is not enough surface to survive being made 44%
+     transparent as well. Opaque cards mask what is behind them, which is the
+     only thing that makes a deck read as depth rather than as a mistake. */
+  .npil--car .npil__sum { opacity: var(--o, 1); }
+  .npil--car .npil__n { opacity: calc(.08 * var(--o, 1)); }
+  .npil--car .npil__i.is-picked .npil__card { border-left-color: var(--brand); }
+
+  .npil--car .npil__n { font-size: 5.5rem; right: .6rem; }
+  .npil--car .npil__h { font-size: calc(var(--a2) * .8); white-space: normal; }
+  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * .82); }
+
+  /* the description sits under the bar, all five in one place, and only the
+     picked one is lit — the same stacked-slot device .help__say runs on the
+     homepage rather than a second way of doing it */
+  .npil--car .npil__b {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    top: calc(var(--car-h) + var(--car-lift) + var(--car-bar));
+    width: min(52ch, 100%);
+    display: block; grid-template-rows: none;
+    text-align: center;
+  }
+  .npil--car .npil__b p {
+    margin: 0; border-top: 0; padding-top: 0; max-width: none;
+  }
+
+  /* ── the bar: arrows, dots, and the count ───────────────────────────── */
+  .npil__bar {
+    position: absolute; left: 0; right: 0;
+    top: calc(var(--car-h) + var(--car-lift));
+    height: var(--car-bar);
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(1rem, 2vw, 1.75rem);
+  }
+  .npil__nav {
+    width: 2.5rem; height: 2.5rem;
+    display: grid; place-items: center;
+    background: none; border: 1px solid var(--ink-15); border-radius: 50%;
+    color: var(--ink); cursor: pointer;
+    transition: border-color var(--fold-open) var(--fold-ease),
+                background-color var(--fold-open) var(--fold-ease);
+  }
+  .npil__nav:hover { border-color: var(--ink-70); background: var(--bone-deep); }
+  /* two borders on an empty box, the same chevron ( 05 ) uses, turned a
+     quarter each way */
+  .npil__nav::before {
+    content: ''; width: 9px; height: 9px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    opacity: .7;
+  }
+  .npil__nav[data-car="-1"]::before { transform: translateX(2px) rotate(135deg); }
+  .npil__nav[data-car="1"]::before  { transform: translateX(-2px) rotate(-45deg); }
+
+  .npil__dots { display: flex; align-items: center; gap: .4rem; list-style: none; margin: 0; padding: 0; }
+  .npil__dot {
+    display: block; width: 6px; height: 6px; padding: 0;
+    background: var(--ink-15); border: 0; border-radius: 99px;
+    cursor: pointer;
+    transition: width var(--fold-open) var(--fold-ease),
+                background-color var(--fold-open) var(--fold-ease);
+  }
+  .npil__dot[aria-selected="true"] { width: 22px; background: var(--ink); }
+
+  .npil__count {
+    font-family: var(--work); font-size: .78rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-70);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .npil--car .npil__card {
+      transition: transform var(--fold-open) var(--fold-ease),
+                  border-color var(--fold-open) var(--fold-ease);
+    }
+    .npil--car .npil__sum,
+    .npil--car .npil__n { transition: opacity var(--fold-open) var(--fold-ease); }
+  }
+}
+
+.nf--ink .npil__nav { border-color: var(--chalk-line); color: var(--chalk); }
+.nf--ink .npil__dot { background: var(--chalk-line); }
+.nf--ink .npil__dot[aria-selected="true"] { background: var(--chalk); }
+.nf--ink .npil__count { color: var(--chalk-65); }

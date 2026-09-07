@@ -870,6 +870,165 @@ function splitLetters(root, skip, onChar) {
   });
 })();
 
+/* ── ( 06 ) AS A STAGE ─────────────────────────────────────
+   Five cards on a shallow arc, one forward, arrows and dots below it and the
+   description under those. Ported from a React/framer-motion carousel; the
+   position maths is the reference's and the rest is not, for reasons written
+   in the stylesheet beside the geometry.
+
+   Desktop only, and added from here rather than written into the markup: below
+   1100 the rows are an accordion, and with no script at all they are the list
+   they have always been. Nothing in the HTML knows this device exists.
+
+   The state is .is-picked, which is already what this fold runs on — wire()
+   sets it from the fold's pass through the viewport, and the arrows, the dots
+   and a click on a card set it too. One class, four ways in, and a
+   MutationObserver re-places the deck whichever of them moved it, so the
+   carousel does not need to know who is driving.
+
+   Hover is deliberately NOT one of those ways here. wire() picks on
+   pointerenter, which is right for a list that holds still; on a deck it means
+   hovering the right-hand card slides it to the centre, out from under the
+   cursor, and the next card lands where the cursor already is. That is the
+   cascade ( 05 ) has a guard for. Cheaper to stop the event than to guard it:
+   a capture listener on the list swallows pointerenter while the stage is up,
+   so the deck answers to clicks, arrows, dots and scroll — never to a hover it
+   would then run away from. */
+(function () {
+  var list = document.querySelector('.npil');
+  if (!list) return;
+  var rows = [].slice.call(list.querySelectorAll('.npil__i'));
+  var n = rows.length;
+  if (n < 3) return;
+
+  var mq = window.matchMedia('(min-width: 1100px)');
+  var bar = null, dots = [], count = null, placing = false;
+
+  function activeIdx() {
+    for (var i = 0; i < n; i++) if (rows[i].classList.contains('is-picked')) return i;
+    return 0;                       /* the CSS falls back to the first too */
+  }
+
+  function pick(i) {
+    i = ((i % n) + n) % n;
+    rows.forEach(function (r, k) { r.classList.toggle('is-picked', k === i); });
+    list.classList.add('npil--picked');
+    list.classList.remove('npil--live');
+    var fold = list.closest('.nf') || list;
+    fold.setAttribute('data-sol', String(i + 1));
+  }
+
+  function place() {
+    if (!list.classList.contains('npil--car')) return;
+    var a = activeIdx(), half = (n - 1) / 2;
+    rows.forEach(function (r, i) {
+      var card = r.querySelector('.npil__card');
+      if (!card) return;
+      var off = i - a;
+      if (off > half) off -= n;
+      if (off < -half) off += n;
+      var d = Math.abs(off);
+      card.style.setProperty('--x', 'calc(' + off + ' * var(--car-step))');
+      /* the arc: 1 - cos across half a turn, so the middle card sits highest
+         and the pair at each end drop by the same amount */
+      card.style.setProperty('--y', 'calc(' + (1 - Math.cos(off / n * Math.PI)).toFixed(3) + ' * var(--car-lift))');
+      card.style.setProperty('--s', (1 - d * 0.075).toFixed(3));
+      card.style.setProperty('--o', (1 - d * 0.28).toFixed(2));
+      card.style.setProperty('--z', String(n - d));
+      card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
+    });
+    dots.forEach(function (b, i) { b.setAttribute('aria-selected', String(i === a)); });
+    if (count) count.textContent = pad(a + 1) + ' / ' + pad(n);
+  }
+
+  function pad(v) { return v < 10 ? '0' + v : String(v); }
+
+  function build() {
+    if (bar) return;
+    bar = document.createElement('div');
+    bar.className = 'npil__bar';
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', 'Solutions');
+
+    var prev = document.createElement('button');
+    prev.type = 'button'; prev.className = 'npil__nav';
+    prev.setAttribute('data-car', '-1');
+    prev.setAttribute('aria-label', 'Previous solution');
+
+    var next = prev.cloneNode(false);
+    next.setAttribute('data-car', '1');
+    next.setAttribute('aria-label', 'Next solution');
+
+    var ol = document.createElement('ol');
+    ol.className = 'npil__dots';
+    dots = rows.map(function (r, i) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'npil__dot';
+      b.setAttribute('role', 'tab');
+      /* the solution's own name, not "item 3" — a control that announces its
+         position and not its subject is a control nobody can use out of order */
+      var h = r.querySelector('.npil__h');
+      b.setAttribute('aria-label', h ? h.textContent.trim() : 'Solution ' + (i + 1));
+      b.addEventListener('click', function () { pick(i); });
+      li.appendChild(b); ol.appendChild(li);
+      return b;
+    });
+
+    count = document.createElement('span');
+    count.className = 'npil__count';
+    count.setAttribute('aria-hidden', 'true');
+
+    bar.appendChild(prev); bar.appendChild(ol); bar.appendChild(count); bar.appendChild(next);
+    list.appendChild(bar);
+
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-car]');
+      if (b) pick(activeIdx() + Number(b.getAttribute('data-car')));
+    });
+
+    rows.forEach(function (r, i) {
+      var card = r.querySelector('.npil__card');
+      if (card) card.addEventListener('click', function () { pick(i); });
+    });
+
+    /* see the note above: the deck answers to everything except a hover */
+    list.addEventListener('pointerenter', function (e) {
+      if (list.classList.contains('npil--car')) e.stopPropagation();
+    }, true);
+
+    new MutationObserver(function () {
+      if (placing) return;
+      placing = true;
+      place();
+      placing = false;
+    }).observe(list, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  }
+
+  function sync() {
+    if (mq.matches) {
+      build();
+      list.classList.add('npil--car');
+      if (bar) bar.hidden = false;
+      place();
+    } else {
+      list.classList.remove('npil--car');
+      if (bar) bar.hidden = true;
+      rows.forEach(function (r) {
+        var c = r.querySelector('.npil__card');
+        if (!c) return;
+        ['--x', '--y', '--s', '--o', '--z'].forEach(function (p) { c.style.removeProperty(p); });
+        c.removeAttribute('aria-current');
+      });
+    }
+  }
+
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  else if (mq.addListener) mq.addListener(sync);
+})();
+
+
 /* ── the client stories ────────────────────────────────────
    Two arrows stepping through the slots. Written against whatever slots are
    present rather than a fixed count, so adding a real testimonial is a matter of

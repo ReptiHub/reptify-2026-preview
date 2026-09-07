@@ -12447,12 +12447,21 @@ h1.statement--sm { font-weight: 900; }
        a subtitle. A card 529 wide holding two lines does not want 277 of
        height; at 15.5 it is 195 and reads about three quarters full, which is
        a card rather than a panel with type in the corner. */
-    /* taller, because the description lives in the card now rather than in a
-       region under the deck */
-    --car-h: clamp(16rem, 21cqw, 20rem);
-    --car-step: 23cqw;
-    --car-depth: 190px;      /* per rank, back into the screen */
-    --car-turn: 16deg;       /* per rank, facing the middle */
+    /* taller again: more padding inside, on instruction, and the box has to
+       grow with it or the air comes out of the text instead */
+    --car-h: clamp(17rem, 23cqw, 22rem);
+    /* A RING, not a row with a z-offset. The cards used to sit on a straight
+       line and lean — an even step sideways, an even step back, a fixed turn —
+       which is three separate approximations of one circle. Put them ON the
+       circle and all three fall out of it: x is r sin0, z is r(cos0 - 1), and
+       the turn IS the angle, so a card is tangent to the ring it stands on
+       rather than angled by a number that happened to look right.
+
+       It also answers going behind in a circle: at 28deg a rank, the outer
+       pair are 56deg round, past the shoulder of the ring, and they read as
+       travelling round the back rather than sliding off the side. */
+    --car-r: 55cqw;
+    --car-arc: 28deg;
     /* THE BEND IS A RATIO, NOT A NUMBER OF PIXELS, and it took losing it to
        see why. "Less bend" was answered by halving 64px to 36 — in the same
        commit that made the card 36% taller. Against the card the bend did not
@@ -12501,12 +12510,13 @@ h1.statement--sm { font-weight: 900; }
     box-sizing: border-box;
     /* air, at the owner's call: 30 x 33 against 20 x 25. The card grew with it
        rather than the padding eating the content box. */
-    padding: clamp(1.4rem, 2.7cqw, 2.3rem) clamp(1.5rem, 2.9cqw, 2.5rem);
-    /* INK, at the owner's call, and the border goes with it: a hairline that
-       was there to lift chalk off a pale ground has nothing to do on a card
-       that is already the darkest thing in the fold. */
+    padding: clamp(1.8rem, 3.5cqw, 3.1rem) clamp(1.9rem, 3.7cqw, 3.3rem);
     background: var(--ink);
-    border: 0;
+    /* The rim earns its place back. It went when the card turned ink, because
+       a hairline holding chalk off a pale ground had no job — but five ink
+       cards overlapping have a new one, which is telling each other apart.
+       Without it the deck is one black mass with type floating on it. */
+    border: 1px solid rgba(240, 239, 234, .12);
     border-radius: 2px;
     overflow: clip; isolation: isolate;
     pointer-events: auto; cursor: pointer;
@@ -12514,6 +12524,19 @@ h1.statement--sm { font-weight: 900; }
                translate3d(var(--x, 0), var(--y, 0), var(--zd, 0))
                rotateY(var(--ry, 0deg)) rotate(var(--rot, 0deg));
     z-index: var(--z, 1);
+  }
+
+  /* SEPARATION, and it is atmospheric rather than a shadow — the house has no
+     shadows, and five identical inks have no depth cue at all beyond their
+     edges. A card further round the ring is veiled by more of the fold's own
+     ground, which is what distance does to a dark object across a light room.
+     The scrim sits above the card's content so it takes the type with it, and
+     the rank opacity underneath only has to finish the job. */
+  .npil--car .npil__card::after {
+    content: ''; position: absolute; inset: 0; z-index: 3;
+    background: var(--bone);
+    opacity: var(--scrim, 0);
+    pointer-events: none;
   }
   /* The card surface stays opaque and the RECESSION LIVES IN THE TEXT. Fading
      the card itself is what the reference does and it is wrong the moment two
@@ -12637,6 +12660,7 @@ h1.statement--sm { font-weight: 900; }
     }
     .npil--car .npil__sum,
     .npil--car .npil__n { transition: opacity var(--fold-open) var(--fold-ease); }
+    .npil--car .npil__card::after { transition: opacity var(--fold-open) var(--fold-ease); }
   }
 }
 

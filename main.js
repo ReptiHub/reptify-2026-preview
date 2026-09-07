@@ -924,9 +924,15 @@ function splitLetters(root, skip, onChar) {
     fold.setAttribute('data-sol', String(i + 1));
   }
 
+  var RAD = Math.PI / 180;
+
   function place() {
     if (!list.classList.contains('npil--car')) return;
     var a = activeIdx(), half = (n - 1) / 2;
+    /* read once per pass rather than hardcoded here, so the ring's opening
+       angle has exactly one home and it is the stylesheet with the rest of
+       the geometry */
+    var arc = parseFloat(getComputedStyle(list).getPropertyValue('--car-arc')) || 28;
     rows.forEach(function (r, i) {
       var card = r.querySelector('.npil__card');
       if (!card) return;
@@ -934,31 +940,31 @@ function splitLetters(root, skip, onChar) {
       if (off > half) off -= n;
       if (off < -half) off += n;
       var d = Math.abs(off);
-      /* on the ROW, not the card: --z has to reach the element that stacks, and
-         custom properties inherit downward, so the card still reads every one
-         of these */
-      r.style.setProperty('--x', 'calc(' + off + ' * var(--car-step))');
-      /* Linear in distance, not the reference's cosine. Across five cards the
-         cosine spends almost all its travel on the outer pair — 1 - cos(0.2pi)
-         is .19, so the neighbours dropped 8px of a 46px lift and the middle of
-         the deck read flat. Distance over the half-count drops them evenly. */
-      r.style.setProperty('--y', 'calc(' + (d / half).toFixed(3) + ' * var(--car-lift))');
-      /* and a tilt, which is what actually makes a deck look bent: a fan of
-         cards is rotated, not merely lowered */
-      r.style.setProperty('--rot', 'calc(' + off + ' * var(--car-tilt))');
-      /* DEPTH IS NOW REAL, so there is no scale to compute. Rank d sits d
-         ranks back into the screen and the perspective does the shrinking:
-         900 / (900 + 190d) is 1, .83, .70 — which no longer has to be paid for
-         in horizontal room, because a card that is further away is smaller
-         where it stands rather than smaller somewhere else.
+      /* ON THE RING. One angle produces all three placements, because they
+         were always three descriptions of the same circle: x is r sin0, z is
+         r(cos0 - 1) so the middle card sits at the front of the ring and the
+         rest fall away behind it, and the turn IS the angle, which makes each
+         card tangent to the circle rather than angled by a number chosen to
+         look about right.
 
-         The turn is toward the middle. A card right of centre rotates positive
-         about Y, which sends its far edge back and brings the edge nearest the
-         reader forward — it faces the front card instead of standing square to
-         a viewer it is not in front of. */
-      r.style.setProperty('--zd', 'calc(' + (-d) + ' * var(--car-depth))');
-      r.style.setProperty('--ry', 'calc(' + off + ' * var(--car-turn))');
-      r.style.setProperty('--o', (1 - d * 0.25).toFixed(2));
+         All of it lands on the ROW, not the card: --z has to reach the element
+         that stacks, and custom properties inherit downward, so the card reads
+         every one of these anyway. */
+      var th = off * arc, c = Math.cos(th * RAD), sn = Math.sin(th * RAD);
+      r.style.setProperty('--x', 'calc(' + sn.toFixed(4) + ' * var(--car-r))');
+      r.style.setProperty('--zd', 'calc(' + (c - 1).toFixed(4) + ' * var(--car-r))');
+      r.style.setProperty('--ry', th.toFixed(2) + 'deg');
+      /* Linear in distance, not a cosine. Across five cards the cosine spends
+         almost all its travel on the outer pair, so the neighbours barely moved
+         and the middle of the deck read flat. */
+      r.style.setProperty('--y', 'calc(' + (d / half).toFixed(3) + ' * var(--car-lift))');
+      /* and a tilt in the plane of the screen, which is what makes a deck look
+         bent rather than merely turned */
+      r.style.setProperty('--rot', 'calc(' + off + ' * var(--car-tilt))');
+      /* the veil, and the rank dimming under it. The scrim carries most of the
+         separation now, so the opacity does less than it did. */
+      r.style.setProperty('--scrim', (d * 0.17).toFixed(2));
+      r.style.setProperty('--o', (1 - d * 0.12).toFixed(2));
       r.style.setProperty('--z', String(n - d));
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });
@@ -1040,7 +1046,7 @@ function splitLetters(root, skip, onChar) {
       list.classList.remove('npil--car');
       if (bar) bar.hidden = true;
       rows.forEach(function (r) {
-        ['--x', '--y', '--zd', '--ry', '--rot', '--o', '--z'].forEach(function (p) { r.style.removeProperty(p); });
+        ['--x', '--y', '--zd', '--ry', '--rot', '--o', '--z', '--scrim'].forEach(function (p) { r.style.removeProperty(p); });
         var c = r.querySelector('.npil__card');
         if (c) c.removeAttribute('aria-current');
       });

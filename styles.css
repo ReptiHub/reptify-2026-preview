@@ -10927,6 +10927,37 @@ h1.statement--sm { font-weight: 900; }
 .naud__k, .naud__f { margin-bottom: .45em; }
 .naud__f { margin-bottom: 0; }
 
+/* ── ( 05 ): the typewriter ───────────────────────────────────────────────
+   Each character pops in rather than fading: 1ms of animation with a staggered
+   delay, so what the reader sees is a letter appearing, not a letter arriving
+   from somewhere. A fade cascade and a typewriter are not the same gesture, and
+   the difference is entirely in the duration.
+
+   `both` fill is the load-bearing keyword. Without it a character is at its
+   resting opacity until its delay elapses, which is every character visible at
+   once and then nothing happening. With it the from-state applies through the
+   delay, which is what makes the wait a wait.
+
+   Lines overlap rather than queue. Strictly sequential across all four reads
+   correctly and takes 1.9s to finish, which is a long time to watch a fold you
+   just opened; starting each line 190ms after the one above brings it to 1.15s
+   and still arrives in reading order — left cell, right cell, next row.
+
+   --kb-open is the head start. The panel takes .32s to grow and typing into a
+   box that is still opening reads as two effects fighting, so the first
+   character lands once it is most of the way there. */
+.naud {
+  --kb-char: 11ms;
+  --kb-line: 190ms;
+  --kb-open: 140ms;
+}
+.naud__pane.is-typed .ltr { opacity: 0; }
+.naud.in details[open] .naud__pane.is-typed .ltr {
+  animation: naud-key 1ms linear both;
+  animation-delay: calc(var(--kb-open) + var(--l, 0) * var(--kb-line) + var(--i, 0) * var(--kb-char));
+}
+@keyframes naud-key { from { opacity: 0 } to { opacity: 1 } }
+
 @media (min-width: 861px) {
   /* the column head rides inside each panel now rather than once above the
      stack, because there is no longer one shared region for it to sit over.

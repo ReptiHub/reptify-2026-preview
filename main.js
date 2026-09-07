@@ -329,36 +329,83 @@
 
    No JS, no split, no animation, and the heading is simply a heading. The colour
    at rest is the end state, never the start, so nothing can strand it pale. */
+/* The splitter both letter devices use. Walks into element children rather than
+   flattening them, so a two-tone heading keeps its halves and each keeps its own
+   end colour, and skips any subtree matching `skip` — the audit's labels are
+   screen-reader text and have no business being animated one character at a
+   time. Spaces stay bare text nodes: they take no index, and there is nothing to
+   see happening to a space. Returns how many characters got a span.
+
+   Kept as one function because the second caller was going to be a copy of the
+   first with two lines different, and two DOM walkers that must agree is how a
+   device drifts from the thing it was meant to rhyme with. */
+function splitLetters(root, skip, onChar) {
+  var i = 0;
+  (function walk(node) {
+    [].slice.call(node.childNodes).forEach(function (n) {
+      if (n.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        n.nodeValue.split('').forEach(function (ch) {
+          if (ch === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
+          var s = document.createElement('span');
+          s.className = 'ltr';
+          s.textContent = ch;
+          onChar(s, i++);
+          frag.appendChild(s);
+        });
+        node.replaceChild(frag, n);
+      } else if (n.nodeType === 1 && !(skip && n.matches(skip))) {
+        walk(n);
+      }
+    });
+  })(root);
+  return i;
+}
+
 (function () {
   var heads = document.querySelectorAll('[data-sweep]');
   if (!heads.length || !CSS.supports('animation-timeline', 'view()')) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   heads.forEach(function (h) {
-    var i = 0;
-    (function walk(node) {
-      var kids = [].slice.call(node.childNodes);
-      kids.forEach(function (n) {
-        if (n.nodeType === 3) {
-          var frag = document.createDocumentFragment();
-          n.nodeValue.split('').forEach(function (ch) {
-            if (ch === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
-            var s = document.createElement('span');
-            s.className = 'ltr';
-            s.style.setProperty('--i', i++);
-            s.textContent = ch;
-            frag.appendChild(s);
-          });
-          node.replaceChild(frag, n);
-        } else if (n.nodeType === 1) {
-          walk(n);
-        }
-      });
-    })(h);
+    var n = splitLetters(h, null, function (s, i) { s.style.setProperty('--i', i); });
     /* the last index, not the count — dividing by the count leaves the final
        letter at 10/11 of the ramp and it never quite reaches full ink. Floored at
        1 so a one-letter heading cannot divide by zero. */
-    h.style.setProperty('--n', Math.max(1, i - 1));
+    h.style.setProperty('--n', Math.max(1, n - 1));
+  });
+})();
+
+
+/* ── ( 05 ): the answers type themselves in ────────────────
+   Each of the four lines in an open pane arrives one character at a time.
+
+   The characters are already in the page and stay there — split into spans and
+   hidden with opacity, never removed and re-inserted. A typewriter that builds
+   its string in JS is invisible to a crawler and reads as a stream of single
+   letters to a screen reader, which on a page arguing that businesses should be
+   findable would be a joke at its own expense.
+
+   Nothing moves. Every span holds its box whether it is showing or not, so a
+   line cannot reflow as it types and the panel's height is settled from the
+   first frame. That is the same property the fold was rebuilt around.
+
+   Keyed on .in as well as [open], so the pane that is open on arrival types as
+   the fold reaches the reader rather than having already finished somewhere up
+   the page. Every later one types on the click that opens it. */
+(function () {
+  var panes = document.querySelectorAll('.naud__pane');
+  if (!panes.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  panes.forEach(function (p) {
+    [].slice.call(p.querySelectorAll('.naud__k, .naud__f')).forEach(function (l, li) {
+      splitLetters(l, '.naud__lbl', function (s, i) { s.style.setProperty('--i', i); });
+      l.style.setProperty('--l', li);
+    });
+    /* the class, not the presence of .ltr: the CSS must not hide a single
+       character on a page where this script did not run */
+    p.classList.add('is-typed');
   });
 })();
 

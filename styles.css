@@ -10839,20 +10839,35 @@ h1.statement--sm { font-weight: 900; }
    see, which is a gap to close rather than a rival.
 
    No new type: question at --a4/500, both sides at --a6. */
-.naud { margin: var(--v4) 0 0; border-bottom: 1px solid var(--ink-15); }
+.naud {
+  margin: var(--v4) 0 0;
+  border-bottom: 1px solid var(--ink-15);
+  --naud-open: .62s;
+  --naud-ease: cubic-bezier(.65, .02, .28, 1);
+}
 .naud details { border-top: 1px solid var(--ink-15); }
 .naud details:first-of-type { border-top: 0; }
 
 .naud summary {
   display: grid; grid-template-columns: 1fr max-content;
   gap: clamp(1rem, 2vw, 1.5rem); align-items: center;
-  /* 44px minimum at 375, where --a4 is 19.2px on a 1.24 leading: 23.8px of
-     type plus 2 x 10.4px is 44.6. The old list ran .5rem and measured 39.8,
-     which was fine for a line of text and is not fine for a control. */
-  padding-block: clamp(.65rem, 1.1vw, .85rem);
+  /* Sized to the column, not to a type step in isolation. The right column runs
+     816px and the left ran 690, so it finished 126px short and left a hole under
+     it. --a3 rather than --a4 buys 29 of that across the four rows and the rest
+     is air in the rows, which is where it belongs: a question you click is a
+     control, and 55px rows for 28.6px type were tight for one.
+
+     87px a row is the number that makes the columns finish level with the first
+     question open. Exact alignment is not actually reachable — the left moves
+     43px depending on which question is open — so this lands it level at the
+     tallest and 43px short at the shortest, rather than 126 short always.
+
+     Still over the 44px minimum at 375, where --a3 clamps to 23.8px: 29.5px of
+     type plus 2 x 13.6px is 56.7. */
+  padding-block: clamp(.85rem, 1.85vw, 1.65rem);
   cursor: pointer; list-style: none;
   font-family: var(--state); font-weight: 500;
-  font-size: var(--a4); line-height: 1.24; letter-spacing: -.02em;
+  font-size: var(--a3); line-height: 1.24; letter-spacing: -.02em;
   /* .62, not the .5 the questions carried as a passive list. At 1400 this is
      22.8px at weight 500, which is NOT WCAG large text — that needs 24px unless
      the weight is 700 — so the bar is 4.5:1 and .5 measured 3.28 over --chalk.
@@ -10891,9 +10906,24 @@ h1.statement--sm { font-weight: 900; }
   transform: translateY(calc(var(--ch) * .354)) rotate(-135deg);
 }
 
+/* The panel's own curve, and not the house --ease, which is the reason it read
+   as abrupt rather than as fast. --ease is cubic-bezier(.22, 1, .36, 1) — an
+   ease-out that puts most of the distance in the first third. That is right for
+   a thing arriving at rest: a fade, a colour, a mark being drawn. A panel
+   growing from zero height is the opposite case; front-loading it means the box
+   lurches open and then creeps the last few pixels, which is what a reader
+   registers as abrupt no matter how long the duration is.
+
+   This one eases in and out, so it leaves rest gently, carries the middle, and
+   settles. .62s against .32 — long enough to watch, short enough that a second
+   click does not feel held up.
+
+   The colour and the chevron ride the same curve and duration. At .28s against
+   a .62s panel they finished while the box was still moving, which is three
+   things on one control disagreeing about how long the gesture takes. */
 @media (prefers-reduced-motion: no-preference) {
-  .naud summary { transition: color .28s var(--ease); }
-  .naud summary::after { transition: transform .28s var(--ease); }
+  .naud summary { transition: color var(--naud-open) var(--naud-ease); }
+  .naud summary::after { transition: transform var(--naud-open) var(--naud-ease); }
 }
 
 /* The open. A closed <details> is display:none, which no transition can cross,
@@ -10906,7 +10936,8 @@ h1.statement--sm { font-weight: 900; }
     .naud { interpolate-size: allow-keywords; }
     .naud details::details-content {
       block-size: 0; overflow: clip;
-      transition: block-size .32s var(--ease), content-visibility .32s allow-discrete;
+      transition: block-size var(--naud-open) var(--naud-ease),
+                  content-visibility var(--naud-open) allow-discrete;
     }
     .naud details[open]::details-content { block-size: auto; }
   }
@@ -10960,7 +10991,10 @@ h1.statement--sm { font-weight: 900; }
 .naud {
   --kb-char: 20ms;
   --kb-gap: 200ms;
-  --kb-open: 160ms;
+  /* the head start tracks the panel: 160ms was most of the way through a .32s
+     open and is barely a quarter of a .62s one, which would put the first
+     characters into a box still visibly growing */
+  --kb-open: 380ms;
 }
 .naud__pane.is-typed .ltr { opacity: 0; }
 .naud.in details[open] .naud__pane.is-typed .ltr {

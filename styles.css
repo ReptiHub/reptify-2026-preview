@@ -12447,20 +12447,23 @@ h1.statement--sm { font-weight: 900; }
        a subtitle. A card 529 wide holding two lines does not want 277 of
        height; at 15.5 it is 195 and reads about three quarters full, which is
        a card rather than a panel with type in the corner. */
-    --car-h: clamp(11.5rem, 15.5cqw, 15rem);
+    /* taller, because the description lives in the card now rather than in a
+       region under the deck */
+    --car-h: clamp(16rem, 21cqw, 20rem);
     --car-step: 23cqw;
     --car-depth: 190px;      /* per rank, back into the screen */
     --car-turn: 16deg;       /* per rank, facing the middle */
-    /* the bend: 64px of drop and a 3.6deg tilt per rank */
-    --car-lift: 64px;
-    --car-tilt: 3.6deg;
+    /* less bend, on instruction: 36px of drop against 64, 1.8deg of tilt
+       against 3.6. The depth and the turn were always doing most of the work —
+       the lift and the tilt on top of them had started to read as a spilt hand
+       of cards rather than a stack. */
+    --car-lift: 36px;
+    --car-tilt: 1.8deg;
     --car-bar: 3rem;
-    /* description above the controls now, with air on both sides of it */
     --car-air: 2.75rem;
-    --car-desc: 5.25rem;
     display: block; position: relative;
     height: calc(var(--car-h) + var(--car-lift) + var(--car-air)
-                 + var(--car-desc) + var(--car-air) + var(--car-bar) + 1.5rem);
+                 + var(--car-bar) + 1.5rem);
     gap: 0;
   }
 
@@ -12494,9 +12497,11 @@ h1.statement--sm { font-weight: 900; }
     /* air, at the owner's call: 30 x 33 against 20 x 25. The card grew with it
        rather than the padding eating the content box. */
     padding: clamp(1.4rem, 2.7cqw, 2.3rem) clamp(1.5rem, 2.9cqw, 2.5rem);
-    background: var(--chalk);
-    border: 1px solid var(--ink-15);
-    border-left: 2px solid transparent;
+    /* INK, at the owner's call, and the border goes with it: a hairline that
+       was there to lift chalk off a pale ground has nothing to do on a card
+       that is already the darkest thing in the fold. */
+    background: var(--ink);
+    border: 0;
     border-radius: 2px;
     overflow: clip; isolation: isolate;
     pointer-events: auto; cursor: pointer;
@@ -12515,37 +12520,72 @@ h1.statement--sm { font-weight: 900; }
      only thing that makes a deck read as depth rather than as a mistake. */
   .npil--car .npil__sum { opacity: var(--o, 1); }
   .npil--car .npil__n { opacity: calc(.08 * var(--o, 1)); }
-  /* no accent rule on the card, at the owner's call. The front card is already
-     the largest, the squarest to the reader and the only one at full ink;
-     a coloured edge on top of that was saying the same thing a fourth time. */
-  .npil--car .npil__card { border-left-color: var(--ink-15); }
+  /* CHALK ON INK, AND ALL THREE STATES OF IT. Turning the card black is not
+     one declaration: the name is written by five rules of ascending
+     specificity — a base, a dimmed .npil__i, a per-letter .ltr for the sweep,
+     a picked pair and a first-child fallback — and every one of them names an
+     ink. Setting .npil--car .npil__h alone lost to four of the five, and the
+     first build of this card was a black rectangle with an invisible name on
+     it while the description showed perfectly, because .npil__b p happened to
+     be the one selector weak enough to override.
 
-  .npil--car .npil__n { font-size: 7.5rem; right: .9rem; }
-  .npil--car .npil__h { font-size: calc(var(--a2) * 1.05); white-space: normal; }
-  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * 1.08); margin-top: .7rem; }
+     So each is answered at its own weight. .npil--car .npil__i beats the
+     dimmed base; .npil--car.npil--picked beats the picked pair; and the
+     first-child fallback is matched selector-for-selector and wins on source
+     order.
+
+     The rank opacity carries the recession on top of this, so the colours
+     themselves stay legible rather than doing double duty: --chalk-65 is
+     7.11:1 on ink where --chalk-40 is 3.48. */
+  .npil--car .npil__i .npil__h,
+  .npil--car .npil__i .npil__h .ltr { color: var(--chalk-65); }
+  .npil--car .npil__i .npil__s { color: var(--chalk-65); }
+  .npil--car.npil--picked .npil__i.is-picked .npil__h,
+  .npil--car.npil--live   .npil__i.is-picked .npil__h,
+  .npil--car.npil--picked .npil__i.is-picked .npil__h .ltr,
+  .npil--car.npil--live   .npil__i.is-picked .npil__h .ltr,
+  .npil--car:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h,
+  .npil--car:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__h .ltr { color: var(--chalk); }
+  .npil--car.npil--picked .npil__i.is-picked .npil__s,
+  .npil--car.npil--live   .npil__i.is-picked .npil__s,
+  .npil--car:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__s { color: var(--chalk-65); }
+  .npil--car .npil__b p { color: var(--chalk-65); border-top-color: var(--chalk-line); }
+  .npil--car .npil__n { color: var(--chalk); }
+
+  .npil--car .npil__n { font-size: 7rem; right: .9rem; top: 1.6rem; transform: none; opacity: .1; }
+  /* more line space on the name too: 1.02 was set for a heading that had a
+     card to itself and reads tight now that three things share the box */
+  .npil--car .npil__h { font-size: calc(var(--a2) * 1.05); line-height: 1.12; white-space: normal; }
+  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * 1.08); line-height: 1.45; margin-top: .55rem; }
 
   /* the description sits under the bar, all five in one place, and only the
      picked one is lit — the same stacked-slot device .help__say runs on the
      homepage rather than a second way of doing it */
-  /* the description reads before the controls, at the owner's call: the answer
-     first and the way to the next one after it */
+  /* INSIDE THE CARD, on instruction, and that is what the .npil__card wrapper
+     stops needing to be clever about: a description that is the card's own
+     content is just flow, not something positioned out of a transformed box.
+     It sits in every card so all five are the same height; only the front
+     card's letters are typed in, so the rest reserve the space and read blank
+     behind it. */
   .npil--car .npil__b {
-    position: absolute; left: 50%; transform: translateX(-50%);
-    top: calc(var(--car-h) + var(--car-lift) + var(--car-air));
-    min-height: var(--car-desc);
-    width: min(54ch, 100%);
+    position: static; transform: none;
+    width: auto; margin-top: 1.1rem;
+    /* the row device indents the description away from the name; inside the
+       card they are one column and share an edge */
+    padding-inline: 0;
     display: block; grid-template-rows: none;
-    text-align: center;
   }
   .npil--car .npil__b p {
-    margin: 0; border-top: 0; padding-top: 0; max-width: none;
+    margin: 0; padding-top: 1.1rem; max-width: none;
+    border-top: 1px solid var(--chalk-line);
+    /* more line space, on instruction */
+    line-height: 1.75;
   }
 
   /* ── the bar: arrows, dots, and the count ───────────────────────────── */
   .npil__bar {
     position: absolute; left: 0; right: 0;
-    top: calc(var(--car-h) + var(--car-lift) + var(--car-air)
-              + var(--car-desc) + var(--car-air));
+    top: calc(var(--car-h) + var(--car-lift) + var(--car-air));
     height: var(--car-bar);
     display: flex; align-items: center; justify-content: center;
     gap: clamp(1rem, 2vw, 1.75rem);

@@ -49,6 +49,17 @@
   --ink-live: #16222E;    /* the panel while the current is going round it */
   --brand-18: rgba(1, 142, 255, .18);
   --brand: #018EFF;        /* the lockup's blue — accents, links, the hub */
+  /* The focus ring, and ONLY the focus ring. Same hue as --brand (206.5°), a few
+     steps darker, because the lockup's blue is a brand colour and not a legible
+     indicator: measured against every ground the ring lands on it gives 2.89:1
+     on chalk, 2.64 on bone and 2.47 on bone-deep — all under WCAG 2.2's 3:1 floor
+     for a focus indicator (1.4.11 non-text contrast, 2.4.11 focus appearance).
+     #0170C8 clears it on both sides of the page at once: 3.75:1 on bone-deep,
+     the worst light ground, and 3.52:1 on ink, where the ring also has to show.
+     That two-sided window is 0.08 of luminance wide, so this value is derived,
+     not picked — darkening further to "be safe" on paper puts the ring under
+     3:1 on the ink folds. Never swap it back to --brand. */
+  --focus: #0170C8;
   --brand-lite: #01C0FE;   /* the lockup's cyan — only where it sits on ink */
   /* The brand orange, given by the owner on 19 Aug — no longer a placeholder. */
   --ember: #FF6600;
@@ -245,7 +256,7 @@ img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
-:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
 ::selection { background: var(--brand); color: var(--chalk); }
 
@@ -394,7 +405,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .stories__b svg { width: 1rem; height: 1rem; stroke: currentColor; stroke-width: 1.6; fill: none; }
 .stories__b:hover { border-color: var(--ink); color: var(--ink); }
-.stories__b:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+.stories__b:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .stories__b[disabled] { opacity: .35; cursor: default; }
 .stories__b[disabled]:hover { border-color: var(--steel); color: var(--ink-70); }
 
@@ -3758,7 +3769,7 @@ body:not(.home) :where(.cta) .btn {
 #jf-3:checked    ~ .jfilter label[for="jf-3"],
 #jf-4:checked    ~ .jfilter label[for="jf-4"],
 #jf-5:checked    ~ .jfilter label[for="jf-5"] { background: var(--ink); border-color: var(--ink); color: var(--chalk); }
-.jl > input[name="jf"]:focus-visible ~ .jfilter label { outline: 2px solid var(--brand); outline-offset: 2px; }
+.jl > input[name="jf"]:focus-visible ~ .jfilter label { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* each filter hides what it is not. Written out rather than generated, because
    three rules a reader can check beat a loop nobody can. */
@@ -4062,7 +4073,7 @@ body:not(.home) :where(.cta) .btn {
    the process fold uses, and it survives a page with no colour to spare */
 .jres__row:hover,
 .jres__row:focus-visible { padding-left: clamp(.4rem, 1vw, .9rem); }
-.jres__row:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; }
+.jres__row:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 
 .jres__t {
   grid-column: 1;
@@ -7708,7 +7719,7 @@ body.has-cbar .ftr { padding-bottom: calc(2rem + var(--cbar-h, 0px)); }
 .cbar__b--ghost { background: none; color: var(--ink); }
 .cbar__b:hover { background: var(--ink-70); border-color: var(--ink-70); color: var(--chalk); }
 .cbar__b--ghost:hover { background: var(--ink); border-color: var(--ink); color: var(--chalk); }
-.cbar__b:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.cbar__b:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .cbar__b { transition: none; } }
 
 .cbar__prefs {

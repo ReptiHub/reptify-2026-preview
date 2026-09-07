@@ -955,6 +955,35 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero__viz { display: none; }
 .hero__grid { position: relative; z-index: 1; }
 
+/* THE KINETIC GRID, ON A LIGHT GROUND.
+
+   The device came from the ink CTA fold, where it is white. Here the ground is
+   chalk, so it is ink — and ink at the module's own alphas is a fainter grid
+   than white was, not a matching one: composited and measured, .13 white over
+   ink gives 1.47:1 against its ground and .13 ink over chalk gives 1.30:1.
+   --kgrid-rest 1.42 is that gap, and it is the ratio, not a preference.
+
+   It sits UNDER the convergence rather than instead of it, and it is allowed
+   full parity there rather than being held back. Held at .88 the grid was a
+   whisper — 1.26:1 for a line where the ink fold gets 1.47 — and a device you
+   have to hunt for is not one you moved into the hero. The two fields do not
+   fight at parity because they disagree in direction, not in weight: the rays
+   are diagonal and converge, the grid is orthogonal and repeats, so the eye
+   separates them without either having to be quieter.
+
+   The text was the thing that could have vetoed this, and it did not. Measured
+   against the worst ground a glyph can stand on — a resting node, .284 ink over
+   chalk, since a lit one is transient — the headline reads 8.38:1 against a bar
+   of 3 and the lede and eyebrow 8.38:1 against a bar of 4.5.
+
+   Gated at 861px, where .hero__viz already is. Below the split the hero stops
+   owning a screen and hides its drawing; a second one appearing there would
+   undo exactly what that rule bought. display:none also means size() measures
+   a zero box and the module returns before binding a single listener, so a
+   phone carries the file and runs none of it. */
+.hero { --kgrid-ink: 21, 24, 27; --kgrid-rest: 1.42; }
+@media (max-width: 860px) { .hero > .kgrid { display: none; } }
+
 .viz {
   position: absolute;
   inset: 0;

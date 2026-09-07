@@ -3,15 +3,24 @@
    Four lines of geometry; everything else is in kgrid.js. See that file for the
    markup contract and the porting notes.
 
-   The colour is a token so a host on a light ground can flip it without
-   touching the module. It is written as a bare "r,g,b" triplet rather than a
-   colour, because the script composes it with a dozen different alphas and
-   canvas has no colour-mix.
+   Two tokens, both read off the HOST element and therefore inherited like any
+   other custom property — set them on the fold, not here, when a fold wants
+   something other than the default.
+
+   --kgrid-ink is written as a bare "r,g,b" triplet rather than a colour,
+   because the script composes it with a dozen different alphas and canvas has
+   no colour-mix.
+
+   --kgrid-rest scales the resting alphas. It is not a taste dial: composited
+   and measured, white at .13 over ink reads 1.47:1 against its ground while ink
+   at .13 over chalk reads only 1.30:1, so a light fold needs about 1.42x to
+   carry the same weight. The lit ends saturate on both grounds and are not
+   scaled.
 
    House device — Reptify's own pages and microsites only. Never carried into a
    client build; a signature move that appears on two clients is a template.
    ---------------------------------------------------------------------------- */
-:root { --kgrid-ink: 255, 255, 255; }
+:root { --kgrid-ink: 255, 255, 255; --kgrid-rest: 1; }
 
 /* No-op on a display:contents host — .cta__pin is one below its gate — because
    an element that generates no box cannot be positioned, so the nearest

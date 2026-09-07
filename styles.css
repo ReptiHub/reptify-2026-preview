@@ -10768,13 +10768,6 @@ h1.statement--sm { font-weight: 900; }
    rest of Napa uses (1px --ink-15 on the ledger, on the fold seams) instead of
    2px solid ink, and the size moves from --t-500 to the Journal --a4 scale the
    page is normalised to, per CLAUDE.md section 2. */
-#here .pull {
-  margin: var(--v4) 0 0; padding-left: clamp(1rem, 2.2vw, 1.6rem);
-  border-left: 1px solid var(--ink-15);
-  font-size: var(--a4); line-height: 1.3;
-}
-#here .pull p { margin: 0; }
-#here .pull strong { font-weight: 700; }
   /* first thing in each column starts at the column's top, so the headline and
      the statement share one baseline and the two columns start together */
   .nmid--cols > div > :first-child { margin-top: 0; }
@@ -12728,3 +12721,30 @@ h1.statement--sm { font-weight: 900; }
 .nf--ink .npil__dot { background: var(--chalk-line); }
 .nf--ink .npil__dot[aria-selected="true"] { background: var(--chalk); }
 .nf--ink .npil__count { color: var(--chalk-65); }
+
+/* ── ( 06 )'s pull quote ───────────────────────────────────────────────────
+   OUTSIDE the 861 query, and it sat inside it. Below the gate the base .pull
+   took back over — Archivo at 600 weight, --t-500, and a 2px solid ink rule —
+   so the phone got a quote at 20.2px in the display face beside a right column
+   at 17, which is the opposite of the balance this was tuned for. The same
+   fault the audit's rules had two folds up: written against an anchor that
+   happened to live inside a gate, and only ever checked above it.
+
+   --a5, down from --a4, at the owner's call: 17.8px against 22.8 at 1400. The
+   left column already carries the fold's loudest thing — a 44.7px headline —
+   and the right column runs at --a5 the whole way down, so a quote 28% over it
+   was the left side speaking twice while the right spoke once. Same token as
+   .nf__note now, so they track each other at every width rather than happening
+   to agree at one.
+
+   It stays a pull quote without the size. The rule down its left edge, the
+   indent and the bold phrase are the device; the size was never what made it
+   one, and at body size beside body text those three marks do more work
+   rather than less. */
+#here .pull {
+  margin: var(--v4) 0 0; padding-left: clamp(1rem, 2.2vw, 1.6rem);
+  border-left: 1px solid var(--ink-15);
+  font-size: var(--a5); line-height: 1.45;
+}
+#here .pull p { margin: 0; }
+#here .pull strong { font-weight: 700; }

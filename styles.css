@@ -10990,7 +10990,7 @@ h1.statement--sm { font-weight: 900; }
    character lands once it is most of the way there. Written against the token
    rather than a number, because the number moved once already and this comment
    went on claiming .32s after it did. */
-.naud {
+.naud, .npil {
   --kb-char: 20ms;
   --kb-gap: 200ms;
   /* the head start tracks the panel: 160ms was most of the way through a .32s
@@ -10998,14 +10998,41 @@ h1.statement--sm { font-weight: 900; }
      characters into a box still visibly growing */
   --kb-open: 380ms;
 }
+/* ( 06 ) types faster and starts at once, and neither is a different taste from
+   ( 05 ) — it is a different reading job. Four short lines you clicked open can
+   be watched; one 155-character paragraph you are scanning past on hover cannot,
+   and at 20ms it runs 3.1s, which is longer than a reader gives a row they have
+   not committed to. 12ms brings it to 1.9s. Nothing grows here either — the
+   description has always held its column whether it is showing or not — so
+   there is no opening panel to wait for and no head start to give. */
+.npil {
+  --kb-char: 12ms;
+  --kb-open: 0ms;
+}
 .naud__pane.is-typed .ltr { opacity: 0; }
 .naud.in details[open] .naud__pane.is-typed .ltr {
-  animation: naud-key 1ms linear both;
+  animation: kb-key 1ms linear both;
   animation-delay: calc(var(--kb-open)
                         + (var(--s, 0) + var(--i, 0)) * var(--kb-char)
                         + var(--l, 0) * var(--kb-gap));
 }
-@keyframes naud-key { from { opacity: 0 } to { opacity: 1 } }
+@keyframes kb-key { from { opacity: 0 } to { opacity: 1 } }
+
+/* ── ( 06 ): the same typewriter on the descriptions ──────────────────────
+   The container's own fade goes when the split has happened. .npil__b was
+   opacity 0 to 1 over .28s and the letters would have typed into a block that
+   was still arriving — the same two-effects-fighting problem the head start
+   solves in ( 05 ), except here there is nothing worth waiting for. The letters
+   are the reveal. The container keeps its opacity rule for the case where this
+   script did not run, which is the only case that still needs it. */
+.npil__b.is-typed { opacity: 1; transition: none; }
+.npil__b.is-typed .ltr { opacity: 0; }
+.npil--picked .npil__i.is-picked .npil__b.is-typed .ltr,
+.npil--live   .npil__i.is-picked .npil__b.is-typed .ltr,
+.npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__b.is-typed .ltr {
+  animation: kb-key 1ms linear both;
+  animation-delay: calc(var(--kb-open) + var(--i, 0) * var(--kb-char));
+}
 
 @media (min-width: 861px) {
   /* the column head rides inside each panel now rather than once above the

@@ -395,8 +395,17 @@ function splitLetters(root, skip, onChar) {
    the page. Every later one types on the click that opens it. */
 (function () {
   var panes = document.querySelectorAll('.naud__pane');
-  if (!panes.length) return;
+  var bodies = document.querySelectorAll('.npil__b');
+  if (!panes.length && !bodies.length) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* ( 06 ) runs the same device on its descriptions. One paragraph rather than
+     four lines, so there is no running total to keep and no line index — the
+     shared delay reads --s and --l as 0 when nothing sets them. */
+  bodies.forEach(function (b) {
+    splitLetters(b, null, function (s, i) { s.style.setProperty('--i', i); });
+    b.classList.add('is-typed');
+  });
 
   panes.forEach(function (p) {
     /* --s is how many characters the lines above this one hold, so a line starts
@@ -812,9 +821,51 @@ function splitLetters(root, skip, onChar) {
    already closed, and reopening it there is a second frame of the fold with a
    hole in it. */
 (function () {
-  document.querySelectorAll('.naud > details > summary').forEach(function (s) {
+  var sums = [].slice.call(document.querySelectorAll('.naud > details > summary'));
+  if (!sums.length) return;
+
+  sums.forEach(function (s) {
     s.addEventListener('click', function (e) {
       if (s.parentNode.open) e.preventDefault();
+    });
+  });
+
+  /* ── and on hover, to match ( 06 ) ──────────────────────────────────────
+     Only where there is a cursor. A touch reader still taps, which is what
+     <details> does on its own.
+
+     THE GUARD IS THE WHOLE THING. Opening a question closes the one above it,
+     which removes that panel's height and slides the question you are pointing
+     at UP the list — measured at 144px — out from under the cursor and onto its
+     neighbour. The browser then fires pointerenter on THAT neighbour, even
+     though the pointer has not moved a pixel, and the list walks itself down to
+     the bottom. That cascade is why the first hover version of this fold was
+     abandoned.
+
+     An enter event carrying the same coordinates as the last real pointermove
+     is the element arriving under a stationary cursor, not the cursor arriving
+     at the element. Ignoring those leaves exactly one open per gesture: the
+     fold opens what you point at, and if it then slides out from under you,
+     nothing else happens until you actually move the mouse again.
+
+     This leans on the order Pointer Events specifies for a pointer crossing
+     into a new element — the boundary events first, pointermove after — so at
+     the moment enter fires, px/py still hold where the pointer WAS. A phantom
+     enter has no move beside it, so px/py already hold where the pointer IS,
+     and the two match. Worth stating because the first test written for this
+     fired move before enter, which is backwards, and made a working guard look
+     like it was blocking every hover. */
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  var px = -1, py = -1;
+  window.addEventListener('pointermove', function (e) {
+    px = e.clientX; py = e.clientY;
+  }, { passive: true });
+
+  sums.forEach(function (s) {
+    s.addEventListener('pointerenter', function (e) {
+      if (e.clientX === px && e.clientY === py) return;
+      s.parentNode.open = true;
     });
   });
 })();

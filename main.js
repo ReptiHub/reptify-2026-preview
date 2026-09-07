@@ -399,9 +399,18 @@ function splitLetters(root, skip, onChar) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   panes.forEach(function (p) {
+    /* --s is how many characters the lines above this one hold, so a line starts
+       when the one before it has finished rather than on a fixed offset from it.
+       That distinction is the whole difference between four typewriters running
+       at once and one machine working down the pane: a fixed offset overlaps
+       whenever a line is longer than the offset assumes, and these lines are 41,
+       21, 48 and 29 characters. Only the running total knows. */
+    var run = 0;
     [].slice.call(p.querySelectorAll('.naud__k, .naud__f')).forEach(function (l, li) {
-      splitLetters(l, '.naud__lbl', function (s, i) { s.style.setProperty('--i', i); });
+      var n = splitLetters(l, '.naud__lbl', function (s, i) { s.style.setProperty('--i', i); });
       l.style.setProperty('--l', li);
+      l.style.setProperty('--s', run);
+      run += n;
     });
     /* the class, not the presence of .ltr: the CSS must not hide a single
        character on a page where this script did not run */

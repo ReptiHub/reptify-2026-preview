@@ -10938,23 +10938,36 @@ h1.statement--sm { font-weight: 900; }
    once and then nothing happening. With it the from-state applies through the
    delay, which is what makes the wait a wait.
 
-   Lines overlap rather than queue. Strictly sequential across all four reads
-   correctly and takes 1.9s to finish, which is a long time to watch a fold you
-   just opened; starting each line 190ms after the one above brings it to 1.15s
-   and still arrives in reading order — left cell, right cell, next row.
+   One line at a time, on instruction, and that is what --s is for. Lines
+   overlapped before, on a fixed offset per line, which is only sequential if
+   every line is shorter than the offset — these are 41, 21, 48 and 29
+   characters, so the long ones ran into the next. --s carries the running
+   character total from JS, so a line begins where the one above it ended and
+   the pane is one machine working down it rather than four going at once.
+
+   --kb-gap is the beat at a line end, a pause rather than an offset: ten
+   characters' worth, so the break reads as a carriage return instead of a
+   stumble.
+
+   20ms a character against 11 before. Comfortable reading is around 24
+   characters a second, which is 42ms and far too slow to watch; 20 is
+   deliberate enough to follow a word as it forms without becoming a wait. The
+   pane's 139 characters take 3.7s end to end.
 
    --kb-open is the head start. The panel takes .32s to grow and typing into a
    box that is still opening reads as two effects fighting, so the first
    character lands once it is most of the way there. */
 .naud {
-  --kb-char: 11ms;
-  --kb-line: 190ms;
-  --kb-open: 140ms;
+  --kb-char: 20ms;
+  --kb-gap: 200ms;
+  --kb-open: 160ms;
 }
 .naud__pane.is-typed .ltr { opacity: 0; }
 .naud.in details[open] .naud__pane.is-typed .ltr {
   animation: naud-key 1ms linear both;
-  animation-delay: calc(var(--kb-open) + var(--l, 0) * var(--kb-line) + var(--i, 0) * var(--kb-char));
+  animation-delay: calc(var(--kb-open)
+                        + (var(--s, 0) + var(--i, 0)) * var(--kb-char)
+                        + var(--l, 0) * var(--kb-gap));
 }
 @keyframes naud-key { from { opacity: 0 } to { opacity: 1 } }
 

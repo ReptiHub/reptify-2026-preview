@@ -946,12 +946,19 @@ function splitLetters(root, skip, onChar) {
       /* and a tilt, which is what actually makes a deck look bent: a fan of
          cards is rotated, not merely lowered */
       r.style.setProperty('--rot', 'calc(' + off + ' * var(--car-tilt))');
-      /* steeper falloff than the reference's, on instruction, and it pays for
-         itself twice: a deck reads front-to-back through how fast the cards
-         shrink, and a smaller neighbour needs less room, which is what lets the
-         card stay 26cqw wide instead of dropping to 23. 1 / .76 / .52. */
-      r.style.setProperty('--s', (1 - d * 0.24).toFixed(3));
-      r.style.setProperty('--o', (1 - d * 0.33).toFixed(2));
+      /* DEPTH IS NOW REAL, so there is no scale to compute. Rank d sits d
+         ranks back into the screen and the perspective does the shrinking:
+         900 / (900 + 190d) is 1, .83, .70 — which no longer has to be paid for
+         in horizontal room, because a card that is further away is smaller
+         where it stands rather than smaller somewhere else.
+
+         The turn is toward the middle. A card right of centre rotates positive
+         about Y, which sends its far edge back and brings the edge nearest the
+         reader forward — it faces the front card instead of standing square to
+         a viewer it is not in front of. */
+      r.style.setProperty('--zd', 'calc(' + (-d) + ' * var(--car-depth))');
+      r.style.setProperty('--ry', 'calc(' + off + ' * var(--car-turn))');
+      r.style.setProperty('--o', (1 - d * 0.25).toFixed(2));
       r.style.setProperty('--z', String(n - d));
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });
@@ -1033,7 +1040,7 @@ function splitLetters(root, skip, onChar) {
       list.classList.remove('npil--car');
       if (bar) bar.hidden = true;
       rows.forEach(function (r) {
-        ['--x', '--y', '--s', '--o', '--z'].forEach(function (p) { r.style.removeProperty(p); });
+        ['--x', '--y', '--zd', '--ry', '--rot', '--o', '--z'].forEach(function (p) { r.style.removeProperty(p); });
         var c = r.querySelector('.npil__card');
         if (c) c.removeAttribute('aria-current');
       });

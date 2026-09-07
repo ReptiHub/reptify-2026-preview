@@ -12427,24 +12427,33 @@ h1.statement--sm { font-weight: 900; }
        deck spans 4 x step + .85 x width. At 18.5 and 26 that is 96.1cqw, which
        leaves a two percent margin at every width rather than at one. */
     container-type: inline-size;
-    /* 26cqw is a CEILING, not a taste. For the card beside the middle one to
-       show its own name, its left edge plus its padding has to clear the middle
-       card's right edge — step >= w/2 + w*s1/2 - pad — and the deck still has
-       to fit, 4*step + s2*w <= 96cqw. Solved across the plausible falloffs, 26
-       passes only with a steep one and 28 fails at every setting. 30 was tried
-       first and did exactly what the arithmetic says: the middle card ate the
-       left half of its neighbour's name, so the deck read "...force ...ns".
+    /* REAL DEPTH, and it is what lifted the width ceiling. The last version
+       faked distance with scale, which meant a card behind had to be pushed
+       SIDEWAYS to be seen at all — and that is what capped the width at 26cqw:
+       past it the middle card ate its neighbour's name.
 
-       Bigger than this needs three cards on the arc rather than five, which
-       buys about 37cqw. That is a content decision, not a geometry one. */
-    --car-w: 26cqw;
-    --car-h: clamp(13rem, 19cqw, 17rem);
-    --car-step: 20.5cqw;
-    /* the bend: 56px of drop across the arc against 22, and a real rotation
-       under it. Lift alone only ever moved the outer pair — the cosine put 8px
-       between the middle card and its neighbours and the deck read flat. */
-    --car-lift: 56px;
-    --car-tilt: 3.2deg;
+       Cards on a z-axis do not need that room. Perspective shrinks them where
+       they stand, so they can sit largely behind the front card and show as
+       an edge, which is the ask — the card comes out from behind rather than
+       sliding in from the side. Same five cards, same content, 42cqw instead
+       of 26: 529px at 1400 against 328.
+
+       900px of perspective rather than the usual 1200-1500. Long perspective
+       is nearly orthographic and the turn stops reading; short is what makes
+       a 16deg card look turned rather than merely narrower. */
+    perspective: 900px;
+    --car-w: 42cqw;
+    /* 22cqw left the front card 46% full — 150px of nothing under a heading and
+       a subtitle. A card 529 wide holding two lines does not want 277 of
+       height; at 15.5 it is 195 and reads about three quarters full, which is
+       a card rather than a panel with type in the corner. */
+    --car-h: clamp(11.5rem, 15.5cqw, 15rem);
+    --car-step: 23cqw;
+    --car-depth: 190px;      /* per rank, back into the screen */
+    --car-turn: 16deg;       /* per rank, facing the middle */
+    /* the bend: 64px of drop and a 3.6deg tilt per rank */
+    --car-lift: 64px;
+    --car-tilt: 3.6deg;
     --car-bar: 3rem;
     /* description above the controls now, with air on both sides of it */
     --car-air: 2.75rem;
@@ -12470,6 +12479,12 @@ h1.statement--sm { font-weight: 900; }
     display: block; padding: 0; border: 0; background: none;
     overflow: visible; pointer-events: none;
     isolation: auto; z-index: var(--z, 1);
+    /* the vanishing point. Perspective applies to an element's own children,
+       and every row is inset:0 on the same box, so each card is projected from
+       the identical origin — one shared vanishing point without putting the
+       rows into a single preserve-3d context, where z-index would stop being
+       ours to set. */
+    perspective: 900px;
   }
 
   .npil--car .npil__card {
@@ -12485,8 +12500,9 @@ h1.statement--sm { font-weight: 900; }
     border-radius: 2px;
     overflow: clip; isolation: isolate;
     pointer-events: auto; cursor: pointer;
-    transform: translateX(-50%) translate(var(--x, 0), var(--y, 0))
-               rotate(var(--rot, 0deg)) scale(var(--s, 1));
+    transform: translateX(-50%)
+               translate3d(var(--x, 0), var(--y, 0), var(--zd, 0))
+               rotateY(var(--ry, 0deg)) rotate(var(--rot, 0deg));
     z-index: var(--z, 1);
   }
   /* The card surface stays opaque and the RECESSION LIVES IN THE TEXT. Fading
@@ -12499,11 +12515,14 @@ h1.statement--sm { font-weight: 900; }
      only thing that makes a deck read as depth rather than as a mistake. */
   .npil--car .npil__sum { opacity: var(--o, 1); }
   .npil--car .npil__n { opacity: calc(.08 * var(--o, 1)); }
-  .npil--car .npil__i.is-picked .npil__card { border-left-color: var(--brand); }
+  /* no accent rule on the card, at the owner's call. The front card is already
+     the largest, the squarest to the reader and the only one at full ink;
+     a coloured edge on top of that was saying the same thing a fourth time. */
+  .npil--car .npil__card { border-left-color: var(--ink-15); }
 
-  .npil--car .npil__n { font-size: 8rem; right: .8rem; }
-  .npil--car .npil__h { font-size: var(--a2); white-space: normal; }
-  .npil--car .npil__s { max-width: none; font-size: var(--a5); margin-top: .65rem; }
+  .npil--car .npil__n { font-size: 7.5rem; right: .9rem; }
+  .npil--car .npil__h { font-size: calc(var(--a2) * 1.05); white-space: normal; }
+  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * 1.08); margin-top: .7rem; }
 
   /* the description sits under the bar, all five in one place, and only the
      picked one is lit — the same stacked-slot device .help__say runs on the

@@ -917,6 +917,10 @@ function splitLetters(root, skip, onChar) {
 
   /* The stage keeps its own index, and that is the whole of the default. */
   var carIdx = 0;
+  /* scrollY at the moment the reader last used a control, or null. A choice
+     outlives the next few pixels of scroll — momentum and a stray trackpad
+     nudge are not a decision — and then hands back. */
+  var heldAt = null;
 
   function pick(i) {
     i = ((i % n) + n) % n;
@@ -1041,7 +1045,7 @@ function splitLetters(root, skip, onChar) {
          position and not its subject is a control nobody can use out of order */
       var h = r.querySelector('.npil__h');
       b.setAttribute('aria-label', h ? h.textContent.trim() : 'Solution ' + (i + 1));
-      b.addEventListener('click', function () { pick(i); });
+      b.addEventListener('click', function () { heldAt = window.scrollY; pick(i); });
       li.appendChild(b); ol.appendChild(li);
       return b;
     });
@@ -1060,12 +1064,17 @@ function splitLetters(root, skip, onChar) {
 
     bar.addEventListener('click', function (e) {
       var b = e.target.closest('[data-car]');
-      if (b) pick(activeIdx() + Number(b.getAttribute('data-car')));
+      if (!b) return;
+      heldAt = window.scrollY;
+      pick(activeIdx() + Number(b.getAttribute('data-car')));
     });
 
     rows.forEach(function (r, i) {
       var card = r.querySelector('.npil__card');
-      if (card) card.addEventListener('click', function () { pick(i); });
+      if (card) card.addEventListener('click', function () {
+        heldAt = window.scrollY;
+        pick(i);
+      });
     });
 
     /* see the note above: the deck answers to everything except a hover */
@@ -1073,19 +1082,17 @@ function splitLetters(root, skip, onChar) {
       if (list.classList.contains('npil--car')) e.stopPropagation();
     }, true);
 
-    /* THE STAGE OWNS ITS STATE, and this is what makes the first card the
-       default rather than whatever the scroll happened to leave behind.
+    /* THE STAGE OWNS ITS STATE, and wire()'s scroll walk is the thing being
+       kept out. Not because walking on scroll is wrong — the deck does it
+       itself now, below — but because wire() measures the wrong span: its
+       progress starts the moment the fold's top touches the BOTTOM of the
+       screen, so by the time the deck is actually in view it is already a
+       third of the way through and the first card has been and gone. That is
+       what "it should start on card one" was describing.
 
-       wire() walks the list as the fold crosses the viewport — right for a
-       row list that holds still, wrong for a deck: arriving at the fold you
-       would find it already dealt to the third card, and it reshuffled under
-       you as you scrolled past, which is the opposite of smooth. Its pointer
-       path is swallowed at capture above; this is the scroll path. wire()
-       stands down while a pick is held, and releases after 40px of scroll —
-       so the deck simply takes the hold back whenever it is dropped.
-
-       The stage's own index is the authority. Anything that moves .is-picked
-       without going through pick() is put back. */
+       Its pointer path is swallowed at capture above; this is the scroll path.
+       The stage's own index is the authority, and anything that moves
+       .is-picked without going through pick() is put back. */
     new MutationObserver(function () {
       if (placing) return;
       placing = true;
@@ -1120,6 +1127,41 @@ function splitLetters(root, skip, onChar) {
       });
     }
   }
+
+  /* ── THE DECK DEALS ITSELF AS THE FOLD PASSES ────────────────────────────
+     Card one at the top of the fold, card five at the bottom, on instruction.
+
+     The span is the fold's OWN travel, not its pass across the viewport, and
+     that distinction is the whole of it. wire() measures from the moment the
+     fold's top touches the bottom of the screen to the moment its bottom
+     leaves the top — a span in which the deck is off-screen for most of both
+     ends, so the middle of the count lands where the reader arrives. Measuring
+     instead from "the fold's top reaches the top of the screen" to "the fold's
+     bottom reaches the bottom" puts 0 and 1 exactly where a reader would say
+     the fold begins and ends.
+
+     A short fold has no such travel — its bottom is already on screen when its
+     top arrives — so below that threshold it falls back to the pass, which is
+     the only span there is. */
+  function deal() {
+    if (!mq.matches || !list.classList.contains('npil--car')) return;
+    if (heldAt !== null) {
+      if (Math.abs(window.scrollY - heldAt) < 120) return;
+      heldAt = null;
+    }
+    var fold = list.closest('.nf') || list;
+    var r = fold.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    if (r.bottom < 0 || r.top > vh) return;
+    var travel = r.height - vh;
+    var p = travel > 40 ? (-r.top) / travel
+                        : (vh - r.top) / (vh + r.height);
+    p = Math.min(Math.max(p, 0), 0.9999);
+    var i = Math.floor(p * n);
+    if (i !== carIdx) pick(i);
+  }
+
+  window.addEventListener('scroll', deal, { passive: true });
 
   sync();
   if (mq.addEventListener) mq.addEventListener('change', sync);

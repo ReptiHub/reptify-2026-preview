@@ -12390,6 +12390,17 @@ h1.statement--sm { font-weight: 900; }
 .ty .figure { font-size: var(--a0); }
 
 
+/* The fold's own label for the list, at the owner's call. It sits outside
+   .npil rather than in it, because .npil is a stage whose children are
+   absolutely placed — and because a label for the five solutions is worth
+   having in the row device and the phone accordion too, not only on the deck. */
+.npil__eyebrow {
+  margin: var(--v5) 0 var(--v2);
+  font-family: var(--work); font-size: .82rem; font-weight: 500;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-70);
+}
+.nf--ink .npil__eyebrow { color: var(--chalk-65); }
+
 /* ── ( 06 ) AS A STAGE ────────────────────────────────────────────────────
    A carousel, on instruction, adjusted on three points before it was built.
 
@@ -12469,8 +12480,18 @@ h1.statement--sm { font-weight: 900; }
        It also answers going behind in a circle: at 28deg a rank, the outer
        pair are 56deg round, past the shoulder of the ring, and they read as
        travelling round the back rather than sliding off the side. */
-    --car-r: 55cqw;
-    --car-arc: 28deg;
+    /* FIVE CARDS, NOT THREE AND TWO EDGES. At 28deg a rank the outer pair sat
+       56deg round, past the shoulder, and kept 221px of their 529 — which read
+       as the ring working and as two of the five services vanishing. At 19deg
+       they sit 38deg round and keep 367px, so all five are legible and the
+       curve is more obvious rather than less: a bend you can see across five
+       cards beats a turn you can see on three.
+
+       The radius grows with the flatter angle so the deck spreads wider rather
+       than bunching: sin(19) is half of sin(38), so a longer arm is what keeps
+       the same horizontal reach at a shallower turn. */
+    --car-r: 62cqw;
+    --car-arc: 19deg;
     /* THE BEND IS A RATIO, NOT A NUMBER OF PIXELS, and it took losing it to
        see why. "Less bend" was answered by halving 64px to 36 — in the same
        commit that made the card 36% taller. Against the card the bend did not
@@ -12480,13 +12501,18 @@ h1.statement--sm { font-weight: 900; }
        Written against --car-h it survives any later change to the card. 20% is
        deliberately below the 33% that read as a spilt hand and well above the
        13.6% that read as nothing. */
-    --car-lift: calc(var(--car-h) * .26);
+    /* .15, down from .26, and the arc is why. At 28deg a rank the turn carried
+       most of the curve and the lift was reading as part of it; at 19deg the
+       cards are barely turned, so the same drop stops looking like a bend and
+       starts looking like the deck sagging. Flatter ring, shallower lift. */
+    --car-lift: calc(var(--car-h) * .15);
     --car-tilt: 2.8deg;
     --car-bar: 3.5rem;
-    --car-air: 3.5rem;
+    --car-air: 2.75rem;
+    --car-num: 4.75rem;
     display: block; position: relative;
     height: calc(var(--car-h) + var(--car-lift) + var(--car-air)
-                 + var(--car-bar) + 1.5rem);
+                 + var(--car-num) + var(--car-air) + var(--car-bar) + 1.5rem);
     gap: 0;
   }
 
@@ -12629,7 +12655,8 @@ h1.statement--sm { font-weight: 900; }
   /* ── the bar: arrows, dots, and the count ───────────────────────────── */
   .npil__bar {
     position: absolute; left: 0; right: 0;
-    top: calc(var(--car-h) + var(--car-lift) + var(--car-air));
+    top: calc(var(--car-h) + var(--car-lift) + var(--car-air)
+              + var(--car-num) + var(--car-air));
     height: var(--car-bar);
     display: flex; align-items: center; justify-content: center;
     gap: clamp(1rem, 2vw, 1.75rem);
@@ -12663,10 +12690,27 @@ h1.statement--sm { font-weight: 900; }
   }
   .npil__dot[aria-selected="true"] { width: 30px; background: var(--ink); }
 
+  /* the position, under the front card. Big, because it is the reference's own
+     arrangement and it is the better one — the number belongs to the card you
+     are looking at rather than to the controls that leave it. */
   .npil__count {
-    font-family: var(--work); font-size: .92rem; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--ink-70);
+    position: absolute; left: 0; right: 0;
+    top: calc(var(--car-h) + var(--car-lift) + var(--car-air));
+    height: var(--car-num);
+    margin: 0; text-align: center;
     font-variant-numeric: tabular-nums;
+    pointer-events: none;
+  }
+  .npil__count b {
+    display: block;
+    font-family: var(--state); font-weight: 800;
+    font-size: 3.1rem; line-height: 1; letter-spacing: -.03em;
+    color: var(--ink);
+  }
+  .npil__count span {
+    display: block; margin-top: .3rem;
+    font-family: var(--work); font-size: .8rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-70);
   }
 
   @media (prefers-reduced-motion: no-preference) {

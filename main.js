@@ -956,7 +956,7 @@ function splitLetters(root, skip, onChar) {
                + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
       if (need > tall) tall = need;
     });
-    if (tall > 0) list.style.setProperty('--car-h', Math.ceil(tall) + 'px');
+    if (tall > 0) list.style.setProperty('--car-h', (Math.ceil(tall) + 2) + 'px');
   }
 
   function place() {
@@ -1002,7 +1002,10 @@ function splitLetters(root, skip, onChar) {
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });
     dots.forEach(function (b, i) { b.setAttribute('aria-selected', String(i === a)); });
-    if (count) count.textContent = pad(a + 1) + ' / ' + pad(n);
+    if (count) {
+      count.firstChild.textContent = pad(a + 1);
+      count.lastChild.textContent = 'of ' + pad(n);
+    }
   }
 
   function pad(v) { return v < 10 ? '0' + v : String(v); }
@@ -1039,11 +1042,16 @@ function splitLetters(root, skip, onChar) {
       return b;
     });
 
-    count = document.createElement('span');
+    /* the position reads under the front card, not inside the bar. It is the
+       reference's own arrangement and it is the better one: the number belongs
+       to the card you are looking at, and the bar is for getting to the next. */
+    count = document.createElement('p');
     count.className = 'npil__count';
     count.setAttribute('aria-hidden', 'true');
+    count.innerHTML = '<b></b><span></span>';
 
-    bar.appendChild(prev); bar.appendChild(ol); bar.appendChild(count); bar.appendChild(next);
+    bar.appendChild(prev); bar.appendChild(ol); bar.appendChild(next);
+    list.appendChild(count);
     list.appendChild(bar);
 
     bar.addEventListener('click', function (e) {
@@ -1097,6 +1105,27 @@ function splitLetters(root, skip, onChar) {
      the container, the description rewraps, and the tallest card is not always
      the same card at every width — at 1210 it is the first, at 1010 it is the
      fourth. Debounced to the next frame so a drag resizes once per paint. */
+  var refit;
+
+  /* AND AGAIN WHENEVER A DESCRIPTION ACTUALLY CHANGES SIZE. The two triggers
+     below — fonts, resize — are guesses at when the text might reflow, and a
+     guess is what let this clip twice. An observer on the descriptions is not
+     a guess: a font swapping, a zoom level, a wrapped line, a word changed in
+     the HTML, anything that makes the tallest card taller refits the box that
+     has to hold it. The card can no longer be the wrong height for its own
+     contents, whatever caused it. */
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function () {
+      if (!mq.matches) return;
+      clearTimeout(refit);
+      refit = setTimeout(function () { fit(); place(); }, 60);
+    });
+    rows.forEach(function (r) {
+      var b = r.querySelector('.npil__b');
+      if (b) ro.observe(b);
+    });
+  }
+
   /* AND AGAIN ONCE THE FONTS LAND. This is the one that matters on a real
      visit: fit() runs while the page is still painting in the fallback face,
      Archivo and Instrument Sans swap in with different metrics, every
@@ -1111,7 +1140,6 @@ function splitLetters(root, skip, onChar) {
     });
   }
 
-  var refit;
   window.addEventListener('resize', function () {
     if (!mq.matches) return;
     clearTimeout(refit);

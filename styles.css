@@ -10863,7 +10863,11 @@ h1.statement--sm { font-weight: 900; }
      the four questions ran to two lines and the left column overshot the right
      by 112px; a step down puts every one back on a single line at 1400, which
      is worth more than the extra millimetre of type. */
-  padding-block: clamp(.9rem, 1.7vw, 1.5rem);
+  /* CLOSED ROWS COMPRESS, THE OPEN ONE OPENS OUT. This is the half of the
+     reference I misread as inert: its -space-y-6 flipping to space-y-0 on open
+     is not decoration, it is the rhythm of the whole device. Shut questions
+     pack into a tight stack you scan; the open one takes the room to be read
+     in. Set below rather than here so the two states can differ. */
   cursor: pointer; list-style: none;
   font-family: var(--state); font-weight: 700;
   font-size: var(--a3); line-height: 1.1; letter-spacing: -.035em;
@@ -10882,7 +10886,13 @@ h1.statement--sm { font-weight: 900; }
      The .62 this replaces was correct for what it was — --a3 at weight 500 is
      not large text, so 4.5 applied. Same token, same size, different bar,
      because the weight changed underneath it. */
-  color: rgba(21, 24, 27, .50);
+  /* .48 is the floor and this sits on it. The reference's .20 measures 1.52:1
+     against this ground — not a dim heading, an invisible one — and there is no
+     exemption to reach for: a shut question is an active control, not
+     incidental text. .48 measures 3.10 against the 3:1 bold large-text bar. The
+     rest of the distance to the reference's look is bought with the rhythm
+     above rather than with more transparency. */
+  color: rgba(21, 24, 27, .48);
 }
 /* the index, from a counter rather than from markup — the HTML stays four
    questions, which is what it is, and nothing needs renumbering by hand if one
@@ -10894,6 +10904,15 @@ h1.statement--sm { font-weight: 900; }
   font-size: .78rem; letter-spacing: .1em; line-height: 2.4;
   color: inherit; opacity: .85;
   font-variant-numeric: tabular-nums;
+}
+/* 47px closed at 1400 against 88 open, and the floor is the touch target, not
+   the taste: at 375 the closed row still measures 46px against the 44 minimum,
+   which is what stops the compression going as far as the reference's. */
+.naud details:not([open]) > summary { padding-block: clamp(.62rem, .9vw, .8rem); }
+.naud details[open] > summary { padding-block: clamp(1.3rem, 2.6vw, 2.3rem); }
+@media (prefers-reduced-motion: no-preference) {
+  .naud summary { transition: padding-block var(--fold-open) var(--fold-ease),
+                              color var(--fold-open) var(--fold-ease); }
 }
 .naud summary::-webkit-details-marker { display: none; }
 .naud details[open] > summary { color: var(--ink); cursor: default; }
@@ -10963,7 +10982,11 @@ h1.statement--sm { font-weight: 900; }
   }
 }
 
-.naud__pane { padding-bottom: clamp(.9rem, 1.8vw, 1.35rem); }
+/* Air under the answer before the next rule, which the reference gives its own
+   open item and which this had none of. It also buys back some of the height
+   the compressed rows took out of the left column — 91px apart after the
+   change, against 32 before it. */
+.naud__pane { padding-bottom: clamp(1.7rem, 3.6vw, 3.2rem); }
 .naud__head { display: none; }
 .naud__p { margin: 0; }
 .naud__p + .naud__p { margin-top: .5rem; }

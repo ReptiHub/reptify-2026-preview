@@ -1009,7 +1009,19 @@ function splitLetters(root, skip, onChar) {
       r.style.setProperty('--z', String(n - d));
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });
-    dots.forEach(function (b, i) { b.setAttribute('aria-selected', String(i === a)); });
+    /* aria-current, not aria-selected, and the dots carry no role at all.
+       They were role="tab" with aria-selected, which is a promise this widget
+       does not keep: ARIA requires a tab to be owned by a tablist, there is no
+       tablist on the page and no tabpanel for a tab to control, and the only
+       handler bound here is click — no arrow keys, no roving tabindex. An
+       orphan tab role gives a screen reader a position it cannot place.
+
+       What this actually is, is the thing the container already says it is: a
+       role="group" labelled Solutions, holding prev, next and five jump
+       buttons. aria-current describes exactly that, is valid on any element,
+       and is what the CARD three lines above already uses. Same state, one
+       vocabulary. */
+    dots.forEach(function (b, i) { b.setAttribute('aria-current', String(i === a)); });
     if (count) {
       count.firstChild.textContent = pad(a + 1);
       count.lastChild.textContent = 'of ' + pad(n);
@@ -1040,7 +1052,6 @@ function splitLetters(root, skip, onChar) {
       var li = document.createElement('li');
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'npil__dot';
-      b.setAttribute('role', 'tab');
       /* the solution's own name, not "item 3" — a control that announces its
          position and not its subject is a control nobody can use out of order */
       var h = r.querySelector('.npil__h');

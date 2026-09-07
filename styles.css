@@ -1341,7 +1341,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ── the one ink band per page ─────────────────────────── */
 
 .ink { background: var(--ink); color: var(--chalk); }
-.ink .eyebrow, .ink .figcap, .ink .signed--face span { color: var(--chalk-65); }
+/* .nf--ink joins the list. There are two ink-band class names on this site and
+   .figcap only ever learned the first: on a .nf--ink band it kept the light-
+   ground --ink-65, which is ink text at 65% ON ink and measures 1.0:1 — the
+   caption was there and could not be read at all. */
+.ink .eyebrow, .ink .figcap, .ink .signed--face span,
+.nf--ink .figcap { color: var(--chalk-65); }
 .ink .lead, .ink p { color: var(--chalk-65); }
 .ink .statement, .ink .statement--sm, .ink .figure { color: var(--chalk); }
 .ink .prose a { color: var(--brand-lite); border-bottom-color: var(--chalk-line); }
@@ -10117,7 +10122,12 @@ h1.statement--sm { font-weight: 900; }
   font-family: var(--work); font-size: var(--a7);
   letter-spacing: .08em; text-transform: uppercase; color: var(--ink-65);
 }
-.nf--ink .nf__meta { color: var(--chalk-40); }
+/* --chalk-65, not --chalk-40. Measured on the ink band, .4 alpha composites to
+   3.48:1 and this line is 13px at weight 400, so its bar is 4.5. .65 gives
+   7.11:1. The sheet already knew this twice — .svcf .eyebrow carries the same
+   correction and .nfig__note documents the same 3.48 — and these were the
+   instances that did not get swept. */
+.nf--ink .nf__meta { color: var(--chalk-65); }
 .nf__meta b { font-weight: 400; font-variant-numeric: tabular-nums; }
 .nf__tag { text-align: right; }
 .nf__tag::before {
@@ -10515,7 +10525,10 @@ h1.statement--sm { font-weight: 900; }
 
 /* the hero's head is the one --a0 on the page */
 .nf__head--hero { font-size: var(--a0); max-width: 20ch; }
-.nf--ink figcaption { color: var(--chalk-40); }
+/* Same 3.48:1 as .nf__meta above, on the band's two figure captions — the
+   BrightLocal citation at 17px and the street caption at 13px. Both normal
+   text, both a 4.5 bar. */
+.nf--ink figcaption { color: var(--chalk-65); }
 .nf--ink .qcard { border-color: var(--chalk-line); }
 
 /* the friction row: eight short labels, hairline-separated, wrapping. A list
@@ -12713,7 +12726,7 @@ h1.statement--sm { font-weight: 900; }
     transition: width var(--fold-open) var(--fold-ease),
                 background-color var(--fold-open) var(--fold-ease);
   }
-  .npil__dot[aria-selected="true"] { width: 30px; background: var(--ink); }
+  .npil__dot[aria-current="true"] { width: 30px; background: var(--ink); }
 
   /* the position, under the front card. Big, because it is the reference's own
      arrangement and it is the better one — the number belongs to the card you
@@ -12751,7 +12764,7 @@ h1.statement--sm { font-weight: 900; }
 
 .nf--ink .npil__nav { border-color: var(--chalk-line); color: var(--chalk); }
 .nf--ink .npil__dot { background: var(--chalk-line); }
-.nf--ink .npil__dot[aria-selected="true"] { background: var(--chalk); }
+.nf--ink .npil__dot[aria-current="true"] { background: var(--chalk); }
 .nf--ink .npil__count { color: var(--chalk-65); }
 
 /* ── ( 06 )'s pull quote ───────────────────────────────────────────────────

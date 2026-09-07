@@ -10985,9 +10985,11 @@ h1.statement--sm { font-weight: 900; }
    deliberate enough to follow a word as it forms without becoming a wait. The
    pane's 139 characters take 3.7s end to end.
 
-   --kb-open is the head start. The panel takes .32s to grow and typing into a
-   box that is still opening reads as two effects fighting, so the first
-   character lands once it is most of the way there. */
+   --kb-open is the head start. The panel takes --naud-open to grow and typing
+   into a box that is still opening reads as two effects fighting, so the first
+   character lands once it is most of the way there. Written against the token
+   rather than a number, because the number moved once already and this comment
+   went on claiming .32s after it did. */
 .naud {
   --kb-char: 20ms;
   --kb-gap: 200ms;

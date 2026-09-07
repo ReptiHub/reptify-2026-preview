@@ -10839,11 +10839,15 @@ h1.statement--sm { font-weight: 900; }
    see, which is a gap to close rather than a rival.
 
    No new type: question at --a4/500, both sides at --a6. */
+/* One gesture for both folds. ( 05 ) and ( 06 ) open the same way below 1100
+   and it should be the same motion, not two that happen to look similar. */
+.naud, .npil {
+  --fold-open: .62s;
+  --fold-ease: cubic-bezier(.65, .02, .28, 1);
+}
 .naud {
   margin: var(--v4) 0 0;
   border-bottom: 1px solid var(--ink-15);
-  --naud-open: .62s;
-  --naud-ease: cubic-bezier(.65, .02, .28, 1);
 }
 .naud details { border-top: 1px solid var(--ink-15); }
 .naud details:first-of-type { border-top: 0; }
@@ -10922,8 +10926,8 @@ h1.statement--sm { font-weight: 900; }
    a .62s panel they finished while the box was still moving, which is three
    things on one control disagreeing about how long the gesture takes. */
 @media (prefers-reduced-motion: no-preference) {
-  .naud summary { transition: color var(--naud-open) var(--naud-ease); }
-  .naud summary::after { transition: transform var(--naud-open) var(--naud-ease); }
+  .naud summary { transition: color var(--fold-open) var(--fold-ease); }
+  .naud summary::after { transition: transform var(--fold-open) var(--fold-ease); }
 }
 
 /* The open. A closed <details> is display:none, which no transition can cross,
@@ -10936,8 +10940,8 @@ h1.statement--sm { font-weight: 900; }
     .naud { interpolate-size: allow-keywords; }
     .naud details::details-content {
       block-size: 0; overflow: clip;
-      transition: block-size var(--naud-open) var(--naud-ease),
-                  content-visibility var(--naud-open) allow-discrete;
+      transition: block-size var(--fold-open) var(--fold-ease),
+                  content-visibility var(--fold-open) allow-discrete;
     }
     .naud details[open]::details-content { block-size: auto; }
   }
@@ -10985,7 +10989,7 @@ h1.statement--sm { font-weight: 900; }
    deliberate enough to follow a word as it forms without becoming a wait. The
    pane's 139 characters take 3.7s end to end.
 
-   --kb-open is the head start. The panel takes --naud-open to grow and typing
+   --kb-open is the head start. The panel takes --fold-open to grow and typing
    into a box that is still opening reads as two effects fighting, so the first
    character lands once it is most of the way there. Written against the token
    rather than a number, because the number moved once already and this comment
@@ -11025,13 +11029,78 @@ h1.statement--sm { font-weight: 900; }
    solves in ( 05 ), except here there is nothing worth waiting for. The letters
    are the reveal. The container keeps its opacity rule for the case where this
    script did not run, which is the only case that still needs it. */
-.npil__b.is-typed { opacity: 1; transition: none; }
+/* opacity only. `transition: none` was here to kill the .28s fade and it also
+   killed the collapse below 1100, because .npil__b.is-typed outranks the plain
+   .npil__b the transition is written on. Nothing needs cancelling: an opacity
+   pinned at 1 never changes, so it never transitions. */
+.npil__b.is-typed { opacity: 1; }
 .npil__b.is-typed .ltr { opacity: 0; }
 .npil--picked .npil__i.is-picked .npil__b.is-typed .ltr,
 .npil--live   .npil__i.is-picked .npil__b.is-typed .ltr,
 .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__b.is-typed .ltr {
   animation: kb-key 1ms linear both;
   animation-delay: calc(var(--kb-open) + var(--i, 0) * var(--kb-char));
+}
+
+/* ── ( 06 ) BELOW 1100: an accordion, because there is nowhere to hide ─────
+   Above 1100 the description holds its own column whether it is showing or
+   not, which is the whole reason that version cannot reflow under a pointer.
+   Below 1100 there is no column to reserve, so every paragraph shows and the
+   fold measures 2179px at 375 — 1109 of it this list, 2.7 viewports of stacked
+   prose for one fold. Opacity alone was never going to fix that; the space is
+   the problem.
+
+   grid-template-rows 0fr to 1fr, not the ::details-content trick ( 05 ) uses.
+   That one needs interpolate-size and a very recent browser and degrades to a
+   snap; this needs neither and animates everywhere. ( 05 ) cannot use it
+   because <details> owns its own content box — here the markup is ours.
+
+   No new state and no new script. wire() already keeps exactly one row picked
+   and already sets it from a tap, a focus and the fold's own pass through the
+   viewport, which is the same three ways ( 05 ) opens. So the phone gets an
+   accordion that also walks itself as you scroll, and nothing was added to
+   make that true.
+
+   The chevron rides the subtitle rather than the row: .npil__n is a numeral
+   the size of the row sitting behind everything on the right, and a mark in
+   that corner would land on top of it. */
+@media (max-width: 1099.98px) {
+  /* minmax(0, 0fr) rather than the 0fr the recipe usually gives, and min-height
+     on the child is not enough on its own. An fr track's minimum is auto, and
+     auto here is the item's min-content contribution — which counts its margin,
+     padding and border even when min-height: 0 has flattened the content box.
+     The paragraph carries a 12px margin, 12px of padding and the 1px rule that
+     separates it from the subtitle, so a collapsed row measured 25px instead of
+     0 and five of them left 100px of ghost space in the fold. */
+  .npil__b {
+    display: grid;
+    grid-template-rows: minmax(0, 0fr);
+  }
+  .npil__b > * { overflow: hidden; min-height: 0; }
+  .npil--picked .npil__i.is-picked .npil__b,
+  .npil--live   .npil__i.is-picked .npil__b,
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__b {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .npil__s::after {
+    content: '';
+    display: inline-block; vertical-align: middle;
+    width: 8px; height: 8px; margin-left: .6em;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: translateY(-.18em) rotate(45deg);
+    opacity: .55;
+  }
+  .npil--picked .npil__i.is-picked .npil__s::after,
+  .npil--live   .npil__i.is-picked .npil__s::after,
+  .npil:not(.npil--picked):not(.npil--live) .npil__i:first-child .npil__s::after {
+    transform: translateY(.1em) rotate(-135deg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .npil__b { transition: grid-template-rows var(--fold-open) var(--fold-ease); }
+    .npil__s::after { transition: transform var(--fold-open) var(--fold-ease); }
+  }
 }
 
 @media (min-width: 861px) {

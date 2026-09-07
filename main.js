@@ -901,6 +901,12 @@ function splitLetters(root, skip, onChar) {
   var n = rows.length;
   if (n < 3) return;
 
+  /* The deck's geometry is written in cqw because nothing else tracks a wrap
+     whose padding is a clamp. Without container queries every width and offset
+     is an invalid length, the cards fall back to auto and the stage collapses —
+     so where the unit is missing, the rows stay the rows. */
+  if (!(window.CSS && CSS.supports && CSS.supports('container-type', 'inline-size'))) return;
+
   var mq = window.matchMedia('(min-width: 1100px)');
   var bar = null, dots = [], count = null, placing = false;
 
@@ -928,13 +934,16 @@ function splitLetters(root, skip, onChar) {
       if (off > half) off -= n;
       if (off < -half) off += n;
       var d = Math.abs(off);
-      card.style.setProperty('--x', 'calc(' + off + ' * var(--car-step))');
+      /* on the ROW, not the card: --z has to reach the element that stacks, and
+         custom properties inherit downward, so the card still reads every one
+         of these */
+      r.style.setProperty('--x', 'calc(' + off + ' * var(--car-step))');
       /* the arc: 1 - cos across half a turn, so the middle card sits highest
          and the pair at each end drop by the same amount */
-      card.style.setProperty('--y', 'calc(' + (1 - Math.cos(off / n * Math.PI)).toFixed(3) + ' * var(--car-lift))');
-      card.style.setProperty('--s', (1 - d * 0.075).toFixed(3));
-      card.style.setProperty('--o', (1 - d * 0.28).toFixed(2));
-      card.style.setProperty('--z', String(n - d));
+      r.style.setProperty('--y', 'calc(' + (1 - Math.cos(off / n * Math.PI)).toFixed(3) + ' * var(--car-lift))');
+      r.style.setProperty('--s', (1 - d * 0.075).toFixed(3));
+      r.style.setProperty('--o', (1 - d * 0.28).toFixed(2));
+      r.style.setProperty('--z', String(n - d));
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });
     dots.forEach(function (b, i) { b.setAttribute('aria-selected', String(i === a)); });
@@ -1015,10 +1024,9 @@ function splitLetters(root, skip, onChar) {
       list.classList.remove('npil--car');
       if (bar) bar.hidden = true;
       rows.forEach(function (r) {
+        ['--x', '--y', '--s', '--o', '--z'].forEach(function (p) { r.style.removeProperty(p); });
         var c = r.querySelector('.npil__card');
-        if (!c) return;
-        ['--x', '--y', '--s', '--o', '--z'].forEach(function (p) { c.style.removeProperty(p); });
-        c.removeAttribute('aria-current');
+        if (c) c.removeAttribute('aria-current');
       });
     }
   }

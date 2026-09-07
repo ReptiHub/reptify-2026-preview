@@ -12413,12 +12413,23 @@ h1.statement--sm { font-weight: 900; }
    both accordions move as one gesture. */
 @media (min-width: 1100px) {
   .npil--car {
-    /* 4 x step + width has to clear the wrap, which is 1260 at 1400: this is
-       1168. Overlap is 48px, enough to stack and not enough to swallow the
-       name on the card behind. */
-    --car-w: 17rem;
-    --car-h: 11.5rem;
-    --car-step: 14rem;
+    /* SIZED FROM THE CONTAINER, and the first build was not. It used fixed rems
+       against a wrap that is a clamp, so the deck fitted at 1400 and hung off
+       both edges at 1100: outer card centre at 448 from a centre of 550, visual
+       half-width 116, left edge at -14. Tested at one width and shipped, which
+       is the whole reason the check is meant to run at two.
+
+       The wrap's padding is not a constant, so vw arithmetic cannot track it —
+       1260 at 1400 is viewport minus 140, 990 at 1100 is viewport minus 110.
+       cqw measures the box itself and is the only unit that does.
+
+       The budget: the outer pair sit at 2 x step and are scaled to .85, so the
+       deck spans 4 x step + .85 x width. At 18.5 and 26 that is 96.1cqw, which
+       leaves a two percent margin at every width rather than at one. */
+    container-type: inline-size;
+    --car-w: 26cqw;
+    --car-h: clamp(11rem, 17cqw, 15rem);
+    --car-step: 18.5cqw;
     --car-lift: 22px;
     --car-bar: 4.25rem;
     display: block; position: relative;
@@ -12429,17 +12440,27 @@ h1.statement--sm { font-weight: 900; }
   /* every row becomes a full-area layer: the card places itself in the stage,
      the description in the region under the bar, and the two are siblings
      rather than parent and child, which is the whole point of .npil__card. */
+  /* isolation: auto, and this was a bug you could see. The base .npil__i
+     carries isolation: isolate so the row's numeral cannot escape upward, and
+     it survives into the stage — which makes every row its own stacking
+     context, all of them at z-index auto, so the deck painted in DOM order and
+     the fifth card drew over the first no matter what --z said. The depth has
+     to live on the layer that stacks, so --z sits on the row and the card
+     inherits the rest of the geometry from it. */
   .npil--car .npil__i {
     position: absolute; inset: 0;
     display: block; padding: 0; border: 0; background: none;
     overflow: visible; pointer-events: none;
+    isolation: auto; z-index: var(--z, 1);
   }
 
   .npil--car .npil__card {
     display: block; position: absolute; top: 0; left: 50%;
     width: var(--car-w); height: var(--car-h);
     box-sizing: border-box;
-    padding: clamp(.9rem, 1.4vw, 1.3rem) clamp(1.1rem, 1.8vw, 1.6rem);
+    /* air, at the owner's call: 30 x 33 against 20 x 25. The card grew with it
+       rather than the padding eating the content box. */
+    padding: clamp(1.2rem, 2.4cqw, 1.9rem) clamp(1.3rem, 2.6cqw, 2.1rem);
     background: var(--chalk);
     border: 1px solid var(--ink-15);
     border-left: 2px solid transparent;
@@ -12461,9 +12482,9 @@ h1.statement--sm { font-weight: 900; }
   .npil--car .npil__n { opacity: calc(.08 * var(--o, 1)); }
   .npil--car .npil__i.is-picked .npil__card { border-left-color: var(--brand); }
 
-  .npil--car .npil__n { font-size: 5.5rem; right: .6rem; }
-  .npil--car .npil__h { font-size: calc(var(--a2) * .8); white-space: normal; }
-  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * .82); }
+  .npil--car .npil__n { font-size: 6.25rem; right: .7rem; }
+  .npil--car .npil__h { font-size: calc(var(--a2) * .88); white-space: normal; }
+  .npil--car .npil__s { max-width: none; font-size: calc(var(--a5) * .92); margin-top: .5rem; }
 
   /* the description sits under the bar, all five in one place, and only the
      picked one is lit — the same stacked-slot device .help__say runs on the

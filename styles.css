@@ -10850,37 +10850,50 @@ h1.statement--sm { font-weight: 900; }
 .naud {
   margin: var(--v4) 0 0;
   border-bottom: 1px solid var(--ink-15);
+  counter-reset: naud;
 }
+.naud details { counter-increment: naud; }
 .naud details { border-top: 1px solid var(--ink-15); }
 .naud details:first-of-type { border-top: 0; }
 
 .naud summary {
-  display: grid; grid-template-columns: 1fr max-content;
-  gap: clamp(1rem, 2vw, 1.5rem); align-items: center;
-  /* Sized to the column, not to a type step in isolation. The right column runs
-     816px and the left ran 690, so it finished 126px short and left a hole under
-     it. --a3 rather than --a4 buys 29 of that across the four rows and the rest
-     is air in the rows, which is where it belongs: a question you click is a
-     control, and 55px rows for 28.6px type were tight for one.
-
-     87px a row is the number that makes the columns finish level with the first
-     question open. Exact alignment is not actually reachable — the left moves
-     43px depending on which question is open — so this lands it level at the
-     tallest and 43px short at the shortest, rather than 126 short always.
-
-     Still over the 44px minimum at 375, where --a3 clamps to 23.8px: 29.5px of
-     type plus 2 x 13.6px is 56.7. */
-  padding-block: clamp(.85rem, 1.85vw, 1.65rem);
+  display: grid; grid-template-columns: max-content 1fr max-content;
+  gap: clamp(.9rem, 1.8vw, 1.6rem); align-items: baseline;
+  /* Sized to the column, and the wrapping is what sizes it. At --a2 three of
+     the four questions ran to two lines and the left column overshot the right
+     by 112px; a step down puts every one back on a single line at 1400, which
+     is worth more than the extra millimetre of type. */
+  padding-block: clamp(.9rem, 1.7vw, 1.5rem);
   cursor: pointer; list-style: none;
-  font-family: var(--state); font-weight: 500;
-  font-size: var(--a3); line-height: 1.24; letter-spacing: -.02em;
-  /* .62, not the .5 the questions carried as a passive list. At 1400 this is
-     22.8px at weight 500, which is NOT WCAG large text — that needs 24px unless
-     the weight is 700 — so the bar is 4.5:1 and .5 measured 3.28 over --chalk.
-     .61 is the threshold and .62 measures 4.74. A closed question is a control
-     now, and a control's own label cannot be the thing that fails. The ladder
-     still reads: .62 closed, .70 hovered, full ink open. */
-  color: rgba(21, 24, 27, .62);
+  font-family: var(--state); font-weight: 700;
+  font-size: var(--a3); line-height: 1.1; letter-spacing: -.035em;
+  text-transform: uppercase;
+  /* .50, and the reference's own .20 is why this is worth writing down. Ghosted
+     to a fifth it measures 1.52:1 on this ground — not a dim heading, an
+     invisible one.
+
+     What buys the darkness back is the WEIGHT, not the size, and that is the
+     part worth remembering. WCAG's large-text threshold is 24px for normal text
+     but 18.66px for BOLD — and these are 700, so --a3 at its 23.8px floor
+     already qualifies and the bar is 3:1 at every width. .48 is the floor there
+     and .50 measures 3.28: most of the reference's effect, none of its problem,
+     and no need for a bigger step to earn it.
+
+     The .62 this replaces was correct for what it was — --a3 at weight 500 is
+     not large text, so 4.5 applied. Same token, same size, different bar,
+     because the weight changed underneath it. */
+  color: rgba(21, 24, 27, .50);
+}
+/* the index, from a counter rather than from markup — the HTML stays four
+   questions, which is what it is, and nothing needs renumbering by hand if one
+   is ever added or cut */
+.naud summary::before {
+  content: counter(naud, decimal-leading-zero);
+  align-self: start;
+  font-family: var(--work); font-weight: 500;
+  font-size: .78rem; letter-spacing: .1em; line-height: 2.4;
+  color: inherit; opacity: .85;
+  font-variant-numeric: tabular-nums;
 }
 .naud summary::-webkit-details-marker { display: none; }
 .naud details[open] > summary { color: var(--ink); cursor: default; }
@@ -10906,7 +10919,8 @@ h1.statement--sm { font-weight: 900; }
   width: var(--ch); height: var(--ch);
   border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
   transform: translateY(calc(var(--ch) * -.354)) rotate(45deg);
-  opacity: .55;
+  /* quieter beside type this size — at .55 it was competing with a 35px word */
+  opacity: .42;
 }
 .naud details[open] > summary::after {
   transform: translateY(calc(var(--ch) * .354)) rotate(-135deg);
@@ -11127,6 +11141,8 @@ h1.statement--sm { font-weight: 900; }
   }
   .naud__k, .naud__f { margin-bottom: 0; }
   .naud__f { border-left: 1px solid var(--ink-15); padding-left: clamp(1rem, 2vw, 1.5rem); }
+  /* the answer starts under the question, not under its number */
+  .naud__pane { padding-left: calc(2ch + clamp(.9rem, 1.8vw, 1.6rem)); }
   .naud__lbl { position: absolute; width: 1px; height: 1px; overflow: hidden;
                clip-path: inset(50%); white-space: nowrap; }
 }

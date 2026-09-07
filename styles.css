@@ -11020,7 +11020,11 @@ h1.statement--sm { font-weight: 900; }
    there is no opening panel to wait for and no head start to give. */
 .npil {
   --kb-char: 12ms;
-  --kb-open: 0ms;
+  /* THE CARD LANDS FIRST, THEN IT SPEAKS, on instruction. The card takes
+     --fold-open to arrive; typing into it while it is still travelling gives
+     the eye two things at once and it follows neither. 720ms is that journey
+     plus a beat to register where it stopped. */
+  --kb-open: 720ms;
 }
 .naud__pane.is-typed .ltr { opacity: 0; }
 .naud.in details[open] .naud__pane.is-typed .ltr {
@@ -12447,8 +12451,13 @@ h1.statement--sm { font-weight: 900; }
        a subtitle. A card 529 wide holding two lines does not want 277 of
        height; at 15.5 it is 195 and reads about three quarters full, which is
        a card rather than a panel with type in the corner. */
-    /* taller again: more padding inside, on instruction, and the box has to
-       grow with it or the air comes out of the text instead */
+    /* A FLOOR ONLY. The real height is measured in main.js from the tallest
+       card's own content and written back over this, because a clamp can only
+       ever be right for the copy that existed when it was typed — and it was
+       not even right for that: swept across the range this one clipped the
+       fourth card by up to 85px from the breakpoint to about 1340, while the
+       first card fitted and reported no overflow. This is what the deck falls
+       back to if the script does not run, and the script is what makes it fit. */
     --car-h: clamp(17rem, 23cqw, 22rem);
     /* A RING, not a row with a z-offset. The cards used to sit on a straight
        line and lean — an even step sideways, an even step back, a fixed turn —
@@ -12471,10 +12480,10 @@ h1.statement--sm { font-weight: 900; }
        Written against --car-h it survives any later change to the card. 20% is
        deliberately below the 33% that read as a spilt hand and well above the
        13.6% that read as nothing. */
-    --car-lift: calc(var(--car-h) * .2);
+    --car-lift: calc(var(--car-h) * .26);
     --car-tilt: 2.8deg;
-    --car-bar: 3rem;
-    --car-air: 2.75rem;
+    --car-bar: 3.5rem;
+    --car-air: 3.5rem;
     display: block; position: relative;
     height: calc(var(--car-h) + var(--car-lift) + var(--car-air)
                  + var(--car-bar) + 1.5rem);
@@ -12516,8 +12525,15 @@ h1.statement--sm { font-weight: 900; }
        a hairline holding chalk off a pale ground had no job — but five ink
        cards overlapping have a new one, which is telling each other apart.
        Without it the deck is one black mass with type floating on it. */
-    border: 1px solid rgba(240, 239, 234, .12);
-    border-radius: 2px;
+    /* .22 rather than .12, on instruction. At .12 the rim was doing its job
+       between two cards that overlap and nothing at all where a card meets the
+       fold, which is most of its edge. */
+    border: 1px solid rgba(240, 239, 234, .22);
+    /* 14px, from the reference. The house radius is 2px and this is a
+       deliberate departure for this device only — a card standing on a ring in
+       perspective reads as an object, and an object with square corners at
+       28deg reads as a cut-out. Nothing else on the site moves. */
+    border-radius: 14px;
     overflow: clip; isolation: isolate;
     pointer-events: auto; cursor: pointer;
     transform: translateX(-50%)
@@ -12619,10 +12635,10 @@ h1.statement--sm { font-weight: 900; }
     gap: clamp(1rem, 2vw, 1.75rem);
   }
   .npil__nav {
-    width: 2.5rem; height: 2.5rem;
+    width: 3rem; height: 3rem;
     display: grid; place-items: center;
-    background: none; border: 1px solid var(--ink-15); border-radius: 50%;
-    color: var(--ink); cursor: pointer;
+    background: var(--chalk); border: 1px solid var(--ink-30, rgba(21,24,27,.3));
+    border-radius: 50%; color: var(--ink); cursor: pointer;
     transition: border-color var(--fold-open) var(--fold-ease),
                 background-color var(--fold-open) var(--fold-ease);
   }
@@ -12639,16 +12655,16 @@ h1.statement--sm { font-weight: 900; }
 
   .npil__dots { display: flex; align-items: center; gap: .4rem; list-style: none; margin: 0; padding: 0; }
   .npil__dot {
-    display: block; width: 6px; height: 6px; padding: 0;
-    background: var(--ink-15); border: 0; border-radius: 99px;
+    display: block; width: 8px; height: 8px; padding: 0;
+    background: rgba(21, 24, 27, .28); border: 0; border-radius: 99px;
     cursor: pointer;
     transition: width var(--fold-open) var(--fold-ease),
                 background-color var(--fold-open) var(--fold-ease);
   }
-  .npil__dot[aria-selected="true"] { width: 22px; background: var(--ink); }
+  .npil__dot[aria-selected="true"] { width: 30px; background: var(--ink); }
 
   .npil__count {
-    font-family: var(--work); font-size: .78rem; letter-spacing: .08em;
+    font-family: var(--work); font-size: .92rem; letter-spacing: .08em;
     text-transform: uppercase; color: var(--ink-70);
     font-variant-numeric: tabular-nums;
   }

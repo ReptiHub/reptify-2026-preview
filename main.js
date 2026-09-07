@@ -926,6 +926,39 @@ function splitLetters(root, skip, onChar) {
 
   var RAD = Math.PI / 180;
 
+  /* THE CARD IS SIZED BY ITS TALLEST TENANT, not by a clamp.
+     --car-h was guessed and re-guessed, and every guess was checked against
+     one card. The descriptions run 92 to 156 letters, so the card that decides
+     the height is not the card anyone looks at first: swept across the range,
+     the box clipped "AI Workforce Solutions" by up to 85px everywhere from the
+     1100 breakpoint to about 1340, while the first card fitted with room to
+     spare and reported no overflow.
+
+     Measured instead. Every card's content is summed at the width it is
+     actually at and the tallest wins, so the box fits the copy at any viewport
+     and survives the copy being rewritten — which a clamp cannot do, because
+     the number in it was only ever true for the words that were there when it
+     was typed. No feedback loop: the card's width does not depend on its
+     height, so one pass settles it. */
+  function fit() {
+    var tall = 0;
+    rows.forEach(function (r) {
+      var card = r.querySelector('.npil__card');
+      if (!card) return;
+      var h = card.querySelector('.npil__h'),
+          sub = card.querySelector('.npil__s'),
+          body = card.querySelector('.npil__b');
+      if (!h || !sub || !body) return;
+      var cs = getComputedStyle(card);
+      var need = h.getBoundingClientRect().height
+               + parseFloat(getComputedStyle(sub).marginTop) + sub.getBoundingClientRect().height
+               + parseFloat(getComputedStyle(body).marginTop) + body.getBoundingClientRect().height
+               + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      if (need > tall) tall = need;
+    });
+    if (tall > 0) list.style.setProperty('--car-h', Math.ceil(tall) + 'px');
+  }
+
   function place() {
     if (!list.classList.contains('npil--car')) return;
     var a = activeIdx(), half = (n - 1) / 2;
@@ -1041,10 +1074,12 @@ function splitLetters(root, skip, onChar) {
       build();
       list.classList.add('npil--car');
       if (bar) bar.hidden = false;
+      fit();
       place();
     } else {
       list.classList.remove('npil--car');
       if (bar) bar.hidden = true;
+      list.style.removeProperty('--car-h');
       rows.forEach(function (r) {
         ['--x', '--y', '--zd', '--ry', '--rot', '--o', '--z', '--scrim'].forEach(function (p) { r.style.removeProperty(p); });
         var c = r.querySelector('.npil__card');
@@ -1056,6 +1091,32 @@ function splitLetters(root, skip, onChar) {
   sync();
   if (mq.addEventListener) mq.addEventListener('change', sync);
   else if (mq.addListener) mq.addListener(sync);
+
+  /* --car-h is a measurement now, not a clamp, so it has to be taken again
+     when the thing it was measured against changes. The card's width tracks
+     the container, the description rewraps, and the tallest card is not always
+     the same card at every width — at 1210 it is the first, at 1010 it is the
+     fourth. Debounced to the next frame so a drag resizes once per paint. */
+  /* AND AGAIN ONCE THE FONTS LAND. This is the one that matters on a real
+     visit: fit() runs while the page is still painting in the fallback face,
+     Archivo and Instrument Sans swap in with different metrics, every
+     description rewraps a line taller — and the card keeps the height measured
+     against a font nobody is looking at. A first paint that fits and a settled
+     page that clips is exactly what a screenshot catches and a local reload,
+     with the fonts already cached, does not. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      if (!mq.matches) return;
+      fit(); place();
+    });
+  }
+
+  var refit;
+  window.addEventListener('resize', function () {
+    if (!mq.matches) return;
+    clearTimeout(refit);
+    refit = setTimeout(function () { fit(); place(); }, 80);
+  }, { passive: true });
 })();
 
 

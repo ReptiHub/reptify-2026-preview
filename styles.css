@@ -12453,12 +12453,17 @@ h1.statement--sm { font-weight: 900; }
     --car-step: 23cqw;
     --car-depth: 190px;      /* per rank, back into the screen */
     --car-turn: 16deg;       /* per rank, facing the middle */
-    /* less bend, on instruction: 36px of drop against 64, 1.8deg of tilt
-       against 3.6. The depth and the turn were always doing most of the work —
-       the lift and the tilt on top of them had started to read as a spilt hand
-       of cards rather than a stack. */
-    --car-lift: 36px;
-    --car-tilt: 1.8deg;
+    /* THE BEND IS A RATIO, NOT A NUMBER OF PIXELS, and it took losing it to
+       see why. "Less bend" was answered by halving 64px to 36 — in the same
+       commit that made the card 36% taller. Against the card the bend did not
+       halve, it fell to a fifth: 64 on a 195px card is 33%, 36 on a 265px card
+       is 13.6%, which is a deck that looks flat.
+
+       Written against --car-h it survives any later change to the card. 20% is
+       deliberately below the 33% that read as a spilt hand and well above the
+       13.6% that read as nothing. */
+    --car-lift: calc(var(--car-h) * .2);
+    --car-tilt: 2.8deg;
     --car-bar: 3rem;
     --car-air: 2.75rem;
     display: block; position: relative;
